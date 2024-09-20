@@ -10,20 +10,13 @@ const ReadBanner = () => {
         </Link>
       }
     >
-      <h1 id="read-beanner" className="read-book-title">
+      <h1 id="read-banner" className="read-book-title">
         Title of the book will come right here
       </h1>
       <p>
-        <span>by</span>
         <strong className="author-name"> John Doe de la Meunge</strong>
       </p>
-      {/* <button
-        type="button"
-        className="no-state-button cta"
-        onClick={() => setModalCard({ type: "SHOW", element: "collection" })}
-      >
-        Create a book collection
-      </button> */}
+      <Link to="/" className="no-state-button cta">Back home</Link>
     </Banner>
   );
 }

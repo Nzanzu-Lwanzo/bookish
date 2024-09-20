@@ -22,8 +22,10 @@ const ReadPanel = () => {
       <div className={`content ${!resume && "center"}`}>
         {resume ? (
           <>
+            <article>
+              <p>{resume}</p>
+            </article>
             <ActionsOnBook />
-            <p>{resume}</p>
           </>
         ) : (
           <div className="no-data-placeholder center">

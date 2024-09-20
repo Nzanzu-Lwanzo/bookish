@@ -3,7 +3,7 @@ import Banner from "../../CrossApp/Banner"
 
 const MainBanner = () => {
 
-    const {setCollectionsAppearance} = useAppContext();
+    const { setCollectionsAppearance, setModalCard } = useAppContext();
 
   return (
     <Banner
