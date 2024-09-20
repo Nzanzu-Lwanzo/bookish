@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 :root {
   --bg: #2c3539;
   --light: #ffe;
@@ -93,8 +100,14 @@ body {
   padding: 1rem;
   background-color: var(--black-shade);
 
-  align-items: center;
-  justify-content: flex-end;
+  -webkit-box-align: center;
+
+      -ms-flex-align: center;
+
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   gap: 0.5rem;
 
   display: none;
@@ -106,7 +119,9 @@ body {
 
 .dashboard {
   min-height: 100vh;
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 30% 1rem 70%;
   grid-template-columns: 30% 70%;
   width: 100%;
   background-color: #eee;
@@ -125,6 +140,8 @@ body {
 .dashboard .collections {
   position: sticky;
   top: 2rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
 }
 
@@ -133,17 +150,29 @@ body {
   border-radius: 3px;
   background-color: var(--light);
   font-size: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 0.5rem;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .collections .title .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 1rem;
-  justify-content: flex-end;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .collections .title .actions button {
@@ -156,18 +185,31 @@ body {
 }
 
 .list-collections {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
   gap: 1rem;
   list-style: none;
   width: 100%;
 }
 
 .list-collections li {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   gap: 1rem;
   border-radius: 2px;
   padding-right: 0.8rem;
@@ -186,9 +228,15 @@ body {
 }
 
 .list-collections li .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   gap: 0.5rem;
 }
 
@@ -213,15 +261,25 @@ body {
 }
 
 .list-books .top-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   gap: 1rem;
 }
 
 .list-books .top-bar .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 0.5rem;
 }
 
@@ -230,13 +288,26 @@ body {
   border: 1px solid var(--black-shade);
   padding: 1rem;
   border-radius: 4px;
+  -webkit-transition: 0.4s ease-out;
+  -o-transition: 0.4s ease-out;
   transition: 0.4s ease-out;
   cursor: pointer;
 
+  display: -webkit-box;
+
+  display: -ms-flexbox;
+
   display: flex;
-  align-items: stretch;
-  justify-content: center;
-  flex-direction: column;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 0.8rem;
 
   background-color: var(--black-shade);
@@ -266,9 +337,15 @@ body {
 
 .book-elt .actions {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   gap: 0.5rem;
 }
 
@@ -283,7 +360,9 @@ body {
 }
 
 .list-books .books {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 1fr 1rem 1fr 1rem 1fr;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   padding: 2rem 0;
@@ -336,17 +415,32 @@ body {
   padding: 1rem;
   font-size: 1.2rem;
 
+  display: -webkit-box;
+
+  display: -ms-flexbox;
+
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   gap: 2rem;
 }
 
 .dashboard-form .wrap-inputs {
   padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
   gap: 1rem;
 }
 
@@ -360,16 +454,29 @@ body {
 }
 
 .dashboard-form .wrap-input:not(:has(input[type="color"])) {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   gap: 0.5rem;
 }
 
 .dashboard-form .wrap-input:has(input[type="color"]) {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .wrap-input input:not([type="color"]),
@@ -378,7 +485,8 @@ body {
   padding: 0.5rem 1rem;
   border-radius: 3px;
   width: 100%;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .wrap-input input:not([type="color"]):focus,
@@ -422,6 +530,8 @@ body {
 .read-panel .content {
   width: 80%;
   margin: auto;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
   padding: 2rem;
   background-color: #fff;
@@ -443,9 +553,15 @@ body {
 
 .read-panel .actions-on-book {
   min-height: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -482,7 +598,13 @@ body {
     inset: 0;
     background-color: var(--black-shade);
 
-    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+
+        -ms-transform: translateX(-100%);
+
+            transform: translateX(-100%);
+    -webkit-transition: 0.4s ease-out;
+    -o-transition: 0.4s ease-out;
     transition: 0.4s ease-out;
 
     overflow: auto;
@@ -494,7 +616,9 @@ body {
   }
 
   .dashboard .collections.show {
-    transform: none;
+    -webkit-transform: none;
+        -ms-transform: none;
+            transform: none;
   }
 
   .collections .no-data-placeholder {
@@ -506,6 +630,8 @@ body {
   }
 
   .banner .sticky-top {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
   }
 
@@ -514,6 +640,8 @@ body {
   }
 
   .for-mobile.hide-sidebar {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
   }
 
@@ -530,12 +658,18 @@ body {
 
 @media only all and (max-width: 720px) {
   .list-books .books {
+    -ms-grid-columns: (1fr)[2];
     grid-template-columns: repeat(2, 1fr);
   }
 
   .list-books .top-bar {
-    flex-direction: column;
-    align-items: flex-end;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
   }
 
   .modal-panel .card {
@@ -558,6 +692,7 @@ body {
 
 @media only all and (max-width: 500px) {
   .list-books .books {
+    -ms-grid-columns: auto;
     grid-template-columns: auto;
   }
 
@@ -583,7 +718,10 @@ body {
   }
 
   .list-books .top-bar .actions {
-    flex-direction: row-reverse;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
   }
 
   .collections .title svg {
