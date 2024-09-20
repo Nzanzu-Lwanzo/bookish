@@ -23,9 +23,8 @@ function App() {
             caseSensitive={false}
           />
         </Routes>
+        <Modal />
       </Router>
-      
-      <Modal />
     </AppContextProvider>
   );
 }

@@ -133,8 +133,8 @@ button.disabled-button,
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
           justify-content: center;
 
   text-decoration: none;
@@ -185,4 +185,25 @@ button.disabled-button {
 .danger:hover {
   background-color: transparent;
   color: red;
+}
+
+.action-icon {
+  height: 30px;
+  width: 30px;
+  background-color: #EEE;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.action-icon svg {
+  height: 18px;
+}
+
+.action-icon:hover {
+  background-color: var(--accent);
+}
+
+.action-icon:hover svg {
+  stroke: #FFF;
 }

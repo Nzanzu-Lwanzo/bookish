@@ -1,7 +1,7 @@
 import { useAppContext } from "../../../../context/AppContext";
 import BookElt from "./BookElt";
 import NoBook from "./NoBook";
-import { Plus } from "../../../../assets/svg";
+import { Plus, SearchIcon } from "../../../../assets/svg";
 
 const ListBooks = () => {
   const books = ["Hello World"];
@@ -15,6 +15,16 @@ const ListBooks = () => {
         <div className="actions">
           {books.length !== 0 && (
             <>
+              <button
+                type="button"
+                className="no-state-button"
+                onClick={() => setModalCard({ type: "SHOW", element: "search-book" })}
+              >
+                <span>Search</span>
+                <span className="center">
+                  <SearchIcon />
+                </span>
+              </button>
               <button
                 type="button"
                 className="no-state-button"

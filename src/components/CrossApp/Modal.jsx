@@ -1,5 +1,6 @@
 import CollectionForm from "../Main/Dashboard/components/CollectionForm";
 import BookForm from "../Main/Dashboard/components/BookForm";
+import SearchBook from "./SearchBook";
 import { useAppContext } from "../../context/AppContext";
 
 const Modal = () => {
@@ -12,6 +13,8 @@ const Modal = () => {
           <BookForm />
         ) : modalCard.element === "collection" ? (
           <CollectionForm />
+        ) : modalCard.element === "search-book" ? (
+          <SearchBook />
         ) : null}
       </div>
     </section>
