@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Main from "./pages/Main";
 import Read from "./pages/Read";
+import About from "./pages/About";
 import { AppContextProvider } from "./context/AppContext";
 import Modal from "./components/CrossApp/Modal";
 
@@ -17,6 +18,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Main />} caseSensitive={false} />
+          <Route path="/about" element={<About />} caseSensitive={false} />
           <Route
             path="/read-book/:id"
             element={<Read />}

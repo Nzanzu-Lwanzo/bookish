@@ -42,6 +42,40 @@ const Collections = () => {
           <CollectionElt />
           <CollectionElt />
           <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
+          <CollectionElt />
         </ul>
       ) : (
         <NoCollection />
