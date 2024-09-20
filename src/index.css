@@ -1,0 +1,165 @@
+.montserrat,* {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.loader-container {
+    background-color: transparent;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .loader {
+      border-radius: 50%;
+      -webkit-animation: spin 2s linear infinite;
+              animation: spin 2s linear infinite;
+  }
+  
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+    }
+  
+    @keyframes spin {
+      0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+    }
+
+.cell {
+    background-color: var(--accent-transp);
+    padding: .1rem .5rem;
+    color: var(--accent);
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    border-radius: 20px;
+}
+
+.cell-red {
+    background-color: rgba(255, 0, 0,.2);
+    padding: .1rem .5rem;
+    color: var(--accent);
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    border-radius: 20px;
+    color: red;
+}
+
+.cell-red svg *:not(rect:first-of-type) {
+  stroke: red;
+}
+
+.placeholder {
+  height: 100%;
+}
+
+.custom-scrollbar::-webkit-scrollbar{
+  width: .5rem;
+  background-color: var(--bg);
+  -webkit-transition: var(--transition);
+  transition: var(--transition);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+}
+
+.custom-scrollbar::-webkit-scrollbar-button {
+  background-color: #111314;
+}
+
+.for-mobile {
+  display: none;
+}
+
+button:disabled,
+button.disabled-button,
+.no-state-button {
+  padding: 0.5rem 0.8rem;
+  border-radius: 2px;
+  width: fit-content;
+  font-size: 0.9rem;
+  transition: 0.4s ease-out;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  text-decoration: none;
+}
+
+button:disabled svg,
+button.disabled-button svg,
+.no-state-button svg {
+  height: 18px;
+}
+
+.no-state-button {
+  color: var(--light);
+  background-color: var(--accent);
+  cursor: pointer;
+  border: 0.8px solid var(--accent);
+}
+
+button:disabled,
+button.disabled-button {
+  background-color: #29ea5a;
+  color: var(--light);
+  cursor: default;
+  border: 0.8px solid #29ea5a;
+}
+
+.no-state-button:hover {
+   background-color: transparent;
+  color: var(--accent);
+}
+
+.danger {
+  padding: 0.5rem 0.8rem;
+  border-radius: 2px;
+  width: fit-content;
+  font-size: 0.9rem;
+  color: var(--light);
+  background-color: red;
+  cursor: pointer;
+  border: 0.8px solid red;
+  transition: 0.4s ease-out;
+}
+
+.danger:hover {
+  background-color: transparent;
+  color: red;
+}

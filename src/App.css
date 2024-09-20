@@ -1,0 +1,555 @@
+:root {
+  --bg: #2c3539;
+  --light: #ffe;
+  --accent: #15d846;
+  --transition: 0.3s ease-out;
+  --accent-transp: rgba(21, 216, 70, 0.1);
+  --black-shade: #111314;
+}
+
+/* @font-face {
+  font-family: FONT;
+  src: url("./assets/fonts/RedHatText-Regular.ttf") format("TrueType");
+} */
+
+::-moz-selection {
+  background-color: transparent;
+}
+
+::selection {
+  background-color: transparent;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+
+  display: -webkit-box;
+
+  display: -ms-flexbox;
+
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+* {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.banner {
+  min-height: 50vh;
+  background-color: var(--black-shade);
+  color: var(--light);
+  width: 100%;
+  text-align: center;
+}
+
+
+.banner .content {
+  padding: 2rem;
+}
+
+.banner h1 {
+  font-size: 6rem;
+}
+
+.banner .sticky-top {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--black-shade);
+
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  display: none;
+}
+
+.banner .cta {
+  margin-top: 1rem;
+}
+
+.dashboard {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  width: 100%;
+  background-color: #eee;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.dashboard > * {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+.dashboard .collections {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.collections .title {
+  padding: 1rem;
+  border-radius: 3px;
+  background-color: var(--light);
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.collections .title .actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.collections .title .actions button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.collections .title svg {
+  height: 23px;
+}
+
+.list-collections {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  list-style: none;
+  width: 100%;
+}
+
+.list-collections li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-radius: 2px;
+  padding-right: 0.8rem;
+  background-color: var(--black-shade);
+  color: var(--light);
+}
+
+.list-collections li .name {
+  width: 100%;
+  padding: 0.8rem;
+  height: 100%;
+  display: inline-block;
+  background-color: transparent;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.list-collections li .actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.list-collections .actions button {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.list-collections .actions button svg {
+  height: 18px;
+}
+
+.list-collections .actions button svg *:not(rect) {
+  stroke: #fff;
+}
+
+.list-books {
+  padding: 2rem;
+}
+
+.list-books .top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.list-books .top-bar .actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.book-elt {
+  width: 100%;
+  border: 1px solid var(--black-shade);
+  padding: 1rem;
+  border-radius: 4px;
+  transition: 0.4s ease-out;
+  cursor: pointer;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  background-color: var(--black-shade);
+  color: #fff;
+}
+
+.book-elt > * {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.book-elt .title {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.book-elt .title .book {
+  color: var(--accent);
+}
+
+.book-elt .date {
+  font-size: 0.8rem;
+}
+
+.book-elt .actions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.book-elt .actions button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.book-elt .actions button svg {
+  height: 18px;
+  stroke: #fff;
+}
+
+.list-books .books {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.no-data-placeholder {
+  height: 100%;
+  padding: 1rem;
+  text-align: center;
+
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.modal-panel {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-panel.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-panel .card {
+  min-height: 200px;
+  width: 500px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.modal-panel .card svg {
+  height: 23px;
+}
+
+.modal-panel button {
+  cursor: pointer;
+}
+
+.modal-panel button:not([type="submit"]) {
+  background-color: transparent;
+}
+
+.dashboard-form .top-bar {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.dashboard-form .wrap-inputs {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.dashboard-form label {
+  font-size: 0.8rem;
+}
+
+.dashboard-form .no-state-button,
+.dashboard-form .disabled-button {
+  width: 100%;
+}
+
+.dashboard-form .wrap-input:not(:has(input[type="color"])) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.dashboard-form .wrap-input:has(input[type="color"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wrap-input input:not([type="color"]),
+.wrap-input textarea {
+  border: 2px solid var(--black-shade);
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.wrap-input input:not([type="color"]):focus,
+.wrap-input textarea:focus {
+  border-color: var(--accent);
+}
+
+.wrap-input input:not([type="color"]):focus::-webkit-input-placeholder,
+.wrap-input textarea:focus::-webkit-input-placeholder {
+  color: var(--accent);
+}
+
+.wrap-input .error {
+  font-size: 0.8rem;
+  color: red;
+}
+
+.wrap-input #resume {
+  height: 300px;
+  resize: none;
+}
+
+/* READ BOOK PAGE */
+.banner h1.read-book-title {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.read-panel {
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #eee;
+  width: 100%;
+}
+
+.read-panel .content {
+  width: 80%;
+  margin: auto;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.read-panel .content p {
+  line-height: 1.6rem;
+  font-size: .9rem;
+}
+
+.read-panel .actions-on-book {
+  min-height: 20px;
+}
+
+@media only all and (max-width: 1100px) {
+  .dashboard {
+    display: block;
+  }
+
+  .dashboard .collections {
+    position: fixed;
+    inset: 0;
+    background-color: var(--black-shade);
+
+    transform: translateX(-100%);
+    transition: 0.4s ease-out;
+
+    overflow: auto;
+    height: 100vh;
+  }
+
+  html:has(.dashboard .collections.show) {
+    overflow: hidden;
+  }
+
+  .dashboard .collections.show {
+    transform: none;
+  }
+
+  .collections .no-data-placeholder {
+    color: #fff;
+  }
+
+  .banner.center {
+    display: block;
+  }
+
+  .banner .sticky-top {
+    display: flex;
+  }
+
+  .collections .title .actions {
+    gap: 0.5rem;
+  }
+
+  .for-mobile.hide-sidebar {
+    display: flex;
+  }
+
+  .collections .title {
+    margin-bottom: 1rem;
+    padding-block: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  .list-collections li {
+    background-color: var(--bg);
+  }
+}
+
+@media only all and (max-width: 720px) {
+  .list-books .books {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .list-books .top-bar {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .modal-panel .card {
+    width: 90%;
+  }
+}
+
+@media only all and (max-width: 500px) {
+  .list-books .books {
+    grid-template-columns: auto;
+  }
+
+  .book-elt {
+    min-height: 100px;
+  }
+
+  .book-elt > * {
+    margin-bottom: 0;
+  }
+
+  .dashboard {
+    padding: 0;
+  }
+
+  .banner h1 {
+    font-size: 4rem;
+  }
+
+  .list-books .top-bar h2 {
+    font-size: 1.4rem;
+    text-align: right;
+  }
+
+  .list-books .top-bar .actions {
+    flex-direction: row-reverse;
+  }
+
+  .collections .title svg {
+    height: 20px;
+  }
+
+  .list-books {
+    padding: 1rem;
+  }
+
+  .no-state-button,
+  .danger {
+    font-size: 0.8rem !important;
+  }
+
+  .wrap-input #resume {
+    height: 200px;
+    resize: none;
+  }
+
+  .list-collections li .name {
+    font-size: 0.8rem;
+  }
+}
