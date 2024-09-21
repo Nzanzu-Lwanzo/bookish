@@ -4,7 +4,13 @@ import { useAppContext } from "../../../../context/AppContext";
 
 const CollectionForm = () => {
 
-  const { setModalCard } = useAppContext();
+  const {
+    setModalCard,
+    database,
+    setCurrentCollection,
+    setCollections,
+    setCollectionsAppearance,
+  } = useAppContext();
 
   const [collection, setCollection] = useState({
     name: "",
@@ -13,7 +19,7 @@ const CollectionForm = () => {
 
   const [fieldMissingError, setFieldMissingError] = useState(false);
 
-  const saveCollection = (e) => {
+  const saveCollection = async (e) => {
     e.preventDefault();
 
     if (!collection.name) {
@@ -22,7 +28,18 @@ const CollectionForm = () => {
     }
 
     // Save and hide form
-    console.log(collection)
+    const savedCollection = await database.createCollection(collection);
+
+    if(savedCollection) {
+      setCurrentCollection(savedCollection);
+      setCollections(prev=>[savedCollection,...prev]);
+      setModalCard({type:"HIDE"})
+      setCollection({
+        description : "",
+        name : ""
+      })
+      setCollectionsAppearance(true);
+    }
   };
 
   return (
@@ -33,7 +50,7 @@ const CollectionForm = () => {
       onSubmit={saveCollection}
     >
       <div className="top-bar">
-        <h2>Collection</h2>
+          <h2>Collection</h2>
 
         <button
           type="button"
@@ -46,11 +63,11 @@ const CollectionForm = () => {
 
       <div className="wrap-inputs">
         <div className="wrap-input">
-          <label htmlFor="name">Name *</label>
+          <label htmlFor="name">Nom *</label>
           <input
             type="text"
             name="name"
-            placeholder="Put a descriptive name"
+            placeholder="Le nom de votre collection"
             maxLength={64}
             onInput={(e) => {
               setCollection((prev) => ({ ...prev, name: e.target.value }));
@@ -70,7 +87,7 @@ const CollectionForm = () => {
           <input
             type="text"
             name="description"
-            placeholder="Shortly describe your collection"
+            placeholder="Courte description de votre collection"
             maxLength={265}
             onInput={(e) => {
               setCollection((prev) => ({
@@ -85,7 +102,7 @@ const CollectionForm = () => {
           type="submit"
           className={collection.name ? "no-state-button" : "disabled-button"}
         >
-          Submit
+          Enregistrer
         </button>
       </div>
     </form>

@@ -1,20 +1,20 @@
-import { useContext, createContext } from "react";
+import { useContext, createContext, useEffect, useLayoutEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import BookishDb from "../database/api";
 
 const ReadPageContext = createContext();
 
-export const useReadPageContext = ()=>{
-    return useContext(ReadPageContext);
-}
+export const useReadPageContext = () => {
+  return useContext(ReadPageContext);
+};
 
-export const ReadPageContextProvider = ({children})=>{
+export const ReadPageContextProvider = ({ children }) => {
+  
+  const data = {
 
-    const data = {
-        
-    }
+  };
 
-    return (
-        <ReadPageContext.Provider value={data}>
-            {children}
-        </ReadPageContext.Provider>
-    )
-}
+  return (
+    <ReadPageContext.Provider value={data}>{children}</ReadPageContext.Provider>
+  );
+};

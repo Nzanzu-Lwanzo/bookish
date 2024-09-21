@@ -1,4 +1,5 @@
-import React from 'react'
+import { Link } from "react-router-dom";
+import { lsWrite } from "../utils/localStorage-io";
 
 const About = () => {
   return (
@@ -6,6 +7,10 @@ const About = () => {
       <main className="about-page">
         <div className="about-text">
           <h1>About</h1>
+          <p>
+            Veuillez, s'il vous plaît, lire ceci avant d'utiliser{" "}
+            <strong>Bookish</strong>.
+          </p>
           <div>
             <h2>Qu'est-ce que Bookish ?</h2>
             <p>
@@ -14,29 +19,31 @@ const About = () => {
                 {" "}
                 NZANZU MUHAYRWA Lwanzo
               </a>
-              , programmeur et écrivain congolais, et qui permet aux
-              utilisateurs de pouvoir sauvegarder le fruit de leurs lectures.{" "}
-              <strong>Bookish</strong> est une application très légère en ce
-              sens qu'
+              , programmeur et écrivain congolais, et qui vous permet de pouvoir
+              sauvegarder le fruit de vos lectures. <strong>Bookish</strong> est
+              une application très légère en ce sens qu'
               <strong>
-                elle ne nécessite pas l'accès à la connexion internet pour
+                elle ne nécessite pas l'accès à une connexion internet pour
                 fonctionner
               </strong>
-              . Une fois que l'utilisateur s'est rendu sur le site, il pourra
-              effectuer différentes opérations (créer une collection, ajouter
-              des livres, en supprimer, ...) sans que ses données mobiles soient
-              consommées.
+              . La connexion n'est requise que pour se rendre sur le site et
+              charger la page. Une fois que vous vous êtes rendu sur le site,
+              vous pourrez effectuer différentes opérations (créer une
+              collection, ajouter des livres, en supprimer, ...){" "}
+              <strong>sans que vos données mobiles soient consommées</strong>.
+              En fait, vous pourrez même éteindre votre connexion.
             </p>
           </div>
 
           <div>
-            <h2>Comment bookish fonctionne-t-il ?</h2>
+            <h2>Comment Bookish fonctionne-t-il ?</h2>
             <p>
               <strong>Bookish</strong> fonctionne de manère très simple. Une
-              fois que vous vous connectez au site pour la première fois, une
-              Base de Données sera créée sur votre téléphone ou votre
-              ordinateur. Ausi, nous vous demandons d'autoriser la création de
-              cette BDD quand le navigateur vous le demandera. <br />
+              fois que vous vous connectez au site pour la première fois, une{" "}
+              <strong>Base de Données</strong> sera créée sur votre téléphone ou
+              votre ordinateur. Ausi, nous vous demandons d'autoriser la
+              création de cette BDD quand le navigateur vous le demandera.{" "}
+              <br />
               C'est dans cette BDD que vous stockerez vos données, vous
               permettant donc de fonctionner sans avoir besoin de contacter un
               serveur ou une BDD éloignée (ce qui, évidemment, vous permet de
@@ -55,7 +62,9 @@ const About = () => {
                   la possibilité d'y accéder à partir d'un autre. En des termes
                   simples, la Base de Données que vous avez sur votre téléphone
                   n'est pas la même que celle que vous avez sur votre
-                  ordinateur.
+                  ordinateur. Ainsi, les livres et les collections que vous
+                  créez sur votre téléphone ne seront pas accessibles depuis
+                  votre ordinateur, votre tablette ou depuis un autre téléphone.
                 </p>
               </li>
               <li>
@@ -81,14 +90,15 @@ const About = () => {
               <strong>Bookish</strong>. J'y travaille toujours. Dans l'avenir,
               vous pourrez{" "}
               <strong>
-                synchroniser vos BDD à travers vos différents appareils
+                synchroniser vos BDD à travers vos différents appareils (en
+                utilisant <strong>Bluetooth</strong>, par exemple)
               </strong>
               ,{" "}
               <strong>
                 avoir la possibilité de sauvegarder vos données sur un serveur
                 ou dans votre Google Drive
               </strong>
-              ,vous permettant aussi de le partager.
+              , ... et bien d'autres fonctionnalités.
             </p>
           </div>
           <div>
@@ -96,24 +106,52 @@ const About = () => {
             <p>
               Comme vous avez pu le remarquer, <strong>Bookish</strong> ne
               possède pas d'adresse propre. Nous utilisons un sous-domaine
-              render. Nous aurons besoin d'acheter notre propre domaine (par
-              exemple, <strong>www.bookish.edu</strong>). <br />
-              En plus de cela, pour permettre la synchronisation, nous aurons
-              besoin de payer un hébergement sur un serveur. Ce qui coûte,
-              évidemment, de l'argent. <br />
+              <strong>Render</strong>. Nous aurons besoin d'acheter notre propre
+              domaine (par exemple, <strong>www.bookish.edu</strong>). <br />
+              En plus de cela, pour permettre le partage de collections et des
+              livres entre utilisateurs, nous aurions probablement besoin de
+              payer un hébergement sur un serveur. Ce qui coûte, évidemment, de
+              l'argent. <br />
               <br />
               Si vous voulez faire un don pour permettre à{" "}
-              <strong>Bookish</strong> de continuer de fonctionner et de
+              <strong>Bookish</strong> de continuer à fonctionner et de
               s'améliorer, merci de contacter le développeur à{" "}
               <a href="mailto:nzanzu.lwanzo.work@gmail.com">
                 cette adresse email.
               </a>
+              <br />
+              <br />
+              Si vous êtes <strong>développeur</strong> et voulez collaborer à
+              l'amélioration de <strong>Bookish</strong>, écrivez-moi à la même
+              adresse e-mail ou accédez à mon profil Github{" "}
+              <a href="https://github.com/Nzanzu-Lwanzo">
+                en cliquant sur ce lien
+              </a>
+              .
             </p>
           </div>
+
+          <div>
+            <h2>Lisez ceci si vous êtes programmeur.</h2>
+            <p>
+              <strong>Bookish</strong> est construit avec{" "}
+              <strong>ReactJs</strong> et <strong>indexedDB</strong>.
+              L'application n'est constiutué que de 3 composants pages et n'a
+              pour seule dépendance que <strong>react-router-dom</strong>.
+            </p>
+          </div>
+
+          <Link
+            to="/"
+            onClick={() => lsWrite(["bookish-has-read-about-page", Date.now()])}
+            className="no-state-button"
+          >
+            J'ai lu et veux utiliser l'application.
+          </Link>
         </div>
       </main>
     </>
   );
-}
+};
 
-export default About
+export default About;

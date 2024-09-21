@@ -3,8 +3,13 @@ import { XCircleIcon } from "../../../../assets/svg";
 import { useAppContext } from "../../../../context/AppContext";
 
 const BookForm = () => {
-
-  const { setModalCard } = useAppContext();
+  const {
+    setModalCard,
+    database,
+    currentCollection,
+    setCurrentBook,
+    setBooks,
+  } = useAppContext();
 
   const [book, setBook] = useState({
     title: "",
@@ -14,16 +19,27 @@ const BookForm = () => {
 
   const [fieldMissingError, setFieldMissingError] = useState(false);
 
-  const saveBook = (e) => {
+  const saveBook = async (e) => {
     e.preventDefault();
 
-    if (!book.title || !book.resume) {
+    if (!book.title) {
       setFieldMissingError(true);
       return;
     }
 
     // Save and hide form
-    console.log(book);
+    const savedBook = await database.createBook(book, currentCollection?.id);
+
+    if (savedBook) {
+       setCurrentBook(savedBook);
+       setBooks((prev) => [savedBook, ...prev]);
+       setModalCard({ type: "HIDE" });
+       setBook({
+         author: "",
+         resume: "",
+         title: "",
+       });
+     }
   };
 
   return (
@@ -34,31 +50,40 @@ const BookForm = () => {
       onSubmit={saveBook}
     >
       <div className="top-bar">
-        <h2>Book</h2>
+        <div>
+          <h2>Livre</h2>
+          <span className="cell">{currentCollection?.name}</span>
+        </div>
 
-        <button type="button" className="center" onClick={()=>setModalCard({type:'HIDE'})}>
+        <button
+          type="button"
+          className="center"
+          onClick={() => setModalCard({ type: "HIDE" })}
+        >
           <XCircleIcon />
         </button>
       </div>
 
       <div className="wrap-inputs">
         <div className="wrap-input">
-          <label htmlFor="title">Title **</label>
+          <label htmlFor="title">Titre **</label>
           <input
             type="text"
             name="title"
-            placeholder="Put the title of the book"
+            placeholder="Le titre du livre"
             onInput={(e) => {
               setBook((prev) => ({ ...prev, title: e.target.value }));
             }}
           />
         </div>
         <div className="wrap-input">
-          <label htmlFor="author">Author</label>
+          <label htmlFor="author">Auteur</label>
           <input
             type="text"
             name="author"
-            placeholder="Who's the author of the book"
+            placeholder={`Qui a écrit ${
+              book.title ? book.title : "ce livre"
+            } ?`}
             maxLength={265}
             onInput={(e) => {
               setBook((prev) => ({
@@ -69,19 +94,21 @@ const BookForm = () => {
           />
         </div>
         <div className="wrap-input">
-          <label htmlFor="resume">Resume **</label>
+          <label htmlFor="resume">Resumé</label>
           <textarea
             name="resume"
             id="resume"
-            placeholder="What do you wann write down about this book"
+            placeholder={`Que voulez-vous retenir ${
+              book.title ? "du livre ".concat(book.title) : "de ce livre"
+            } ?`}
           ></textarea>
         </div>
 
         <button
           type="submit"
-          className={book.name ? "no-state-button" : "disabled-button"}
+          className={book.title ? "no-state-button" : "disabled-button"}
         >
-          Submit
+          Enregistrer
         </button>
       </div>
     </form>

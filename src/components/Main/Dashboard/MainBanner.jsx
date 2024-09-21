@@ -1,9 +1,8 @@
 import { useAppContext } from "../../../context/AppContext";
-import Banner from "../../CrossApp/Banner"
+import Banner from "../../CrossApp/Banner";
 
 const MainBanner = () => {
-
-    const { setCollectionsAppearance, setModalCard } = useAppContext();
+  const { setCollectionsAppearance, setModalCard } = useAppContext();
 
   return (
     <Banner
@@ -12,24 +11,24 @@ const MainBanner = () => {
           className="no-state-button"
           onClick={() => setCollectionsAppearance(true)}
         >
-          My collections
+          Mes collections
         </button>
       }
     >
       <h1>Bookish</h1>
       <p>
-        Let's combat ignorance, let's save the world from rumbling down, let's
-        spark the light of a brighter future
+        Combattre l'ignorance, empêcher le monde de s'écrouler, planter la
+        graine d'un meilleur avenir.
       </p>
       <button
         type="button"
         className="no-state-button cta"
         onClick={() => setModalCard({ type: "SHOW", element: "collection" })}
       >
-        Create a book collection
+        Créer une collection
       </button>
     </Banner>
   );
-}
+};
 
-export default MainBanner
+export default MainBanner;

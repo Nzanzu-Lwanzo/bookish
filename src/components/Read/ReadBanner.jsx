@@ -1,22 +1,29 @@
+import { useAppContext } from "../../context/AppContext";
+import { useReadPageContext } from "../../context/ReadPageContext";
 import Banner from "../CrossApp/Banner";
 import { Link } from "react-router-dom";
 
 const ReadBanner = () => {
+  
+  const { currentBook: beingReadBook  } = useAppContext();
+
   return (
     <Banner
       headerBtn={
         <Link className="no-state-button" to="/">
-          Home
+          Accueil
         </Link>
       }
     >
       <h1 id="read-banner" className="read-book-title">
-        Title of the book will come right here
+        {beingReadBook?.title}
       </h1>
       <p>
-        <strong className="author-name"> John Doe de la Meunge</strong>
+        <span className="author-name">{beingReadBook?.author}</span>
       </p>
-      <Link to="/" className="no-state-button cta">Back home</Link>
+      <Link to="/" className="no-state-button cta">
+        Accueil
+      </Link>
     </Banner>
   );
 }

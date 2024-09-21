@@ -1,5 +1,13 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useState,
+  useEffect,
+} from "react";
 import { modalReducer } from "../utils/reducers";
+import BookishDb from "../database/api";
+import { lsRead } from "../utils/localStorage-io";
 
 const AppContext = createContext();
 
@@ -9,17 +17,58 @@ export const useAppContext = () => {
 
 export const AppContextProvider = function ({ children }) {
 
-    const [collectionsAppearance,setCollectionsAppearance] = useState(false);
-    const [modalCard, setModalCard] = useReducer(modalReducer,{
-      show : false,
-      element : 'book'
-    });
+  const [collectionsAppearance, setCollectionsAppearance] = useState(false);
+  const [database, setDatabase] = useState(null);
+  const [collections, setCollections] = useState([]);
+  const [currentCollection, setCurrentCollection] = useState({});
+  const [books, setBooks] = useState([]);
+  const [currentBook, setCurrentBook] = useState(lsRead("bookish-current-book") || {});
+  const [modalCard, setModalCard] = useReducer(modalReducer, {
+    show: false,
+    element: "book",
+  });
+
+  useEffect(() => {
+    BookishDb.init()
+      .then((db) => {
+        setDatabase(db);
+        return db;
+      })
+      .then(async (db) => {
+        const fetchedCollections = await db?.getCollections();
+
+        if (fetchedCollections) {
+          setCollections(fetchedCollections || []);
+          setCurrentCollection(fetchedCollections?.at(-1));
+          return { db, chosenCollection: fetchedCollections.at(-1) };
+        }
+
+        return { db, chosenCollection: undefined };
+      })
+      .then(async ({ db, chosenCollection }) => {
+        const fetchedBooks = await db.getCollectionBooks(
+          chosenCollection?.id || 0
+        );
+
+        setBooks(fetchedBooks.books);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const data = {
     collectionsAppearance,
     setCollectionsAppearance,
     modalCard,
     setModalCard,
+    database,
+    collections,
+    setCollections,
+    currentCollection,
+    setCurrentCollection,
+    books,
+    setBooks,
+    currentBook,
+    setCurrentBook,
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

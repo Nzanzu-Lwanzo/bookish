@@ -4,11 +4,11 @@ const NoContent = ({width="200",height="200"}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      data-name="Layer 1"
+      dataname="Layer 1"
       width={width}
       height={height}
       viewBox="0 0 797.5 834.5"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
     >
       <title>void</title>
       <ellipse cx="308.5" cy="780" rx="308.5" ry="54.5" fill="#3f3d56" />

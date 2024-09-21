@@ -1,12 +1,19 @@
-import NoData from "../../../../assets/illustrations/NoData";
+import NoContent from "../../../../assets/illustrations/NoContent";
+import { useAppContext } from "../../../../context/AppContext";
 
 const NoCollection = () => {
+  const { setModalCard } = useAppContext();
+
   return (
     <div className="no-data-placeholder center">
-      <NoData />
-      <span className="message">Oups, no collection found !</span>
-      <button type="button" className="no-state-button">
-        Add a collection
+      <NoContent />
+      <span className="message">Oups, vous n'avez aucune collection !</span>
+      <button
+        type="button"
+        className="no-state-button"
+        onClick={() => setModalCard({ type: "SHOW", element: "collection" })}
+      >
+        En créer une
       </button>
     </div>
   );

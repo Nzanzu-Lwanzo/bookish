@@ -8,7 +8,7 @@ const Modal = () => {
 
   return (
     <section className={`modal-panel center ${modalCard.show && "show"}`}>
-      <div className="card">
+      <div className="card custom-scrollbar">
         {modalCard.element === "book" ? (
           <BookForm />
         ) : modalCard.element === "collection" ? (

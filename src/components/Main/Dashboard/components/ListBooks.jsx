@@ -1,130 +1,83 @@
 import { useAppContext } from "../../../../context/AppContext";
 import BookElt from "./BookElt";
 import NoBook from "./NoBook";
-import { Plus, SearchIcon } from "../../../../assets/svg";
+import NoCollection from "./NoCollection";
+import { Plus, SearchIcon, Trash2 } from "../../../../assets/svg";
+import { useEffect } from "react";
+import { useGetCollectionBooks } from "../../../../hooks/useGet";
 
 const ListBooks = () => {
-  const books = ["Hello World"];
+  const { setModalCard, currentCollection, books, database, setBooks } =
+    useAppContext();
+  const { fetcher } = useGetCollectionBooks();
 
-  const { setModalCard } = useAppContext();
+  useEffect(() => {
+    async function fn() {
+      fetcher(currentCollection?.id);
+    }
+
+    fn();
+  }, [currentCollection]);
 
   return (
     <div className="list-books">
       <div className="top-bar">
-        <h2>The collection name comes here </h2>
+        <h2>{currentCollection?.name}</h2>
         <div className="actions">
-          {books.length !== 0 && (
+          {books?.length !== 0 && (
             <>
-              <button
-                type="button"
-                className="no-state-button"
-                onClick={() => setModalCard({ type: "SHOW", element: "search-book" })}
-              >
-                <span>Search</span>
-                <span className="center">
-                  <SearchIcon />
-                </span>
-              </button>
               <button
                 type="button"
                 className="no-state-button"
                 onClick={() => setModalCard({ type: "SHOW", element: "book" })}
               >
-                <span>Add</span>
+                <span>Ajouter</span>
                 <span className="center">
                   <Plus />
                 </span>
               </button>
-              <button type="button" className="danger">
-                Empty
+
+              <button
+                type="button"
+                className="action-icon ok center"
+                onClick={() =>
+                  setModalCard({ type: "SHOW", element: "search-book" })
+                }
+              >
+                <SearchIcon />
+              </button>
+
+              <button
+                type="button"
+                className="center action-icon no"
+                onClick={async () => {
+                  const deletedBooksOnCollection =
+                    await database.removeBookFromCollection(
+                      currentCollection.id
+                    );
+
+                  if (deletedBooksOnCollection) {
+                    setBooks([]);
+                  }
+                }}
+              >
+                <Trash2 />
               </button>
             </>
           )}
         </div>
       </div>
 
-      {books.length !== 0 ? (
+      {books?.length !== 0 ? (
         <div className="books">
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
-          <BookElt />
+          {books?.map((book) => {
+            return <BookElt key={book.id} book={book} />;
+          })}
         </div>
-      ) : (
+      ) : currentCollection ? (
         <NoBook />
+      ) : (
+        <NoCollection />
       )}
     </div>
   );

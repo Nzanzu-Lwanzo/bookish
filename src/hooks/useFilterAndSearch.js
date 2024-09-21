@@ -1,10 +1,7 @@
-import Axios from "axios";
 import { useState } from "react";
-import { BACKEND_ORIGIN } from "../utils/constants";
 
-export default function useFilterAndSearch({ link, filter, handleResult }) {
+export default function useFilterAndSearch({ filter }) {
   const [searchInput, setSearchInput] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
   const [result, setResult] = useState([]);
 
   return {
@@ -19,24 +16,6 @@ export default function useFilterAndSearch({ link, filter, handleResult }) {
       // and need to request to the backend
       setSearchInput(e.target.value);
     },
-
-    search: () => {
-      setIsSearching(true);
-      Axios.get(`${BACKEND_ORIGIN}${link}search/?hint=${searchInput}`, {
-        withCredentials: true,
-      })
-        .then((r) => {
-          setResult(r.data);
-          handleResult(r.data);
-        })
-        .catch((e) => {
-          console.log(e);
-          setResult([]);
-        })
-        .finally(($) => setIsSearching(false));
-    },
-
     result,
-    isSearching,
   };
 }

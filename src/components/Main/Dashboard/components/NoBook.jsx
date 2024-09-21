@@ -1,12 +1,22 @@
-import NoData from "../../../../assets/illustrations/NoData";
+import NoContent from "../../../../assets/illustrations/NoContent";
+import { useAppContext } from "../../../../context/AppContext";
 
 const NoBook = () => {
+
+  const { setModalCard  } = useAppContext();
+
   return (
     <div className="no-data-placeholder center">
-      <NoData />
-      <span className="message">Oups, no book found in this collection !</span>
-      <button type="button" className="no-state-button">
-        Add a book
+      <NoContent />
+      <span className="message">
+        Oups, aucun livre trouvé dans cette collection !
+      </span>
+      <button
+        type="button"
+        className="no-state-button"
+        onClick={() => setModalCard({ type: "SHOW", element: "book" })}
+      >
+        Ajouter
       </button>
     </div>
   );

@@ -1,37 +1,26 @@
-import NoContent from "../../assets/illustrations/NoContent";
+import NoData from "../../assets/illustrations/NoData";
 import { useAppContext } from "../../context/AppContext";
+import { useReadPageContext } from "../../context/ReadPageContext";
 import ActionsOnBook from "./ActionsOnBook";
 
 const ReadPanel = () => {
-  const resume = `
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit suscipit commodi mollitia, maxime iure est quis possimus repellendus libero dolore. Dignissimos expedita tempore veniam velit commodi iusto quas, labore nihil.
+  const { setModalCard, currentBook: beingReadBook } = useAppContext();
 
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit suscipit commodi mollitia, maxime iure est quis possimus repellendus libero dolore. Dignissimos expedita tempore veniam velit commodi iusto quas, labore nihil.
-
-
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit suscipit commodi mollitia, maxime iure est quis possimus repellendus libero dolore. Dignissimos expedita tempore veniam velit commodi iusto quas, labore nihil.
-
-
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit suscipit commodi mollitia, maxime iure est quis possimus repellendus libero dolore. Dignissimos expedita tempore veniam velit commodi iusto quas, labore nihil.
-
-  `;
-  const { setModalCard } = useAppContext();
-  
   return (
     <section className="read-panel">
-      <div className={`content ${!resume && "center"}`}>
-        {resume ? (
+      <div className={`content ${!beingReadBook?.resume && "center"}`}>
+        {beingReadBook?.resume ? (
           <>
             <article>
-              <p>{resume}</p>
+              <p>{beingReadBook?.resume}</p>
             </article>
             <ActionsOnBook />
           </>
         ) : (
           <div className="no-data-placeholder center">
-            <NoContent />
+            <NoData />
             <span className="message">
-              Oups, you have got no resume about this book !
+              Oups, vous n'avez encore aucun résumé sur ce livre.
             </span>
             <button
               type="button"
@@ -40,10 +29,17 @@ const ReadPanel = () => {
                 setModalCard({ type: "SHOW", element: "book" });
               }}
             >
-              Add some content
+              Ajouter le résumé
             </button>
           </div>
         )}
+        <div className="quote">
+          <p>
+            Un lecteur vit mille vies avant de mourir. L'homme qui ne lit pas
+            n'en vit qu'une.
+          </p>
+          <span className="author">Georges RR Martin</span>
+        </div>
       </div>
     </section>
   );

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
-const BookFilterable = () => {
+const BookFilterable = ({title,id}) => {
   return (
     <Link
-      to="/read-book/1"
+      to={`/read-book/${id}`}
       className="book-filterable"
       onClick={() => setModalCard({ type: "HIDE" })}
     >
-      <span>Book title only</span>
+      <span>{title}</span>
     </Link>
   );
 };
