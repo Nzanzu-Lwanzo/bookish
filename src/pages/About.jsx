@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { lsWrite } from "../utils/localStorage-io";
+import { useState } from "react";
+import Loader from "../components/CrossApp/Loader";
 
 const About = () => {
+  const navigateTo = useNavigate();
+
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
   return (
     <>
       <main className="about-page">
@@ -143,10 +149,24 @@ const About = () => {
 
           <Link
             to="/"
-            onClick={() => lsWrite(["bookish-has-read-about-page", Date.now()])}
+            onClick={(event) => {
+              event.preventDefault();
+              setIsRedirecting(true);
+
+              lsWrite(["bookish-has-read-about-page", Date.now()]);
+              
+              setTimeout(() => {
+                setIsRedirecting(false);
+                return navigateTo("/");
+              }, 1000);
+            }}
             className="no-state-button"
           >
-            J'ai lu et veux utiliser l'application.
+            {isRedirecting ? (
+              <Loader />
+            ) : (
+              "J'ai lu et veux utiliser l'application."
+            )}
           </Link>
         </div>
       </main>
