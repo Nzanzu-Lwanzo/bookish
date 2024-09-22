@@ -23,11 +23,12 @@ const About = () => {
               <strong>Bookish</strong> est une application web développée par
               <a href="https://github.com/Nzanzu-Lwanzo">
                 {" "}
-                NZANZU MUHAYRWA Lwanzo
+                NZANZU MUHAYRWA L.V
               </a>
-              , programmeur et écrivain congolais, et qui vous permet de pouvoir
-              sauvegarder le fruit de vos lectures. <strong>Bookish</strong> est
-              une application très légère en ce sens qu'
+              , programmeur et écrivain, et qui vous permet de sauvegarder le
+              fruit de vos lectures dans une base de données.{" "}
+              <strong>Bookish</strong> est une application très légère en ce
+              sens qu'
               <strong>
                 elle ne nécessite pas l'accès à une connexion internet pour
                 fonctionner
@@ -44,16 +45,16 @@ const About = () => {
           <div>
             <h2>Comment Bookish fonctionne-t-il ?</h2>
             <p>
-              <strong>Bookish</strong> fonctionne de manère très simple. Une
+              <strong>Bookish</strong> fonctionne de manière très simple. Une
               fois que vous vous connectez au site pour la première fois, une{" "}
               <strong>Base de Données</strong> sera créée sur votre téléphone ou
-              votre ordinateur. Ausi, nous vous demandons d'autoriser la
+              votre ordinateur. Aussi, nous vous demandons d'autoriser la
               création de cette BDD quand le navigateur vous le demandera.{" "}
               <br />
-              C'est dans cette BDD que vous stockerez vos données, vous
-              permettant donc de fonctionner sans avoir besoin de contacter un
-              serveur ou une BDD éloignée (ce qui, évidemment, vous permet de
-              sauver vos mégas).
+              C'est dans cette BDD que vous stockerez vos collections et vos
+              livres, vous permettant donc de fonctionner sans avoir besoin de
+              contacter un serveur ou une BDD éloignée (ce qui, évidemment, vous
+              permet de sauver vos mégas).
             </p>
           </div>
           <div>
@@ -83,7 +84,7 @@ const About = () => {
               <li>
                 <p>
                   Il peut arriver, pour différentes raisons, que la BDD se
-                  supprimme d'elle-même et que vous perdiez vos données.
+                  supprime d'elle-même et que vous perdiez vos données.
                 </p>
               </li>
             </ul>
@@ -93,8 +94,8 @@ const About = () => {
             <h2>Les perspectives de Bookish</h2>
             <p>
               Nous tenons à signaler que celle-ci est a version bêta de{" "}
-              <strong>Bookish</strong>. J'y travaille toujours. Dans l'avenir,
-              vous pourrez{" "}
+              <strong>Bookish</strong>. Nous y travaillons toujours. Dans
+              l'avenir, vous pourrez{" "}
               <strong>
                 synchroniser vos BDD à travers vos différents appareils (en
                 utilisant <strong>Bluetooth</strong>, par exemple)
@@ -111,7 +112,7 @@ const About = () => {
             <h2>Les besoins de Bookish</h2>
             <p>
               Comme vous avez pu le remarquer, <strong>Bookish</strong> ne
-              possède pas d'adresse propre. Nous utilisons un sous-domaine
+              possède pas d'adresse propre. Nous utilisons un sous-domaine{" "}
               <strong>Render</strong>. Nous aurons besoin d'acheter notre propre
               domaine (par exemple, <strong>www.bookish.edu</strong>). <br />
               En plus de cela, pour permettre le partage de collections et des
@@ -120,16 +121,16 @@ const About = () => {
               l'argent. <br />
               <br />
               Si vous voulez faire un don pour permettre à{" "}
-              <strong>Bookish</strong> de continuer à fonctionner et de
-              s'améliorer, merci de contacter le développeur à{" "}
+              <strong>Bookish</strong> de continuer à fonctionner et au
+              développeur de l'améliorer, merci de le contacter à{" "}
               <a href="mailto:nzanzu.lwanzo.work@gmail.com">
-                cette adresse email.
+                cette adresse e-mail.
               </a>
               <br />
               <br />
               Si vous êtes <strong>développeur</strong> et voulez collaborer à
-              l'amélioration de <strong>Bookish</strong>, écrivez-moi à la même
-              adresse e-mail ou accédez à mon profil Github{" "}
+              l'amélioration de <strong>Bookish</strong>, écrivez à la même
+              adresse e-mail ou accédez au profil Github du développeur{" "}
               <a href="https://github.com/Nzanzu-Lwanzo">
                 en cliquant sur ce lien
               </a>
@@ -140,11 +141,44 @@ const About = () => {
           <div>
             <h2>Lisez ceci si vous êtes programmeur.</h2>
             <p>
-              <strong>Bookish</strong> est construit avec{" "}
-              <strong>ReactJs</strong> et <strong>indexedDB</strong>.
-              L'application n'est constiutué que de 3 composants pages et n'a
-              pour seule dépendance que <strong>react-router-dom</strong>.
+              Voici l'architecture de <strong>Bookish</strong>
             </p>
+            <ul>
+              <li>
+                <p>
+                  {" "}
+                  <strong>Interface</strong> : l'interface de Bookish est faite
+                  avec <strong>React-Js Vanilla JavaScript</strong>. Le
+                  développeur n'a pas utilisé de framework comme{" "}
+                  <strong>Nex-Jst</strong>. <strong>Vite</strong> est utilisé
+                  pour <i>build</i> l'application.
+                </p>
+              </li>
+              <li>
+                <p>
+                  {" "}
+                  <strong>Base de Données</strong> : l'application utilise{" "}
+                  <strong>indexedDB</strong>, une solution de stockage embarquée
+                  qui fonctionne à base de <strong>promesses</strong> et d'
+                  <strong>évènements</strong>. Pour permettre une gestion de
+                  requête plus efficace, le développeur a codé une API qui{" "}
+                  <i>wrappe</i> indexedDB et qui convient aux besoins de{" "}
+                  <strong>Bookish</strong> . Cette API est accessible et{" "}
+                  <i>open source</i>. Si vous en avez besoin, écrivez au
+                  développeur et vous obtiendrez le code source (le dépôt Github
+                  est privé, impossible de partager le lien du fichier.)
+                </p>
+              </li>
+              <li>
+                <p>
+                  {" "}
+                  <strong>Dépendances</strong> : l'application n'a pour le
+                  moment que deux dépendances :{" "}
+                  <strong>react-router-dom</strong> pour la navigation et{" "}
+                  <strong>notistack</strong> pour les toast messages.
+                </p>
+              </li>
+            </ul>
           </div>
 
           <Link
@@ -154,7 +188,7 @@ const About = () => {
               setIsRedirecting(true);
 
               lsWrite(["bookish-has-read-about-page", Date.now()]);
-              
+
               setTimeout(() => {
                 setIsRedirecting(false);
                 return navigateTo("/");

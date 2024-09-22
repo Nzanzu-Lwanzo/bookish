@@ -5,6 +5,13 @@
 * Browsers: last 4 version
 */
 
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 
 .montserrat,* {
   font-family: "Montserrat", sans-serif;
@@ -253,4 +260,27 @@ ul,ol {
 
 strong {
   font-weight: bold;
+}
+
+.hide-toast-message {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.hide-toast-message svg {
+  height: 20px;
+}
+
+.hide-toast-message svg *:not(rect) {
+  stroke: #FFF;
+}
+
+.go167266335.toast-message {
+  background-color: var(--bg);
+  padding: .2rem .8rem;
+  font-size: .8rem;
+}
+
+i {
+  font-style: italic;
 }

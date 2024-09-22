@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { XCircleIcon } from "../../../../assets/svg";
 import { useAppContext } from "../../../../context/AppContext";
+import { enqueueSnackbar } from "notistack";
 
 const CollectionForm = () => {
-
   const {
     setModalCard,
     database,
@@ -18,27 +18,36 @@ const CollectionForm = () => {
   });
 
   const [fieldMissingError, setFieldMissingError] = useState(false);
+  const formRef = useRef();
 
   const saveCollection = async (e) => {
     e.preventDefault();
 
     if (!collection.name) {
-        setFieldMissingError(true);
-        return
+      setFieldMissingError(true);
+      return;
     }
 
     // Save and hide form
-    const savedCollection = await database.createCollection(collection);
+    let savedCollection;
+    try {
+      savedCollection = await database.createCollection(collection);
+    } catch (e) {
+      enqueueSnackbar("Erreur ! Collection non créée !");
+    }
 
-    if(savedCollection) {
+    if (savedCollection) {
       setCurrentCollection(savedCollection);
-      setCollections(prev=>[savedCollection,...prev]);
-      setModalCard({type:"HIDE"})
+      setCollections((prev) => [savedCollection, ...prev]);
+      setModalCard({ type: "HIDE" });
       setCollection({
-        description : "",
-        name : ""
-      })
+        description: "",
+        name: "",
+      });
       setCollectionsAppearance(true);
+      /**@type { HTMLFormElement} */
+      const form = formRef.current;
+      form?.reset();
     }
   };
 
@@ -48,9 +57,10 @@ const CollectionForm = () => {
       id="collection-form"
       className="dashboard-form"
       onSubmit={saveCollection}
+      ref={formRef}
     >
       <div className="top-bar">
-          <h2>Collection</h2>
+        <h2>Collection</h2>
 
         <button
           type="button"
@@ -69,6 +79,7 @@ const CollectionForm = () => {
             name="name"
             placeholder="Le nom de votre collection"
             maxLength={64}
+            value={collection.name}
             onInput={(e) => {
               setCollection((prev) => ({ ...prev, name: e.target.value }));
             }}
@@ -89,6 +100,7 @@ const CollectionForm = () => {
             name="description"
             placeholder="Courte description de votre collection"
             maxLength={265}
+            value={collection.description}
             onInput={(e) => {
               setCollection((prev) => ({
                 ...prev,

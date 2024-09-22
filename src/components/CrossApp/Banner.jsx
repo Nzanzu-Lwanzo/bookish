@@ -9,7 +9,7 @@ const Banner = ({ headerBtn, children }) => {
     <section className="banner center">
       <div className="sticky-top for-mobile">
         {headerBtn}
-        <Link className="action-icon center about-link" to="/about">
+        <Link className="center about-link" to="/about">
           <InfoIcon />
         </Link>
       </div>

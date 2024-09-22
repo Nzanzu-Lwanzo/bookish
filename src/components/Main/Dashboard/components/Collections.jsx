@@ -3,6 +3,7 @@ import { PlusCircleIcon, TrashIcon, XCircleIcon } from "../../../../assets/svg";
 import NoCollection from "./NoCollection";
 import { useAppContext } from "../../../../context/AppContext";
 import { useEffect } from "react";
+import { enqueueSnackbar } from "notistack";
 
 const Collections = () => {
   const {
@@ -21,16 +22,24 @@ const Collections = () => {
       <div className="title">
         <span>Collections</span>
         <div className="actions">
-          <button type="button" className="center" onClick={async ()=>{
+          <button
+            type="button"
+            className="center"
+            onClick={async () => {
+              let areAllDeleted;
+              try {
+                areAllDeleted = await database.deleteAllCollections();
+              } catch (e) {
+                enqueueSnackbar("Erreur ! Collections non supprimées !");
+              }
 
-            const areAllDeleted = await database.deleteAllCollections();
-            if(areAllDeleted) {
-              setCurrentCollection(undefined);
-              setBooks([]);
-              setCollections([]);
-            }
-
-          }}>
+              if (areAllDeleted) {
+                setCurrentCollection(undefined);
+                setBooks([]);
+                setCollections([]);
+              }
+            }}
+          >
             <TrashIcon />
           </button>
           <button
@@ -59,8 +68,8 @@ const Collections = () => {
               key={collection.id}
               name={collection.name}
               id={collection.id}
-              onClick={async (event)=>{
-                if(!event.target.matches("button *")) {
+              onClick={async (event) => {
+                if (!event.target.matches("button *")) {
                   setCurrentCollection(collection);
                   setCollectionsAppearance(false);
                 }

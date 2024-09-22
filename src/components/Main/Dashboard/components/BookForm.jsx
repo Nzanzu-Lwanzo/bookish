@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { XCircleIcon } from "../../../../assets/svg";
 import { useAppContext } from "../../../../context/AppContext";
+import { enqueueSnackbar } from "notistack";
 
 const BookForm = () => {
   const {
@@ -18,6 +19,7 @@ const BookForm = () => {
   });
 
   const [fieldMissingError, setFieldMissingError] = useState(false);
+  const formRef = useRef();
 
   const saveBook = async (e) => {
     e.preventDefault();
@@ -28,18 +30,27 @@ const BookForm = () => {
     }
 
     // Save and hide form
-    const savedBook = await database.createBook(book, currentCollection?.id);
+    let savedBook;
+    try {
+      savedBook = await database.createBook(book, currentCollection?.id);
+    } catch (e) {
+      enqueueSnackbar("Erreur ! Livre non enregistré !");
+    }
 
     if (savedBook) {
-       setCurrentBook(savedBook);
-       setBooks((prev) => [savedBook, ...prev]);
-       setModalCard({ type: "HIDE" });
-       setBook({
-         author: "",
-         resume: "",
-         title: "",
-       });
-     }
+      setCurrentBook(savedBook);
+      setBooks((prev) => [savedBook, ...prev]);
+      setModalCard({ type: "HIDE" });
+      setBook({
+        author: "",
+        resume: "",
+        title: "",
+      });
+
+      /**@type { HTMLFormElement} */
+      const form = formRef.current;
+      form?.reset();
+    }
   };
 
   return (
@@ -48,6 +59,7 @@ const BookForm = () => {
       id="book-form"
       className="dashboard-form"
       onSubmit={saveBook}
+      ref={formRef}
     >
       <div className="top-bar">
         <div>
@@ -71,6 +83,7 @@ const BookForm = () => {
             type="text"
             name="title"
             placeholder="Le titre du livre"
+            value={book.title}
             onInput={(e) => {
               setBook((prev) => ({ ...prev, title: e.target.value }));
             }}
@@ -84,6 +97,7 @@ const BookForm = () => {
             placeholder={`Qui a écrit ${
               book.title ? book.title : "ce livre"
             } ?`}
+            value={book.author}
             maxLength={265}
             onInput={(e) => {
               setBook((prev) => ({
@@ -101,6 +115,13 @@ const BookForm = () => {
             placeholder={`Que voulez-vous retenir ${
               book.title ? "du livre ".concat(book.title) : "de ce livre"
             } ?`}
+            value={book.resume}
+            onChange={(e)=>{
+              setBook((prev) => ({
+                ...prev,
+                resume: e.target.value,
+              }));
+            }}
           ></textarea>
         </div>
 

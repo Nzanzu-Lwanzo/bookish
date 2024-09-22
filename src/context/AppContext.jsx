@@ -8,6 +8,7 @@ import {
 import { modalReducer } from "../utils/reducers";
 import BookishDb from "../database/api";
 import { lsRead } from "../utils/localStorage-io";
+import { enqueueSnackbar } from "notistack";
 
 const AppContext = createContext();
 
@@ -50,9 +51,11 @@ export const AppContextProvider = function ({ children }) {
           chosenCollection?.id || 0
         );
 
-        setBooks(fetchedBooks.books);
+        setBooks(fetchedBooks?.books);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        enqueueSnackbar("Erreur de création de la DBB");
+      });
   }, []);
 
   const data = {

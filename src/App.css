@@ -5,6 +5,13 @@
 * Browsers: last 4 version
 */
 
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 :root {
   --bg: #2c3539;
   --light: #ffe;
@@ -108,7 +115,7 @@ body {
 }
 
 .banner .sticky-top {
-  color: #FFF;
+  color: #fff;
 }
 
 .banner .sticky-top .about-link {
@@ -120,7 +127,7 @@ body {
 }
 
 .banner .sticky-top .about-link svg *:not(rect) {
-  stroke: #FFF;
+  stroke: #fff;
 }
 
 .banner .cta {
@@ -286,7 +293,6 @@ body {
   stroke: #fff;
 }
 
-
 .list-books .top-bar {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -298,11 +304,11 @@ body {
   -ms-flex-pack: justify;
   justify-content: space-between;
   gap: 1rem;
-  padding:1rem 2rem;
+  padding: 1rem 2rem;
 
-  position:sticky;
-  top:0;
-  z-index:2;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .list-books .top-bar .actions {
@@ -312,7 +318,7 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .book-elt {
@@ -583,23 +589,23 @@ html:has(.modal-panel.show) {
 
   display: flex;
   -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
   -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .read-panel .content .no-data-placeholder,
 .read-panel .content article {
   height: 100%;
   -webkit-box-flex: 9;
-      -ms-flex: 9;
-          flex: 9;
+  -ms-flex: 9;
+  flex: 9;
 }
 
 .read-panel .content .quote {
@@ -878,6 +884,10 @@ html:has(.modal-panel.show) {
     font-size: 4rem;
   }
 
+  .list-books .top-bar {
+    background-color: #fff;
+  }
+
   .list-books .top-bar h2 {
     font-size: 1.4rem;
     text-align: right;
@@ -896,6 +906,17 @@ html:has(.modal-panel.show) {
 
   .list-books {
     padding: 1rem;
+    padding: 0;
+  }
+
+  .list-books .top-bar,
+  .list-books .books {
+    padding-inline: 1rem;
+  }
+
+  .list-books .books {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
   }
 
   .list-books:has(.no-data-placeholder) {
@@ -938,8 +959,8 @@ html:has(.modal-panel.show) {
 
   .modal-panel.center {
     -webkit-box-pack: end;
-        -ms-flex-pack: end;
-            justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
   }
 
   .modal-panel .card {
@@ -953,8 +974,8 @@ html:has(.modal-panel.show) {
     opacity: 1;
     pointer-events: none;
     -webkit-transform: translateY(100%);
-        -ms-transform: translateY(100%);
-            transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    transform: translateY(100%);
     -webkit-transition: 0.4s ease-out;
     -o-transition: 0.4s ease-out;
     transition: 0.4s ease-out;
@@ -964,8 +985,8 @@ html:has(.modal-panel.show) {
   .modal-panel.show {
     pointer-events: all;
     -webkit-transform: none;
-        -ms-transform: none;
-            transform: none;
+    -ms-transform: none;
+    transform: none;
   }
 
   .dashboard-form {
@@ -974,19 +995,22 @@ html:has(.modal-panel.show) {
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     -webkit-box-align: stretch;
-        -ms-flex-align: stretch;
-            align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     height: 100%;
   }
-  
+
   .list-books .top-bar h2 {
-    display:none;
+    display: none;
   }
 
+  .go167266335.toast-message {
+    font-size: 0.7rem !important;
+  }
 }

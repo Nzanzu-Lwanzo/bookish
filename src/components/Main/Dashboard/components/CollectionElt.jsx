@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Trash2, PencilLine, Check, XIcon } from "../../../../assets/svg";
 import { useCallback } from "react";
 import { useAppContext } from "../../../../context/AppContext";
+import { enqueueSnackbar } from "notistack";
 
 const CollectionElt = ({ name, id, onClick }) => {
   const [updating, setUpdating] = useState(false);
@@ -43,7 +44,14 @@ const CollectionElt = ({ name, id, onClick }) => {
           type="button"
           className="center"
           onClick={async () => {
-            const deletedId = await database.deleteCollection(id);
+
+            let deletedId;
+            
+            try {
+              deletedId = await database.deleteCollection(id);
+            } catch(e) {
+              enqueueSnackbar("Erreur ! Collection non supprimée !")
+            }
 
             if (deletedId) {
               const collections = await database.getCollections();

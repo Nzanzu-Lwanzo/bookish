@@ -5,6 +5,7 @@ import NoCollection from "./NoCollection";
 import { Plus, SearchIcon, Trash2 } from "../../../../assets/svg";
 import { useEffect } from "react";
 import { useGetCollectionBooks } from "../../../../hooks/useGet";
+import { enqueueSnackbar } from "notistack";
 
 const ListBooks = () => {
   const { setModalCard, currentCollection, books, database, setBooks } =
@@ -51,10 +52,15 @@ const ListBooks = () => {
                 type="button"
                 className="center action-icon no"
                 onClick={async () => {
-                  const deletedBooksOnCollection =
-                    await database.removeBookFromCollection(
-                      currentCollection.id
-                    );
+                  let deletedBooksOnCollection;
+                  try {
+                    deletedBooksOnCollection =
+                      await database.removeBookFromCollection(
+                        currentCollection.id
+                      );
+                  } catch (e) {
+                    enqueueSnackbar("Erreur ! Livres non supprmés !");
+                  }
 
                   if (deletedBooksOnCollection) {
                     setBooks([]);
