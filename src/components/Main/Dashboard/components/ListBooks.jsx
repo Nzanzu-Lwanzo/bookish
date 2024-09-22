@@ -6,11 +6,14 @@ import { Plus, SearchIcon, Trash2 } from "../../../../assets/svg";
 import { useEffect } from "react";
 import { useGetCollectionBooks } from "../../../../hooks/useGet";
 import { enqueueSnackbar } from "notistack";
+import useShowNetworkStatus from "../../../../hooks/useShowNetworkStatus";
 
 const ListBooks = () => {
   const { setModalCard, currentCollection, books, database, setBooks } =
     useAppContext();
   const { fetcher } = useGetCollectionBooks();
+
+  const { element } = useShowNetworkStatus();
 
   useEffect(() => {
     async function fn() {
@@ -71,6 +74,8 @@ const ListBooks = () => {
               </button>
             </>
           )}
+
+          {element}
         </div>
       </div>
 
