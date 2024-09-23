@@ -5,7 +5,6 @@ import { convertToDate } from "../../utils/convertTime";
 import ActionsOnBook from "./ActionsOnBook";
 import BookResume from "./BookResume";
 
-
 const ReadPanel = () => {
   const { setModalCard } = useAppContext();
   const { beingReadBook } = useReadPageContext();
@@ -28,7 +27,10 @@ const ReadPanel = () => {
               type="button"
               className="no-state-button"
               onClick={() => {
-                setModalCard({ type: "SHOW", element: "book" });
+                enqueueSnackbar("Mettre-à-jour ce livre");
+                enqueueSnackbar("Fonctionnalité bientôt disponible");
+                return;
+                // setModalCard({ type: "SHOW", element: "book" });
               }}
             >
               Ajouter le résumé
