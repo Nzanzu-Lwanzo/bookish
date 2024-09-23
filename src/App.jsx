@@ -18,7 +18,7 @@ function App() {
 
   return (
     <SnackbarProvider
-      maxSnack={3}
+      maxSnack={4}
       action={(snackBarId) => {
         return (
           <button

@@ -4,13 +4,17 @@ import Banner from "../CrossApp/Banner";
 import { Link } from "react-router-dom";
 
 const ReadBanner = () => {
-  
-  const { currentBook: beingReadBook  } = useAppContext();
+  const { setCurrentBook } = useAppContext();
+  const { beingReadBook } = useReadPageContext();
 
   return (
     <Banner
       headerBtn={
-        <Link className="no-state-button" to="/">
+        <Link
+          className="no-state-button"
+          to="/"
+          onClick={() => setCurrentBook(undefined)}
+        >
           Accueil
         </Link>
       }
@@ -21,9 +25,13 @@ const ReadBanner = () => {
       <p>
         <span className="author-name">{beingReadBook?.author}</span>
       </p>
-      <Link to="/" className="no-state-button cta">
+      {/* <Link
+        to="/"
+        className="no-state-button cta"
+        onClick={() => setCurrentBook(undefined)}
+      >
         Accueil
-      </Link>
+      </Link> */}
     </Banner>
   );
 }

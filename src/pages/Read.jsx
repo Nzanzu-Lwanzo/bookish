@@ -1,13 +1,16 @@
+import { useState } from "react";
 import ReadBanner from "../components/Read/ReadBanner";
 import ReadPanel from "../components/Read/ReadPanel";
-import { ReadPageContextProvider } from "../context/ReadPageContext";
+import { ReadPageContextProvider, useReadPageContext } from "../context/ReadPageContext";
 
 const Read = () => {
 
   return (
     <ReadPageContextProvider>
-      <ReadBanner />
-      <ReadPanel />
+       <>
+          <ReadBanner />
+          <ReadPanel />
+        </>
     </ReadPageContextProvider>
   );
 };

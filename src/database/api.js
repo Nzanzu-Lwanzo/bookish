@@ -323,7 +323,8 @@ export default class BookishDb {
   }
 
   async getBook(bid) {
-    if (!bid) return;
+
+    if(!bid) return;
 
     const database = await this.getDb();
     const crudHandler = database
@@ -336,7 +337,7 @@ export default class BookishDb {
       request.onerror = (event) => reject(event.target);
 
       request.onsuccess = (event) => {
-        return resolve(request.result);
+        resolve(request.result);
       };
     });
   }

@@ -28,7 +28,7 @@ const ListBooks = () => {
       <div className="top-bar">
         <h2>{currentCollection?.name}</h2>
         <div className="actions">
-          {books.length ? (
+          {books?.length ? (
             <>
               <button
                 type="button"

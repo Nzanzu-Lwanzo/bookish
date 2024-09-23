@@ -1,22 +1,22 @@
 import NoData from "../../assets/illustrations/NoData";
 import { useAppContext } from "../../context/AppContext";
 import { useReadPageContext } from "../../context/ReadPageContext";
+import { convertToDate } from "../../utils/convertTime";
 import ActionsOnBook from "./ActionsOnBook";
-import { decode } from "html-entities";
+import BookResume from "./BookResume";
 
 
 const ReadPanel = () => {
-  const { setModalCard, currentBook: beingReadBook } = useAppContext();
+  const { setModalCard } = useAppContext();
+  const { beingReadBook } = useReadPageContext();
 
   return (
     <section className="read-panel">
       <div className={`content ${!beingReadBook?.resume && "center"}`}>
         {beingReadBook?.resume ? (
           <>
-            <article>
-              {decode(beingReadBook?.resume)}
-            </article>
             <ActionsOnBook />
+            <BookResume resume={beingReadBook.resume} />
           </>
         ) : (
           <div className="no-data-placeholder center">

@@ -21,12 +21,13 @@ export const AppContextProvider = function ({ children }) {
   const [collectionsAppearance, setCollectionsAppearance] = useState(false);
   const [database, setDatabase] = useState(null);
   const [collections, setCollections] = useState([]);
-  const [currentCollection, setCurrentCollection] = useState({});
+  const [currentCollection, setCurrentCollection] = useState(undefined);
   const [books, setBooks] = useState([]);
-  const [currentBook, setCurrentBook] = useState(lsRead("bookish-current-book") || {});
+  const [currentBook, setCurrentBook] = useState(undefined);
   const [modalCard, setModalCard] = useReducer(modalReducer, {
     show: false,
     element: "book",
+    is_update: false,
   });
 
   useEffect(() => {

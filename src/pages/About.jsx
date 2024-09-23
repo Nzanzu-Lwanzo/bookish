@@ -169,13 +169,31 @@ const About = () => {
                   est privé, impossible de partager le lien du fichier.)
                 </p>
               </li>
+            </ul>
+          </div>
+
+          <div>
+            <h2>Dépendances</h2>
+            <ul>
               <li>
                 <p>
-                  {" "}
-                  <strong>Dépendances</strong> : l'application n'a pour le
-                  moment que deux dépendances :{" "}
-                  <strong>react-router-dom</strong> pour la navigation et{" "}
-                  <strong>notistack</strong> pour les toast messages.
+                  <strong>react-router-dom</strong> : pour la navigation
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>html-entities</strong>, {" "} 
+                  <strong>react-safely-set-inner-html</strong>, <strong>dompurify</strong> : pour le parsing des chaînes de caractère HTML stockées dans la BDD
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>notistack</strong> : pour les toast messages
+                </p>
+              </li>
+               <li>
+                <p>
+                  <strong>react-froala-wysiwyg</strong> : pour l'édition des resumés des livres.
                 </p>
               </li>
             </ul>
@@ -186,6 +204,8 @@ const About = () => {
             onClick={(event) => {
               event.preventDefault();
               setIsRedirecting(true);
+
+              lsWrite(["bookish-main-page-scroll-coordinates"], { x: 0, y: 0 });
 
               lsWrite(["bookish-has-read-about-page", Date.now()]);
 

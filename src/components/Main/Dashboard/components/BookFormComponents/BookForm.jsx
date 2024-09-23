@@ -3,6 +3,7 @@ import { XCircleIcon } from "../../../../../assets/svg";
 import { useAppContext } from "../../../../../context/AppContext";
 import { enqueueSnackbar } from "notistack";
 import RichTextEditor from "./RichTextEditor";
+import { lsRead } from "../../../../../utils/localStorage-io";
 
 const BookForm = () => {
   const {
@@ -11,6 +12,7 @@ const BookForm = () => {
     currentCollection,
     setCurrentBook,
     setBooks,
+    modalCard,
   } = useAppContext();
 
   const [book, setBook] = useState({
@@ -47,13 +49,13 @@ const BookForm = () => {
         resume: "",
         title: "",
       });
-
       /**@type { HTMLFormElement} */
       const form = formRef.current;
       form?.reset();
-
     }
   };
+  
+  const bookToUpdate = lsRead("bookish-current-book");
 
   return (
     <form
@@ -85,7 +87,7 @@ const BookForm = () => {
             type="text"
             name="title"
             placeholder="Le titre du livre"
-            value={book.title}
+            defaultValue={modalCard.is_update ? bookToUpdate.title : book.title}
             onInput={(e) => {
               setBook((prev) => ({ ...prev, title: e.target.value }));
             }}
@@ -99,7 +101,7 @@ const BookForm = () => {
             placeholder={`Qui a écrit ${
               book.title ? book.title : "ce livre"
             } ?`}
-            value={book.author}
+            value={modalCard.is_update ? bookToUpdate.author : book.author}
             maxLength={265}
             onInput={(e) => {
               setBook((prev) => ({
@@ -111,22 +113,9 @@ const BookForm = () => {
         </div>
         <div className="wrap-input">
           <label htmlFor="resume">Resumé</label>
-          {/* <textarea
-            name="resume"
-            id="resume"
-            placeholder={`Que voulez-vous retenir ${
-              book.title ? "du livre ".concat(book.title) : "de ce livre"
-            } ?`}
-            value={book.resume}
-            onChange={(e)=>{
-              setBook((prev) => ({
-                ...prev,
-                resume: e.target.value,
-              }));
-            }}
-          ></textarea> */}
           <RichTextEditor
             model={book.resume}
+
             title={`Que voulez-vous retenir ${
               book.title ? "du livre ".concat(book.title) : "de ce livre"
             } ?`}

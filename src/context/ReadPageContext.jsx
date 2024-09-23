@@ -1,13 +1,10 @@
-import {
-  useContext,
-  createContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
-import { useParams } from "react-router-dom";
+import { useContext, createContext, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BookishDb from "../database/api";
-import { useLocation } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
+import Loader from "../components/CrossApp/Loader";
+import { useTransition } from "react";
+import { useAppContext } from "./AppContext";
 
 const ReadPageContext = createContext();
 
@@ -17,14 +14,57 @@ export const useReadPageContext = () => {
 
 export const ReadPageContextProvider = ({ children }) => {
   const { pathname } = useLocation();
+  const { id } = useParams();
+  const [beingReadBook, setBeingReadBook] = useState(undefined);
+  const [pending, startTransition] = useTransition();
+  const navigateTo = useNavigate();
+  const { setCurrentBook } = useAppContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    BookishDb.init()
+      .then(async (database) => {
+        let bid = parseInt(id);
+
+        if (Number.isNaN(bid)) {
+          return enqueueSnackbar("404 : book not found !");
+        }
+
+        const book = await database.getBook(bid);
+
+        if (book) {
+          startTransition(() => {
+            setBeingReadBook(book);
+            setCurrentBook(book);
+          });
+        } else {
+          navigateTo("/");
+          enqueueSnackbar("Une erreur est survenue !");
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar("Erreur de lecture de la BDD !");
+        console.log(error);
+      });
+
+      return () => setCurrentBook(false);
   }, [pathname]);
 
-  const data = {};
+  const data = {
+    beingReadBook,
+    setBeingReadBook,
+  };
 
   return (
-    <ReadPageContext.Provider value={data}>{children}</ReadPageContext.Provider>
+    <ReadPageContext.Provider value={data}>
+      {beingReadBook && !pending ? (
+        children
+      ) : (
+        <div className="center wait-to-read-book" style={{ height: "100vh" }}>
+          <Loader height={100} width={100} borderWidth={5}></Loader>
+        </div>
+      )}
+    </ReadPageContext.Provider>
   );
 };
