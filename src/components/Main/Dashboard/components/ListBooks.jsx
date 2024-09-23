@@ -28,7 +28,7 @@ const ListBooks = () => {
       <div className="top-bar">
         <h2>{currentCollection?.name}</h2>
         <div className="actions">
-          {books?.length !== 0 && (
+          {books.length ? (
             <>
               <button
                 type="button"
@@ -73,7 +73,7 @@ const ListBooks = () => {
                 <Trash2 />
               </button>
             </>
-          )}
+          ) : null}
 
           {element}
         </div>

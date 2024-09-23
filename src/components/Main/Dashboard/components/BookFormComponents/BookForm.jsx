@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
-import { XCircleIcon } from "../../../../assets/svg";
-import { useAppContext } from "../../../../context/AppContext";
+import { XCircleIcon } from "../../../../../assets/svg";
+import { useAppContext } from "../../../../../context/AppContext";
 import { enqueueSnackbar } from "notistack";
+import RichTextEditor from "./RichTextEditor";
 
 const BookForm = () => {
   const {
@@ -50,6 +51,7 @@ const BookForm = () => {
       /**@type { HTMLFormElement} */
       const form = formRef.current;
       form?.reset();
+
     }
   };
 
@@ -109,7 +111,7 @@ const BookForm = () => {
         </div>
         <div className="wrap-input">
           <label htmlFor="resume">Resumé</label>
-          <textarea
+          {/* <textarea
             name="resume"
             id="resume"
             placeholder={`Que voulez-vous retenir ${
@@ -122,7 +124,16 @@ const BookForm = () => {
                 resume: e.target.value,
               }));
             }}
-          ></textarea>
+          ></textarea> */}
+          <RichTextEditor
+            model={book.resume}
+            title={`Que voulez-vous retenir ${
+              book.title ? "du livre ".concat(book.title) : "de ce livre"
+            } ?`}
+            handleModelChange={(data) => {
+              setBook((prev) => ({ ...prev, resume: data }));
+            }}
+          />
         </div>
 
         <button

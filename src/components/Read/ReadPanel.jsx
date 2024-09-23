@@ -2,6 +2,8 @@ import NoData from "../../assets/illustrations/NoData";
 import { useAppContext } from "../../context/AppContext";
 import { useReadPageContext } from "../../context/ReadPageContext";
 import ActionsOnBook from "./ActionsOnBook";
+import { decode } from "html-entities";
+
 
 const ReadPanel = () => {
   const { setModalCard, currentBook: beingReadBook } = useAppContext();
@@ -12,7 +14,7 @@ const ReadPanel = () => {
         {beingReadBook?.resume ? (
           <>
             <article>
-              <p>{beingReadBook?.resume}</p>
+              {decode(beingReadBook?.resume)}
             </article>
             <ActionsOnBook />
           </>

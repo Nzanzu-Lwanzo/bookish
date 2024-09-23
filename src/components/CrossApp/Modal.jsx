@@ -1,5 +1,5 @@
 import CollectionForm from "../Main/Dashboard/components/CollectionForm";
-import BookForm from "../Main/Dashboard/components/BookForm";
+import BookForm from "../Main/Dashboard/components/BookFormComponents/BookForm";
 import SearchBook from "./SearchBook";
 import { useAppContext } from "../../context/AppContext";
 

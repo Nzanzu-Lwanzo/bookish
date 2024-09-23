@@ -639,6 +639,21 @@ html:has(.modal-panel.show) {
   margin-top: 1rem;
 }
 
+.read-panel article h2,
+.read-panel article h3 {
+  margin-bottom: 0.8rem;
+  line-height: 2rem;
+  margin-block:1rem;
+}
+
+.read-panel article strong {
+  font-weight: bold;
+}
+
+.read-panel article a {
+  color: blue;
+}
+
 /* SEARCH BOOK */
 
 .search-book {
