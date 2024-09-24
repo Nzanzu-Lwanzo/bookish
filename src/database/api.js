@@ -387,6 +387,9 @@ export default class BookishDb {
   }
 
   async updateBook(bid, data) {
+    
+    if(!bid) return;
+
     const database = await this.getDb();
     const crudHandler = database
       .transaction("books", "readwrite")

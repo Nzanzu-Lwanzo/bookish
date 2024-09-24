@@ -4,19 +4,19 @@ import { useReadPageContext } from "../../context/ReadPageContext";
 import { convertToDate } from "../../utils/convertTime";
 import ActionsOnBook from "./ActionsOnBook";
 import BookResume from "./BookResume";
-import { enqueueSnackbar } from "notistack";
+import { Link } from "react-router-dom";
 
 const ReadPanel = () => {
-  const { setModalCard } = useAppContext();
+  const { setModalCard, setCurrentBook } = useAppContext();
   const { beingReadBook } = useReadPageContext();
 
   return (
     <section className="read-panel">
       <div className={`content ${!beingReadBook?.resume && "center"}`}>
+        <ActionsOnBook />
         {beingReadBook?.resume ? (
           <>
-            <ActionsOnBook />
-            <BookResume resume={beingReadBook.resume} />
+            <BookResume title={beingReadBook?.title} resume={beingReadBook.resume} />
           </>
         ) : (
           <div className="no-data-placeholder center">
@@ -24,18 +24,17 @@ const ReadPanel = () => {
             <span className="message">
               Oups, vous n'avez encore aucun résumé sur ce livre.
             </span>
-            <button
+            <Link
               type="button"
               className="no-state-button"
+              to={`/update-book/${beingReadBook?.id}`}
               onClick={() => {
-                enqueueSnackbar("Mettre-à-jour ce livre");
-                enqueueSnackbar("Fonctionnalité bientôt disponible");
+                setCurrentBook(beingReadBook);
                 return;
-                // setModalCard({ type: "SHOW", element: "book" });
               }}
             >
               Ajouter le résumé
-            </button>
+            </Link>
           </div>
         )}
         <div className="quote">

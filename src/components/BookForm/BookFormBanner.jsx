@@ -12,12 +12,12 @@ const BookFormBanner = () => {
         l'humanité.
       </p>
 
-      <Link
+      {/* <Link
         className="no-state-button cta"
         to="/"
       >
         Accueil
-      </Link>
+      </Link> */}
     </Banner>
   );
 };

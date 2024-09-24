@@ -6,14 +6,14 @@ import UpdateDocument from "../../assets/illustrations/UpdateDocument";
 import Loader from "../CrossApp/Loader";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
+import { lsWrite } from "../../utils/localStorage-io";
 
-const Parent = ({ children, is_update = false, resume }) => {
+const Parent = ({ children, is_update = false, resume, bid }) => {
   const { database, currentCollection, currentBook, setBooks, setCurrentBook } =
     useAppContext();
   const [isRegistering, setIsRegistering] = useState(false);
   const navigateTo = useNavigate();
-  const [pending,startTransition] = useTransition();
-  
+  const [pending, startTransition] = useTransition();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,39 +35,50 @@ const Parent = ({ children, is_update = false, resume }) => {
           currentCollection?.id
         );
 
-        startTransition(()=>{
-            
-            setCurrentBook(savedBook);
-        setBooks((prev) => [savedBook, ...prev]);
-        })
+        startTransition(() => {
+          setCurrentBook(savedBook);
+          setBooks((prev) => [savedBook, ...prev]);
+        });
+
+        if (savedBook) {
+          navigateTo(`/read-book/${savedBook.id}`);
+        }
+
+        lsWrite(["bookish-current-book",savedBook]);
+
+        enqueueSnackbar(
+          `Un livre a été ajouté !`
+        );
       } else {
-        const savedBook = await database.updateBook(currentBook?.id, data);
+        const savedBook = await database.updateBook(bid, data);
 
-        startTransition(()=>{
-             setBooks(
-               /**@param {Array} prev */
-               (prev) => {
-                 let oldBookIdx = prev.findIndex(
-                   (book) => book?.id === savedBook.id
-                 );
-                 if (oldBookIdx < 0) return;
+        startTransition(() => {
+          setBooks(
+            /**@param {Array} prev */
+            (prev) => {
+              let oldBookIdx = prev.findIndex(
+                (book) => book?.id === savedBook.id
+              );
+              if (oldBookIdx < 0) return;
 
-                 prev.splice(oldBookIdx, 1, savedBook);
-                 return prev;
-               }
-             );
+              prev.splice(oldBookIdx, 1, savedBook);
+              return prev;
+            }
+          );
 
-             setCurrentBook(savedBook);
-        })
+          setCurrentBook(savedBook);
+        });
+
+        if (savedBook) {
+          navigateTo(`/read-book/${savedBook.id}`);
+        }
+
+        lsWrite(["bookish-current-book", savedBook]);
+
+        enqueueSnackbar(`Ce livre a été mis à jour.`);
       }
 
       setIsRegistering(false);
-
-      if(!pending) {
-        navigateTo("/");
-        enqueueSnackbar("Un livre a été ajouté !")
-      }
-
     } catch (e) {
       enqueueSnackbar("Erreur ! Livre non enregistré !");
     }

@@ -6,6 +6,8 @@ import { startTransition, useState } from "react";
 import Loader from "../CrossApp/Loader";
 import { useReadPageContext } from "../../context/ReadPageContext";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Search } from "lucide-react";
 
 const ActionsOnBook = () => {
   const { database, setCurrentBook, setBooks, setModalCard } = useAppContext();
@@ -15,19 +17,21 @@ const ActionsOnBook = () => {
 
   return (
     <div className="actions-on-book">
-      <button
-        type="button"
-        className="no-state-button"
-        onClick={() => {
-          enqueueSnackbar("Convertir en PDF et télécharger");
-          enqueueSnackbar("Fonctionnalité bientôt disponible");
-        }}
-      >
-        <span>Télécharger</span>
-        <span>
-          <DownoladIcon />
-        </span>
-      </button>
+      {beingReadBook?.resume && (
+        <button
+          type="button"
+          className="no-state-button download-book-button"
+          onClick={() => {
+            enqueueSnackbar("Convertir en PDF et télécharger");
+            enqueueSnackbar("Fonctionnalité bientôt disponible");
+          }}
+        >
+          <span>Télécharger</span>
+          <span>
+            <DownoladIcon />
+          </span>
+        </button>
+      )}
       <button
         type="button"
         className="action-icon center no"
@@ -61,17 +65,25 @@ const ActionsOnBook = () => {
       >
         {isDeleting ? <Loader ringColor="#000" trackColor="red" /> : <Trash2 />}
       </button>
+      <Link
+        type="button"
+        className="action-icon center ok"
+        to={`/update-book/${beingReadBook?.id}`}
+        onClick={() => {
+          setCurrentBook(beingReadBook);
+          return;
+        }}
+      >
+        <PencilLine />
+      </Link>
       <button
         type="button"
         className="action-icon center ok"
         onClick={() => {
-          enqueueSnackbar("Mettre-à-jour ce livre");
-          enqueueSnackbar("Fonctionnalité bientôt disponible");
-          return
-          // setModalCard({ type: "SHOW", element: "book", is_update: true });
+          setModalCard({ type: "SHOW", element: "search-book" });
         }}
       >
-        <PencilLine />
+        <Search />
       </button>
     </div>
   );

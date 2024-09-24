@@ -29,7 +29,7 @@ const BookElt = ({ book }) => {
           <span style={{ fontSize: ".8rem" }}>#{currentCollection.name}</span>
           <span className="title">
             <span className="book">{book.title}</span>{" "}
-            <span className="author-name">par {book.author}</span>
+            <span className="author-name">de {book.author}</span>
           </span>
           <span className="date">
             Modifié : le {convertToDate(book.updated_at)}
