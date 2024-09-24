@@ -1176,6 +1176,10 @@ p[data-f-id="pbf"] {
     width: 60px !important;
   }
 
+  .read-panel .content article {
+    padding-inline: 1.5rem;
+    font-size: 0.9rem;
+  }
 
   #book-form {
     padding: 0.5rem;
