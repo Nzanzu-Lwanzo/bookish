@@ -644,7 +644,7 @@ html:has(.modal-panel.show) {
 }
 
 .read-panel .article *:not(h1, h2, h3, h4, h5) {
-  line-height: 1.6rem;
+  line-height: 1.8rem;
   font-size: 0.9rem;
 }
 
@@ -1160,6 +1160,7 @@ p[data-f-id="pbf"] {
   .read-panel .content article {
     padding-inline: 1.5rem;
     font-size: 0.9rem;
+    line-height:1.5rem;
   }
 
   #book-form {
