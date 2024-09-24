@@ -1,5 +1,6 @@
 import NoContent from "../../../../assets/illustrations/NoContent";
 import { useAppContext } from "../../../../context/AppContext";
+import { Link } from "react-router-dom";
 
 const NoBook = () => {
 
@@ -11,13 +12,12 @@ const NoBook = () => {
       <span className="message">
         Oups, aucun livre trouvé dans cette collection !
       </span>
-      <button
-        type="button"
+      <Link
         className="no-state-button"
-        onClick={() => setModalCard({ type: "SHOW", element: "book" })}
+        to="/create-book"
       >
         Ajouter
-      </button>
+      </Link>
     </div>
   );
 };

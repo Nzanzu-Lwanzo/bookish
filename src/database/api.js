@@ -289,7 +289,7 @@ export default class BookishDb {
         reject(new InvalidDataError("Book must contain a title."));
       }
 
-      const buildBook = Object.assign(book, this.timestamps);
+      const buildBook = Object.assign(book, this.timestamps,{ cid });
 
       const request = crudHandler.add(buildBook);
 
@@ -298,7 +298,7 @@ export default class BookishDb {
           this.addBookToCollection(cid, request.result);
         }
 
-        resolve({ id: request.result, cid, ...buildBook });
+        resolve({ id: request.result, ...buildBook });
       };
 
       request.onerror = (event) => {

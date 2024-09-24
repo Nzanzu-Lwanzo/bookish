@@ -22,12 +22,28 @@ const RichTextEditor = ({ handleModelChange, model, title }) => {
     <FroalaEditorComponent
       config={{
         placeholderText: title,
+        name : "resume"
+
       }}
       model={model}
       tag="textarea"
       onModelChange={handleModelChange}
+
     />
   );
 };
+
+/*
+   <RichTextEditor
+            model={book.resume}
+
+            title={`Que voulez-vous retenir ${
+              book.title ? "du livre ".concat(book.title) : "de ce livre"
+            } ?`}
+            handleModelChange={(data) => {
+              setBook((prev) => ({ ...prev, resume: data }));
+            }}
+          />
+*/
 
 export default RichTextEditor;

@@ -10,8 +10,11 @@ import Read from "./pages/Read";
 import About from "./pages/About";
 import Modal from "./components/CrossApp/Modal";
 import { lsRead } from "./utils/localStorage-io";
+import CreateBookForm from "./pages/CreateBookForm";
+import UpdateBookForm from "./pages/UpdateBookForm";
 import { closeSnackbar, SnackbarProvider } from "notistack";
 import { XIcon } from "./assets/svg";
+
 
 function App() {
   const hasReadAboutPage = lsRead("bookish-has-read-about-page");
@@ -29,7 +32,6 @@ function App() {
             <XIcon />
           </button>
         );
-
       }}
       className="toast-message"
     >
@@ -41,6 +43,16 @@ function App() {
             caseSensitive={false}
           />
           <Route path="/about" element={<About />} caseSensitive={false} />
+          <Route
+            path="/create-book"
+            element={<CreateBookForm />}
+            caseSensitive={false}
+          />
+          <Route
+            path="/update-book/:id"
+            element={<UpdateBookForm />}
+            caseSensitive={false}
+          />
           <Route
             path="/read-book/:id"
             element={hasReadAboutPage ? <Read /> : <Navigate to="/about" />}

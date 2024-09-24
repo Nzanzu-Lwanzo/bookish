@@ -7,7 +7,13 @@ import { enqueueSnackbar } from "notistack";
 const CollectionElt = ({ name, id, onClick }) => {
   const [updating, setUpdating] = useState(false);
   const [collectionName, setCollectionName] = useState("");
-  const { database, setCurrentCollection, setCollections, currentCollection, setBooks } = useAppContext();
+  const {
+    database,
+    setCurrentCollection,
+    setCollections,
+    currentCollection,
+    setBooks,
+  } = useAppContext();
 
   const updateCollectionName = useCallback(
     (event) => {
@@ -35,7 +41,7 @@ const CollectionElt = ({ name, id, onClick }) => {
       ) : (
         <span className="name">
           <span>{name}</span>
-          <span className="dot"></span>
+          <span className="dot-to-mark-active"></span>
         </span>
       )}
 
@@ -44,13 +50,12 @@ const CollectionElt = ({ name, id, onClick }) => {
           type="button"
           className="center"
           onClick={async () => {
-
             let deletedId;
-            
+
             try {
               deletedId = await database.deleteCollection(id);
-            } catch(e) {
-              enqueueSnackbar("Erreur ! Collection non supprimée !")
+            } catch (e) {
+              enqueueSnackbar("Erreur ! Collection non supprimée !");
             }
 
             if (deletedId) {

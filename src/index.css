@@ -5,8 +5,40 @@
 * Browsers: last 4 version
 */
 
+*::-webkit-input-placeholder {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 
-.montserrat,* {
+
+*::-moz-placeholder {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+*:-ms-input-placeholder {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+*::-ms-input-placeholder {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.montserrat,*,
+*::placeholder {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -198,6 +230,7 @@ button.disabled-button {
   background-color: #EEE;
   border-radius: 50%;
   cursor: pointer;
+  color: inherit;
 }
 
 .action-icon svg {

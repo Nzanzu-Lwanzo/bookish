@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useGetCollectionBooks } from "../../../../hooks/useGet";
 import { enqueueSnackbar } from "notistack";
 import useShowNetworkStatus from "../../../../hooks/useShowNetworkStatus";
+import { Link } from "react-router-dom";
 
 const ListBooks = () => {
   const { setModalCard, currentCollection, books, database, setBooks } =
@@ -30,16 +31,15 @@ const ListBooks = () => {
         <div className="actions">
           {books?.length ? (
             <>
-              <button
-                type="button"
+              <Link
                 className="no-state-button"
-                onClick={() => setModalCard({ type: "SHOW", element: "book" })}
+                to="/create-book"
               >
                 <span>Ajouter</span>
                 <span className="center">
                   <Plus />
                 </span>
-              </button>
+              </Link>
 
               <button
                 type="button"
