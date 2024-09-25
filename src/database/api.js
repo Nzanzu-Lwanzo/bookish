@@ -13,7 +13,7 @@ export default class BookishDb {
     }
 
     BookishDb.#instance = this;
-    this.#dbV = 2;
+    this.#dbV = 4;
     this.#dbName = "bookish";
 
     /**@type {IDBDatabase} */
@@ -34,10 +34,10 @@ export default class BookishDb {
       const request = window.indexedDB.open(this.#dbName, this.#dbV);
 
       request.onblocked = (event) => {
-        enqueueSnackbar(`Ensuite relancez l'application !`)
+        enqueueSnackbar(`Ensuite relancez l'application !`);
         enqueueSnackbar(`Fermez tous les onglets Bookish`);
         enqueueSnackbar(`Version ${this.#dbV} de ${this.#dbName} installée !`);
-      }
+      };
 
       request.onupgradeneeded = function (event) {
         const db = this.result;

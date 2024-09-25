@@ -16,6 +16,7 @@ const Collections = () => {
     database,
     setCollections,
     setBooks,
+    currentCollection,
   } = useAppContext();
 
   const { confirmDeletion } = useConfirmDeletion();
@@ -72,8 +73,12 @@ const Collections = () => {
 
       {collections?.length !== 0 ? (
         <ul className="list-collections">
-          {collections?.map((collection) => (
-            <CollectionElt
+          {collections?.map((collection) => {
+            console.log({
+              collection,
+              currentCollection
+            })
+           return  (<CollectionElt
               key={collection._id}
               name={collection.name}
               id={collection._id}
@@ -83,8 +88,8 @@ const Collections = () => {
                   setCollectionsAppearance(false);
                 }
               }}
-            />
-          ))}
+            />);
+          })}
         </ul>
       ) : (
         <NoCollection />

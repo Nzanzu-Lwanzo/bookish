@@ -9,10 +9,17 @@ import { enqueueSnackbar } from "notistack";
 import useShowNetworkStatus from "../../../../hooks/useShowNetworkStatus";
 import { Link } from "react-router-dom";
 import useConfirmDeletion from "../../../../hooks/useConfirmDeletion";
+import CollectionsButNoneSelected from "./CollectionsButNoneSelected";
 
 const ListBooks = () => {
-  const { setModalCard, currentCollection, books, database, setBooks } =
-    useAppContext();
+  const {
+    setModalCard,
+    currentCollection,
+    books,
+    database,
+    setBooks,
+    collections,
+  } = useAppContext();
   const { fetcher } = useGetCollectionBooks();
 
   const { element } = useShowNetworkStatus();
@@ -32,15 +39,15 @@ const ListBooks = () => {
       <div className="top-bar">
         <h2>{currentCollection?.name}</h2>
         <div className="actions">
-          {books?.length ? (
+          {collections?.length !== 0 && currentCollection ? (
+            <Link className="no-state-button" to="/create-book">
+              <span>Ajouter</span>
+              <span className="center">
+                <Plus />
+              </span>
+            </Link>
+          ) : books?.length ? (
             <>
-              <Link className="no-state-button" to="/create-book">
-                <span>Ajouter</span>
-                <span className="center">
-                  <Plus />
-                </span>
-              </Link>
-
               <button
                 type="button"
                 className="action-icon ok center"
@@ -91,8 +98,12 @@ const ListBooks = () => {
             return <BookElt key={book._id} book={book} />;
           })}
         </div>
-      ) : currentCollection ? (
+      ) : collections?.length !== 0 &&
+        currentCollection &&
+        books?.length === 0 ? (
         <NoBook />
+      ) : collections?.length !== 0 && !currentCollection ? (
+        <CollectionsButNoneSelected />
       ) : (
         <NoCollection />
       )}

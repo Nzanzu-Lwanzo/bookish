@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Searching = () => {
+const Searching = ({ width = "250", height = "250" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="552.81023"
-      height="515.45882"
+      width={width}
+      height={height}
       viewBox="0 0 552.81023 515.45882"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
@@ -116,6 +116,6 @@ const Searching = () => {
       </g>
     </svg>
   );
-}
+};
 
 export default Searching
