@@ -53,7 +53,9 @@ const CollectionElt = ({ name, id, onClick }) => {
           type="button"
           className="center"
           onClick={async () => {
-            let yes = confirmDeletion();
+            let yes = confirmDeletion(`
+              Etes-vous sûr(e) de vouloir supprimer la collection ${name} ?
+              `);
 
             if(yes) {
               let deletedId;
