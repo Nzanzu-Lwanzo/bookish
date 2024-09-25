@@ -74,10 +74,6 @@ const Collections = () => {
       {collections?.length !== 0 ? (
         <ul className="list-collections">
           {collections?.map((collection) => {
-            console.log({
-              collection,
-              currentCollection
-            })
            return  (<CollectionElt
               key={collection._id}
               name={collection.name}

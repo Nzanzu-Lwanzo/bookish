@@ -14,6 +14,7 @@ const BookElt = ({ book }) => {
       to={`/read-book/${book._id}`}
       className="book-elt"
       onClick={() => {
+        alert(JSON.stringify(book));
         lsWrite(["bookish-current-book", book]);
         lsWrite([
           "bookish-main-page-scroll-coordinates",

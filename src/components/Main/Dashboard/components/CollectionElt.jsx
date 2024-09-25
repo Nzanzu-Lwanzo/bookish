@@ -25,8 +25,6 @@ const CollectionElt = ({ name, id, onClick }) => {
 
   const  { confirmDeletion } = useConfirmDeletion();
 
-  console.log(name)
-
   return (
     <li
       onClick={onClick}
