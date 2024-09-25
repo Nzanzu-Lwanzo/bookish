@@ -3,6 +3,7 @@ import { Trash2, PencilLine, Check, XIcon } from "../../../../assets/svg";
 import { useCallback } from "react";
 import { useAppContext } from "../../../../context/AppContext";
 import { enqueueSnackbar } from "notistack";
+import useConfirmDeletion from "../../../../hooks/useConfirmDeletion";
 
 const CollectionElt = ({ name, id, onClick }) => {
   const [updating, setUpdating] = useState(false);
@@ -21,6 +22,8 @@ const CollectionElt = ({ name, id, onClick }) => {
     },
     [collectionName]
   );
+
+  const  { confirmDeletion } = useConfirmDeletion();
 
   return (
     <li
@@ -50,22 +53,26 @@ const CollectionElt = ({ name, id, onClick }) => {
           type="button"
           className="center"
           onClick={async () => {
-            let deletedId;
+            let yes = confirmDeletion();
 
-            try {
-              deletedId = await database.deleteCollection(id);
-            } catch (e) {
-              enqueueSnackbar("Erreur ! Collection non supprimée !");
-            }
+            if(yes) {
+              let deletedId;
 
-            if (deletedId) {
-              const collections = await database.getCollections();
-              setCollections(collections);
-              setCurrentCollection({});
+              try {
+                deletedId = await database.deleteCollection(id);
+              } catch (e) {
+                enqueueSnackbar("Erreur ! Collection non supprimée !");
+              }
 
-              if (deletedId === currentCollection._id) {
-                setCurrentCollection(undefined);
-                setBooks([]);
+              if (deletedId) {
+                const collections = await database.getCollections();
+                setCollections(collections);
+                setCurrentCollection({});
+
+                if (deletedId === currentCollection._id) {
+                  setCurrentCollection(undefined);
+                  setBooks([]);
+                }
               }
             }
           }}
