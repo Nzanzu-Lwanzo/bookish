@@ -35,7 +35,7 @@ const BookForm = () => {
     // Save and hide form
     let savedBook;
     try {
-      savedBook = await database.createBook(book, currentCollection?.id);
+      savedBook = await database.createBook(book, currentCollection?._id);
     } catch (e) {
       enqueueSnackbar("Erreur ! Livre non enregistré !");
     }
@@ -54,7 +54,7 @@ const BookForm = () => {
       form?.reset();
     }
   };
-  
+
   const bookToUpdate = lsRead("bookish-current-book");
 
   return (
@@ -115,7 +115,6 @@ const BookForm = () => {
           <label htmlFor="resume">Resumé</label>
           <RichTextEditor
             model={book.resume}
-
             title={`Que voulez-vous retenir ${
               book.title ? "du livre ".concat(book.title) : "de ce livre"
             } ?`}

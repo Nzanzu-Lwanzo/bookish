@@ -11,7 +11,7 @@ const BookElt = ({ book }) => {
 
   return (
     <Link
-      to={`/read-book/${book.id}`}
+      to={`/read-book/${book._id}`}
       className="book-elt"
       onClick={() => {
         lsWrite(["bookish-current-book", book]);

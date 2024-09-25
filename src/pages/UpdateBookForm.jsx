@@ -14,7 +14,7 @@ const UpdateBookForm = () => {
   const [resume, setResume] = useState(currentBook?.resume);
 
   return (
-    <Parent resume={resume} is_update={true} bid={currentBook?.id}>
+    <Parent resume={resume} is_update={true} bid={currentBook?._id}>
       <div className="top-bar">
         <div>
           <h2>Mettre A Jour</h2>

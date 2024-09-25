@@ -1,15 +1,32 @@
 import { XCircleIcon } from "lucide-react";
 import { useAppContext } from "../../context/AppContext";
 import BookFilterable from "./BookFilterable";
-import { useDeferredValue, useState } from "react";
-import { useEffect } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
+import Loader from "./Loader";
+import { enqueueSnackbar } from "notistack";
 
 const SearchBook = () => {
-  const { setModalCard, books } = useAppContext();
+  const { setModalCard, database } = useAppContext();
 
-  const [filterables, setFilterables] = useState([...books]);
+  const [filterables, setFilterables] = useState();
+  const [fetching, setFetching] = useState(true);
 
   const deferredFilterableBooks = useDeferredValue(filterables);
+
+  useEffect(()=>{
+
+    setFetching(true),
+      database
+        .getAllBooks()
+        .then((books) => {
+          setFilterables(books);
+        })
+        .catch((error) => {
+          enqueueSnackbar("Erreur ! Réessayez la recherche !");
+        })
+        .finally(($) => setFetching(false));
+
+  },[])
 
   return (
     <div className="search-book custom-scrollbar">
@@ -42,11 +59,19 @@ const SearchBook = () => {
         </button>
       </div>
 
-      <div className="list-books-to-filter">
-        {deferredFilterableBooks?.map((book) => (
-          <BookFilterable key={book.id} id={book.id} title={book.title} />
-        ))}
-      </div>
+      {fetching ? (
+        <div className="center sec-block">
+          <Loader height={100} width={100}></Loader>
+        </div>
+      ) : (
+        <>
+          <div className="list-books-to-filter sec-block">
+            {deferredFilterableBooks?.map((book) => (
+              <BookFilterable key={book._id} id={book._id} title={book.title} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

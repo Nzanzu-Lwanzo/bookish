@@ -32,7 +32,7 @@ const Parent = ({ children, is_update = false, resume, bid }) => {
       if (!is_update) {
         const savedBook = await database.createBook(
           data,
-          currentCollection?.id
+          currentCollection?._id
         );
 
         startTransition(() => {
@@ -41,14 +41,12 @@ const Parent = ({ children, is_update = false, resume, bid }) => {
         });
 
         if (savedBook) {
-          navigateTo(`/read-book/${savedBook.id}`);
+          navigateTo(`/read-book/${savedBook._id}`);
         }
 
-        lsWrite(["bookish-current-book",savedBook]);
+        lsWrite(["bookish-current-book", savedBook]);
 
-        enqueueSnackbar(
-          `Un livre a été ajouté !`
-        );
+        enqueueSnackbar(`Un livre a été ajouté !`);
       } else {
         const savedBook = await database.updateBook(bid, data);
 
@@ -57,7 +55,7 @@ const Parent = ({ children, is_update = false, resume, bid }) => {
             /**@param {Array} prev */
             (prev) => {
               let oldBookIdx = prev.findIndex(
-                (book) => book?.id === savedBook.id
+                (book) => book?._id === savedBook._id
               );
               if (oldBookIdx < 0) return;
 
@@ -70,7 +68,7 @@ const Parent = ({ children, is_update = false, resume, bid }) => {
         });
 
         if (savedBook) {
-          navigateTo(`/read-book/${savedBook.id}`);
+          navigateTo(`/read-book/${savedBook._id}`);
         }
 
         lsWrite(["bookish-current-book", savedBook]);

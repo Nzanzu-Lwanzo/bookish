@@ -5,17 +5,19 @@ export function useAuthenticate() {
   const { user, currentGroup } = useChatContext();
 
   return {
-    isGroupCreator: () => user.id === currentGroup.creator_id,
+    isGroupCreator: () => user._id === currentGroup.creator_id,
   };
 }
 
-export function useCheck () {
+export function useCheck() {
   const { currentChat } = useChatContext();
   const { textersIds } = useSocketContext();
 
   return {
     isTyping: (_id) => {
-      return textersIds?.map((id) => parseInt(id))?.includes(_id || currentChat.id);
+      return textersIds
+        ?.map((id) => parseInt(id))
+        ?.includes(_id || currentChat._id);
     },
   };
 }

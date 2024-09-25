@@ -25,7 +25,7 @@ const CollectionElt = ({ name, id, onClick }) => {
   return (
     <li
       onClick={onClick}
-      className={`${id === currentCollection?.id ? "active" : ""}`}
+      className={`${id === currentCollection?._id ? "active" : ""}`}
     >
       {updating ? (
         <input
@@ -63,7 +63,7 @@ const CollectionElt = ({ name, id, onClick }) => {
               setCollections(collections);
               setCurrentCollection({});
 
-              if (deletedId === currentCollection.id) {
+              if (deletedId === currentCollection._id) {
                 setCurrentCollection(undefined);
                 setBooks([]);
               }

@@ -17,7 +17,6 @@ export const useAppContext = () => {
 };
 
 export const AppContextProvider = function ({ children }) {
-
   const [collectionsAppearance, setCollectionsAppearance] = useState(false);
   const [database, setDatabase] = useState(null);
   const [collections, setCollections] = useState([]);
@@ -49,7 +48,7 @@ export const AppContextProvider = function ({ children }) {
       })
       .then(async ({ db, chosenCollection }) => {
         const fetchedBooks = await db.getCollectionBooks(
-          chosenCollection?.id || 0
+          chosenCollection?._id || 0
         );
 
         setBooks(fetchedBooks?.books);

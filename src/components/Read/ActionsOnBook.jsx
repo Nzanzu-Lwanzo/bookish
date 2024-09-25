@@ -8,12 +8,15 @@ import { useReadPageContext } from "../../context/ReadPageContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
+import useConfirmDeletion from "../../hooks/useConfirmDeletion";
+
 
 const ActionsOnBook = () => {
   const { database, setCurrentBook, setBooks, setModalCard } = useAppContext();
   const { beingReadBook, setBeingReadBook } = useReadPageContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const navigateTo = useNavigate();
+  const { confirmDeletion } = useConfirmDeletion();
 
   return (
     <div className="actions-on-book">
@@ -36,31 +39,37 @@ const ActionsOnBook = () => {
         type="button"
         className="action-icon center no"
         onClick={async (event) => {
-          setIsDeleting(true);
-          await database
-            .deleteBook(beingReadBook?.id)
-            .then((deletedId) => {
-              navigateTo("/");
-              enqueueSnackbar(
-                `${beingReadBook?.title || "Ce livre"} a été supprimé !`
-              );
-              setCurrentBook(undefined);
-              setBeingReadBook(undefined);
+          let yes = confirmDeletion(
+            `Etes-vous sûr(e) de vouloir supprimer le livre ${beingReadBook?.title} ?`
+          );
 
-              startTransition(() => {
-                setBooks((prev) => {
-                  return prev?.filter((book) => book.id !== deletedId);
+          if(yes) {
+            setIsDeleting(true);
+            await database
+              .deleteBook(beingReadBook?._id)
+              .then((deletedId) => {
+                navigateTo("/");
+                enqueueSnackbar(
+                  `${beingReadBook?.title || "Ce livre"} a été supprimé !`
+                );
+                setCurrentBook(undefined);
+                setBeingReadBook(undefined);
+
+                startTransition(() => {
+                  setBooks((prev) => {
+                    return prev?.filter((book) => book._id !== deletedId);
+                  });
                 });
-              });
 
-              lsWrite(["bookish-current-book", undefined]);
-            })
-            .catch((e) => {
-              enqueueSnackbar("Erreur ! Livre non supprimé !");
-            })
-            .finally(($) => {
-              setIsDeleting(false);
-            });
+                lsWrite(["bookish-current-book", undefined]);
+              })
+              .catch((e) => {
+                enqueueSnackbar("Erreur ! Livre non supprimé !");
+              })
+              .finally(($) => {
+                setIsDeleting(false);
+              });
+          }
         }}
       >
         {isDeleting ? <Loader ringColor="#000" trackColor="red" /> : <Trash2 />}
@@ -68,7 +77,7 @@ const ActionsOnBook = () => {
       <Link
         type="button"
         className="action-icon center ok"
-        to={`/update-book/${beingReadBook?.id}`}
+        to={`/update-book/${beingReadBook?._id}`}
         onClick={() => {
           setCurrentBook(beingReadBook);
           return;

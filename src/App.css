@@ -1,10 +1,3 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 4 version
-*/
-
 :root {
   --bg: #2c3539;
   --light: #ffe;
@@ -133,6 +126,7 @@ body {
 
 .banner .sticky-top .about-link {
   background-color: transparent;
+  cursor: pointer;
 }
 
 .banner .sticky-top .about-link svg {
@@ -719,6 +713,23 @@ html:has(.modal-panel.show) {
 
 .search-book {
   overflow: auto !important;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.search-book .sec-block {
   height: 100%;
 }
 

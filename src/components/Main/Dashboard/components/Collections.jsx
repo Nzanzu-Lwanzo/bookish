@@ -4,6 +4,7 @@ import NoCollection from "./NoCollection";
 import { useAppContext } from "../../../../context/AppContext";
 import { useEffect } from "react";
 import { enqueueSnackbar } from "notistack";
+import useConfirmDeletion from "../../../../hooks/useConfirmDeletion";
 
 const Collections = () => {
   const {
@@ -17,6 +18,8 @@ const Collections = () => {
     setBooks,
   } = useAppContext();
 
+  const { confirmDeletion } = useConfirmDeletion();
+
   return (
     <aside className={`collections ${collectionsAppearance && "show"}`}>
       <div className="title">
@@ -26,17 +29,23 @@ const Collections = () => {
             type="button"
             className="center"
             onClick={async () => {
-              let areAllDeleted;
-              try {
-                areAllDeleted = await database.deleteAllCollections();
-              } catch (e) {
-                enqueueSnackbar("Erreur ! Collections non supprimées !");
-              }
+              let yes = confirmDeletion(
+                `Etes-vous sûr(e) de vouloir supprimer toutes vos collections ?`
+              );
 
-              if (areAllDeleted) {
-                setCurrentCollection(undefined);
-                setBooks([]);
-                setCollections([]);
+              if(yes) {
+                let areAllDeleted;
+                try {
+                  areAllDeleted = await database.deleteAllCollections();
+                } catch (e) {
+                  enqueueSnackbar("Erreur ! Collections non supprimées !");
+                }
+
+                if (areAllDeleted) {
+                  setCurrentCollection(undefined);
+                  setBooks([]);
+                  setCollections([]);
+                }
               }
             }}
           >
@@ -65,9 +74,9 @@ const Collections = () => {
         <ul className="list-collections">
           {collections?.map((collection) => (
             <CollectionElt
-              key={collection.id}
+              key={collection._id}
               name={collection.name}
-              id={collection.id}
+              id={collection._id}
               onClick={async (event) => {
                 if (!event.target.matches("button *")) {
                   setCurrentCollection(collection);

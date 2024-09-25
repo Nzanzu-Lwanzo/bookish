@@ -1,3 +1,5 @@
+import { enqueueSnackbar } from "notistack";
+
 export default class BookishDb {
   #dbV;
   #dbName;
@@ -11,7 +13,7 @@ export default class BookishDb {
     }
 
     BookishDb.#instance = this;
-    this.#dbV = 1;
+    this.#dbV = 2;
     this.#dbName = "bookish";
 
     /**@type {IDBDatabase} */
@@ -31,12 +33,18 @@ export default class BookishDb {
     return new Promise((resolve, reject) => {
       const request = window.indexedDB.open(this.#dbName, this.#dbV);
 
+      request.onblocked = (event) => {
+        enqueueSnackbar(`Ensuite relancez l'application !`)
+        enqueueSnackbar(`Fermez tous les onglets Bookish`);
+        enqueueSnackbar(`Version ${this.#dbV} de ${this.#dbName} installée !`);
+      }
+
       request.onupgradeneeded = function (event) {
         const db = this.result;
 
         if (!db.objectStoreNames.contains("collections")) {
           const collections = db.createObjectStore("collections", {
-            keyPath: "id",
+            keyPath: "_id",
             autoIncrement: true,
           });
 
@@ -47,11 +55,16 @@ export default class BookishDb {
 
         if (!db.objectStoreNames.contains("books")) {
           const books = db.createObjectStore("books", {
-            keyPath: "id",
+            keyPath: "_id",
             autoIncrement: true,
           });
 
           books.createIndex("title", "title");
+        }
+
+        db.onversionchange = (event) => {
+          window.indexedDB.deleteDatabase(BookishDb.#instance.#dbName);
+          BookishDb.init();
         }
       };
 
@@ -90,7 +103,7 @@ export default class BookishDb {
       const request = crudHandler.add(buildCollection);
 
       request.onsuccess = (event) => {
-        resolve({ id: request.result, ...buildCollection });
+        resolve({ _id: request.result, ...buildCollection });
       };
 
       request.onerror = (event) => reject(event.target);
@@ -113,25 +126,24 @@ export default class BookishDb {
   }
 
   async getCollection(cid) {
-
-    if(!cid) return;
+    if (!cid) return;
 
     const database = await this.getDb();
-    const crudHandler = database.transaction("collections","readonly").objectStore("collections");
+    const crudHandler = database
+      .transaction("collections", "readonly")
+      .objectStore("collections");
 
-    return new Promise((resolve,reject)=>{
-
+    return new Promise((resolve, reject) => {
       const request = crudHandler.get(cid);
 
-      request.onerror = (event)=>{
-        reject(event.target)
-      }
+      request.onerror = (event) => {
+        reject(event.target);
+      };
 
-      request.onsuccess = (event)=>{
+      request.onsuccess = (event) => {
         resolve(request.result);
-      }
-
-    })
+      };
+    });
   }
 
   async getCollectionBooks(cid) {
@@ -198,7 +210,7 @@ export default class BookishDb {
         requestPutCollection.onerror = (event) => reject(event.target);
 
         requestPutCollection.onsuccess = (event) => {
-          resolve({ id: requestCollection.result, ...collection });
+          resolve({ _id: requestCollection.result, ...collection });
         };
       };
     });
@@ -222,8 +234,8 @@ export default class BookishDb {
 
         if (bid) {
           /**@type {number[]} */
-          const booksList = collection?.books_id || [];
-          keepElements = booksList.filter((id) => id !== bid);
+          const booksListOfIds = collection?.books_id || [];
+          keepElements = booksListOfIds.filter((id) => id !== bid);
         }
 
         collection.books_id = keepElements;
@@ -233,7 +245,7 @@ export default class BookishDb {
         requestPutCollection.onerror = (event) => reject(event.target);
 
         requestPutCollection.onsuccess = (event) => {
-          resolve({ id: requestCollection.result, ...collection });
+          resolve({ _id: requestCollection.result, ...collection });
         };
       };
     });
@@ -289,7 +301,7 @@ export default class BookishDb {
         reject(new InvalidDataError("Book must contain a title."));
       }
 
-      const buildBook = Object.assign(book, this.timestamps,{ cid });
+      const buildBook = Object.assign(book, this.timestamps, { cid });
 
       const request = crudHandler.add(buildBook);
 
@@ -298,7 +310,7 @@ export default class BookishDb {
           this.addBookToCollection(cid, request.result);
         }
 
-        resolve({ id: request.result, ...buildBook });
+        resolve({ _id: request.result, ...buildBook });
       };
 
       request.onerror = (event) => {
@@ -323,8 +335,7 @@ export default class BookishDb {
   }
 
   async getBook(bid) {
-
-    if(!bid) return;
+    if (!bid) return;
 
     const database = await this.getDb();
     const crudHandler = database
@@ -387,8 +398,7 @@ export default class BookishDb {
   }
 
   async updateBook(bid, data) {
-    
-    if(!bid) return;
+    if (!bid) return;
 
     const database = await this.getDb();
     const crudHandler = database
@@ -415,6 +425,56 @@ export default class BookishDb {
 
         requestPutBook.onsuccess = (event) => resolve(updatedBook);
       };
+    });
+  }
+
+  async getUnSyncedCollections() {
+    const database = await this.getDb();
+    const crudHandler = database
+      .transaction("collections", "readonly")
+      .objectStore("collections");
+
+    return new Promise((resolve, reject) => {
+      const request = crudHandler.getAll();
+
+      request.onerror = (event) => reject(event.target);
+
+      request.onsuccess = (event) => {
+        const allCollections = request.result;
+
+        const unSyncedCollections = allCollections.filter(
+          (collection) => !collection.synced
+        );
+
+        resolve(unSyncedCollections);
+      };
+    });
+  }
+
+  async markAllCollectionsAsSynced() {
+    const database = await this.getDb();
+    const crudHandler = database
+      .transaction("collections", "readwrite")
+      .objectStore("collections");
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        /**@type { Array } */
+        const collections = await this.getUnSyncedCollections();
+        const allUpdatedCollections = [];
+
+        for (let collection of collections) {
+          const updatedCollection = await this.updateCollection(
+            collection?._id,
+            { synced: true }
+          );
+          allUpdatedCollections.push(updatedCollection);
+        }
+
+        resolve(allUpdatedCollections);
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 

@@ -16,7 +16,10 @@ const ReadPanel = () => {
         <ActionsOnBook />
         {beingReadBook?.resume ? (
           <>
-            <BookResume title={beingReadBook?.title} resume={beingReadBook.resume} />
+            <BookResume
+              title={beingReadBook?.title}
+              resume={beingReadBook.resume}
+            />
           </>
         ) : (
           <div className="no-data-placeholder center">
@@ -27,7 +30,7 @@ const ReadPanel = () => {
             <Link
               type="button"
               className="no-state-button"
-              to={`/update-book/${beingReadBook?.id}`}
+              to={`/update-book/${beingReadBook?._id}`}
               onClick={() => {
                 setCurrentBook(beingReadBook);
                 return;

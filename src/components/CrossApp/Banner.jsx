@@ -2,9 +2,11 @@ import { useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { DatabaseBackup, InfoIcon } from "lucide-react";
 import { enqueueSnackbar } from "notistack";
+import useSyncDatabase from "../../hooks/useSyncDatabase";
 
 const Banner = ({ headerBtn, children }) => {
   const { setCollectionsAppearance, setModalCard } = useAppContext();
+  const { sync } = useSyncDatabase();
 
   return (
     <section className="banner center">
@@ -15,8 +17,9 @@ const Banner = ({ headerBtn, children }) => {
             <InfoIcon />
           </Link>
           <button className="center about-link" type="button" onClick={()=>{
-            enqueueSnackbar("Synchroniser avec la BDD cloud")
-            enqueueSnackbar("Fonctionnalité bientôt disponible");
+            // enqueueSnackbar("Synchroniser avec la BDD cloud")
+            // enqueueSnackbar("Fonctionnalité bientôt disponible");
+            sync()
           }}>
             <DatabaseBackup />
           </button>

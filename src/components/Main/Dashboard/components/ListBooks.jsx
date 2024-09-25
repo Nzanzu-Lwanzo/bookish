@@ -8,6 +8,7 @@ import { useGetCollectionBooks } from "../../../../hooks/useGet";
 import { enqueueSnackbar } from "notistack";
 import useShowNetworkStatus from "../../../../hooks/useShowNetworkStatus";
 import { Link } from "react-router-dom";
+import useConfirmDeletion from "../../../../hooks/useConfirmDeletion";
 
 const ListBooks = () => {
   const { setModalCard, currentCollection, books, database, setBooks } =
@@ -16,9 +17,11 @@ const ListBooks = () => {
 
   const { element } = useShowNetworkStatus();
 
+  const { confirmDeletion } = useConfirmDeletion();
+
   useEffect(() => {
     async function fn() {
-      fetcher(currentCollection?.id);
+      fetcher(currentCollection?._id);
     }
 
     fn();
@@ -31,10 +34,7 @@ const ListBooks = () => {
         <div className="actions">
           {books?.length ? (
             <>
-              <Link
-                className="no-state-button"
-                to="/create-book"
-              >
+              <Link className="no-state-button" to="/create-book">
                 <span>Ajouter</span>
                 <span className="center">
                   <Plus />
@@ -55,18 +55,24 @@ const ListBooks = () => {
                 type="button"
                 className="center action-icon no"
                 onClick={async () => {
-                  let deletedBooksOnCollection;
-                  try {
-                    deletedBooksOnCollection =
-                      await database.removeBookFromCollection(
-                        currentCollection.id
-                      );
-                  } catch (e) {
-                    enqueueSnackbar("Erreur ! Livres non supprmés !");
-                  }
+                  let yes = confirmDeletion(
+                    `Etes-vous sûr(e) de vouloir supprimer tous les livres de cette collection ?`
+                  );
 
-                  if (deletedBooksOnCollection) {
-                    setBooks([]);
+                  if (yes) {
+                    let deletedBooksOnCollection;
+                    try {
+                      deletedBooksOnCollection =
+                        await database.removeBookFromCollection(
+                          currentCollection._id
+                        );
+                    } catch (e) {
+                      enqueueSnackbar("Erreur ! Livres non supprmés !");
+                    }
+
+                    if (deletedBooksOnCollection) {
+                      setBooks([]);
+                    }
                   }
                 }}
               >
@@ -82,7 +88,7 @@ const ListBooks = () => {
       {books?.length !== 0 ? (
         <div className="books">
           {books?.map((book) => {
-            return <BookElt key={book.id} book={book} />;
+            return <BookElt key={book._id} book={book} />;
           })}
         </div>
       ) : currentCollection ? (
