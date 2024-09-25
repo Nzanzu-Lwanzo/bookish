@@ -58,6 +58,11 @@ function App() {
             element={hasReadAboutPage ? <Read /> : <Navigate to="/about" />}
             caseSensitive={false}
           />
+          <Route
+            path="*"
+            element={hasReadAboutPage ? <Main /> : <Navigate to="/about" />}
+            caseSensitive={false}
+          />
         </Routes>
         <Modal />
       </Router>

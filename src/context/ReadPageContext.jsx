@@ -28,7 +28,7 @@ export const ReadPageContextProvider = ({ children }) => {
         let bid = parseInt(id);
 
         if (Number.isNaN(bid)) {
-          return enqueueSnackbar("404 : book not found !");
+          return enqueueSnackbar("Paramètre de recherche invalide !");
         }
 
         const book = await database.getBook(bid);
@@ -40,7 +40,7 @@ export const ReadPageContextProvider = ({ children }) => {
           });
         } else {
           navigateTo("/");
-          enqueueSnackbar("Une erreur est survenue !");
+          enqueueSnackbar("404 : Ressource introuvable !");
         }
       })
       .catch((error) => {
@@ -48,7 +48,7 @@ export const ReadPageContextProvider = ({ children }) => {
         console.log(error);
       });
 
-      return () => setCurrentBook(false);
+    return () => setCurrentBook(false);
   }, [pathname]);
 
   const data = {

@@ -61,11 +61,6 @@ export default class BookishDb {
 
           books.createIndex("title", "title");
         }
-
-        db.onversionchange = (event) => {
-          window.indexedDB.deleteDatabase(BookishDb.#instance.#dbName);
-          BookishDb.init();
-        }
       };
 
       request.onsuccess = (event) => {
