@@ -6,17 +6,23 @@ import { enqueueSnackbar } from "notistack";
 
 export function useGetCollectionBooks() {
   const { setBooks } = useAppContext();
+  const [fetchingBooks, setFetchingBooks] = useState(false);
   
   return {
     fetcher: async function (cid) {
       try {
+        setFetchingBooks(true);
         const database = await BookishDb.init();
-      const fechedData = await database.getCollectionBooks(cid);
-      setBooks(fechedData?.books || []);
-      } catch(e) {
-        enqueueSnackbar("Nous n'avons pas pu récupérer les livres")
+        const fetchedData = await database.getCollectionBooks(cid);
+
+        const booksArrayReversed = fetchedData?.books?.reverse();
+        setBooks(booksArrayReversed || []);
+        setFetchingBooks(false);
+      } catch (e) {
+        enqueueSnackbar("Nous n'avons pas pu récupérer les livres");
       }
-      
     },
+
+    fetchingBooks,
   };
 }

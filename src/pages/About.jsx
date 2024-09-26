@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { lsWrite } from "../utils/localStorage-io";
 import { useState } from "react";
 import Loader from "../components/CrossApp/Loader";
+import { Info } from "lucide-react";
 
 const About = () => {
   const navigateTo = useNavigate();
@@ -15,7 +16,13 @@ const About = () => {
           <h1>About</h1>
           <p>
             Veuillez, s'il vous plaît, lire ceci avant d'utiliser{" "}
-            <strong>Bookish</strong>.
+            <strong>Bookish</strong>. Sinon, scroller jusqu'au bas de la page et
+            cliquez sur le bouton. Vous pourrez toujours revenir en cliquant sur
+            le bouton{" "}
+            <span>
+              <Info size={18}></Info>
+            </span>{" "}
+            dans l'en-tête.
           </p>
           <div>
             <h2>Qu'est-ce que Bookish ?</h2>
@@ -83,8 +90,20 @@ const About = () => {
               </li>
               <li>
                 <p>
+                  Inutile de partager le lien d'une page de livre. Puisque les
+                  données ne sont pas stockées sur un serveur, les personnes à
+                  qui vous partagez le lien n'obtiendront toujours qu'une erreur
+                  404 (Not Found = Ressource non retrouvée).
+                </p>
+              </li>
+              <li>
+                <p>
                   Il peut arriver, pour différentes raisons, que la BDD se
-                  supprime d'elle-même et que vous perdiez vos données.
+                  supprime d'elle-même et que vous perdiez vos données. Nous
+                  sommes en train d'implémenter des techniques de sauvegarde
+                  (backup sur BDD cloud, téléchargement en PDF, ... ). En
+                  attendant que la solution soit trouvée, utilisez l'application
+                  mais soyez prudents.
                 </p>
               </li>
             </ul>
@@ -148,10 +167,7 @@ const About = () => {
                 <p>
                   {" "}
                   <strong>Interface</strong> : l'interface de Bookish est faite
-                  avec <strong>React-Js Vanilla JavaScript</strong>. Le
-                  développeur n'a pas utilisé de framework comme{" "}
-                  <strong>Nex-Jst</strong>. <strong>Vite</strong> est utilisé
-                  pour <i>build</i> l'application.
+                  avec <strong>React</strong>.
                 </p>
               </li>
               <li>
@@ -170,6 +186,16 @@ const About = () => {
                 </p>
               </li>
             </ul>
+
+            <p>
+              Nous signalons également que nous avons besoin d'un volontaire qui
+              voudrait travailler sur les algorithmes de synchronisation de BDD
+              (avec un modèle de Base de Données NoSql). Si cela vous intéresse,
+              merci d'écrire au développeur au numéro{" "}
+              <a href="tel:0977210519">0977210519 (Whatsapp et Telegram)</a> en
+              envoyant <strong>votre a adresse e-mail</strong> et/ou{" "}
+              <strong>le lien vers votre Github.</strong>
+            </p>
           </div>
 
           <div>
@@ -201,7 +227,10 @@ const About = () => {
               </li>
               <li>
                 <p>
-                  <strong>lucide-react</strong> : pour les icônes, bien que certaines aient été prises dans le pack <strong>phosphor-icons</strong> et leurs svgs copiés comme des compoosants.
+                  <strong>lucide-react</strong> : pour les icônes, bien que
+                  certaines aient été prises dans le pack{" "}
+                  <strong>phosphor-icons</strong> et leurs svgs copiés comme des
+                  compoosants.
                 </p>
               </li>
             </ul>

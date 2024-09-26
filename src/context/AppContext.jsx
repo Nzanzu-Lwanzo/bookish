@@ -51,7 +51,9 @@ export const AppContextProvider = function ({ children }) {
           chosenCollection?._id || 0
         );
 
-        setBooks(fetchedBooks?.books);
+        const booksArrayReversed = fetchedBooks?.books?.reverse();
+
+        setBooks(booksArrayReversed);
       })
       .catch((error) => {
         enqueueSnackbar("Erreur de création de la DBB");

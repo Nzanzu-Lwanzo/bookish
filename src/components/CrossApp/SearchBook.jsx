@@ -1,17 +1,18 @@
 import { XCircleIcon } from "lucide-react";
 import { useAppContext } from "../../context/AppContext";
 import BookFilterable from "./BookFilterable";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import Loader from "./Loader";
 import { enqueueSnackbar } from "notistack";
 
 const SearchBook = () => {
   const { setModalCard, database } = useAppContext();
 
-  const [filterables, setFilterables] = useState();
+  const [filterables, setFilterables] = useState([]);
   const [fetching, setFetching] = useState(true);
 
   const deferredFilterableBooks = useDeferredValue(filterables);
+  let booksRef = useRef([]);
 
   useEffect(()=>{
 
@@ -20,6 +21,7 @@ const SearchBook = () => {
         .getAllBooks()
         .then((books) => {
           setFilterables(books);
+          booksRef.current = books;
         })
         .catch((error) => {
           enqueueSnackbar("Erreur ! Réessayez la recherche !");
@@ -40,7 +42,7 @@ const SearchBook = () => {
             setFilterables(
               /**@param {Array} prev */
               (prev) => {
-                return books?.filter((book) => {
+                return booksRef.current?.filter((book) => {
                   return book.title
                     ?.toLowerCase()
                     .includes(event.target.value.toLowerCase());

@@ -952,6 +952,11 @@ p[data-f-id="pbf"] {
     height: 300px;
     width: 300px;
   }
+
+  
+  .list-books {
+    min-height: calc(100vh - 40vh);
+  }
 }
 
 @media only all and (max-width: 900px) {

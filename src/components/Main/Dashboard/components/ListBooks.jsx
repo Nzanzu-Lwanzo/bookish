@@ -10,6 +10,7 @@ import useShowNetworkStatus from "../../../../hooks/useShowNetworkStatus";
 import { Link } from "react-router-dom";
 import useConfirmDeletion from "../../../../hooks/useConfirmDeletion";
 import CollectionsButNoneSelected from "./CollectionsButNoneSelected";
+import Loader from "../../../CrossApp/Loader";
 
 const ListBooks = () => {
   const {
@@ -20,7 +21,7 @@ const ListBooks = () => {
     setBooks,
     collections,
   } = useAppContext();
-  const { fetcher } = useGetCollectionBooks();
+  const { fetcher, fetchingBooks } = useGetCollectionBooks();
 
   const { element } = useShowNetworkStatus();
 
@@ -34,19 +35,27 @@ const ListBooks = () => {
     fn();
   }, [currentCollection]);
 
+  let thereAreCollections = collections?.length !== 0;
+  let thereAreNoBooksInCurrentCollection =
+    thereAreCollections && currentCollection && books?.length === 0;
+  let thereAreCollectionsButNoneSelected =
+    thereAreCollections && !currentCollection;
+
   return (
     <div className="list-books">
       <div className="top-bar">
         <h2>{currentCollection?.name}</h2>
         <div className="actions">
-          {collections?.length !== 0 && currentCollection ? (
+          {thereAreCollections && currentCollection && (
             <Link className="no-state-button" to="/create-book">
               <span>Ajouter</span>
               <span className="center">
                 <Plus />
               </span>
             </Link>
-          ) : books?.length ? (
+          )}
+
+          {currentCollection && books?.length !== 0 && (
             <>
               <button
                 type="button"
@@ -86,9 +95,15 @@ const ListBooks = () => {
                 <Trash2 />
               </button>
             </>
-          ) : null}
+          )}
 
           {element}
+
+          {fetchingBooks && (
+            <div className="center">
+              <Loader height={25} width={25}></Loader>
+            </div>
+          )}
         </div>
       </div>
 
@@ -98,15 +113,13 @@ const ListBooks = () => {
             return <BookElt key={book._id} book={book} />;
           })}
         </div>
-      ) : collections?.length !== 0 &&
-        currentCollection &&
-        books?.length === 0 ? (
+      ) : thereAreNoBooksInCurrentCollection ? (
         <NoBook />
-      ) : collections?.length !== 0 && !currentCollection ? (
+      ) : thereAreCollectionsButNoneSelected ? (
         <CollectionsButNoneSelected />
-      ) : (
+      ) : !thereAreCollections ? (
         <NoCollection />
-      )}
+      ) : null}
     </div>
   );
 };

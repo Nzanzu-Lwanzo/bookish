@@ -16,11 +16,15 @@ const Banner = ({ headerBtn, children }) => {
           <Link className="center about-link" to="/about">
             <InfoIcon />
           </Link>
-          <button className="center about-link" type="button" onClick={()=>{
-            enqueueSnackbar("Synchroniser avec la BDD cloud")
-            enqueueSnackbar("Fonctionnalité bientôt disponible");
-            sync()
-          }}>
+          <button
+            className="center about-link"
+            type="button"
+            onClick={() => {
+              enqueueSnackbar("Synchroniser avec la BDD cloud");
+              enqueueSnackbar("Fonctionnalité bientôt disponible");
+              // sync();
+            }}
+          >
             <DatabaseBackup />
           </button>
         </div>

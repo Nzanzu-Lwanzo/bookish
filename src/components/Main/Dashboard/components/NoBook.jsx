@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const NoBook = () => {
 
-  const { setModalCard  } = useAppContext();
+  const { setModalCard, currentCollection  } = useAppContext();
 
   return (
     <div className="no-data-placeholder center">
@@ -12,10 +12,7 @@ const NoBook = () => {
       <span className="message">
         Oups, aucun livre trouvé dans cette collection !
       </span>
-      <Link
-        className="no-state-button"
-        to="/create-book"
-      >
+      <Link className="no-state-button" to="/create-book">
         Ajouter
       </Link>
     </div>
