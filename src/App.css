@@ -863,6 +863,13 @@ p[data-f-id="pbf"] {
   padding: 4rem;
 }
 
+#book-form .actions-to-navigate {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .5rem;
+}
+
 #fr-logo {
   display: none;
 }

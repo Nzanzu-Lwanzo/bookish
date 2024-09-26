@@ -182,8 +182,10 @@ const About = () => {
               </li>
               <li>
                 <p>
-                  <strong>html-entities</strong>, {" "} 
-                  <strong>react-safely-set-inner-html</strong>, <strong>dompurify</strong> : pour le parsing des chaînes de caractère HTML stockées dans la BDD
+                  <strong>html-entities</strong>,{" "}
+                  <strong>react-safely-set-inner-html</strong>,{" "}
+                  <strong>dompurify</strong> : pour le parsing des chaînes de
+                  caractère HTML stockées dans la BDD
                 </p>
               </li>
               <li>
@@ -191,9 +193,15 @@ const About = () => {
                   <strong>notistack</strong> : pour les toast messages
                 </p>
               </li>
-               <li>
+              <li>
                 <p>
-                  <strong>react-froala-wysiwyg</strong> : pour l'édition des resumés des livres.
+                  <strong>react-froala-wysiwyg</strong> : pour l'édition des
+                  resumés des livres.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>lucide-react</strong> : pour les icônes, bien que certaines aient été prises dans le pack <strong>phosphor-icons</strong> et leurs svgs copiés comme des compoosants.
                 </p>
               </li>
             </ul>

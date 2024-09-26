@@ -1,9 +1,8 @@
 import Parent from "../components/BookForm/Parent";
 import RichTextEditor from "../components/Main/Dashboard/components/BookFormComponents/RichTextEditor";
-import { Home } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useState } from "react";
+import ActionsOnForm from "../components/BookForm/ActionsOnForm";
 
 const CreateBookForm = () => {
 
@@ -19,9 +18,7 @@ const CreateBookForm = () => {
           <span className="cell">{currentCollection?.name}</span>
         </div>
 
-        <Link className="center action-icon" to="/">
-          <Home />
-        </Link>
+        <ActionsOnForm />
       </div>
       <div className="wrap-inputs">
         <div className="wrap-input">

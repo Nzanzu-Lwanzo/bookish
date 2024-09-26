@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useState } from "react";
 import { lsRead } from "../utils/localStorage-io";
+import ActionsOnForm from "../components/BookForm/ActionsOnForm";
 
 const UpdateBookForm = () => {
   const { currentCollection } = useAppContext();
@@ -20,10 +21,7 @@ const UpdateBookForm = () => {
           <h2>Mettre A Jour</h2>
           <span className="cell">{currentBook?.title}</span>
         </div>
-
-        <Link className="center action-icon" to="/">
-          <Home />
-        </Link>
+        <ActionsOnForm />
       </div>
       <div className="wrap-inputs">
         <div className="wrap-input">

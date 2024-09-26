@@ -13,7 +13,7 @@ export default class BookishDb {
     }
 
     BookishDb.#instance = this;
-    this.#dbV = 2;
+    this.#dbV = 5;
     this.#dbName = "bookish";
 
     /**@type {IDBDatabase} */
@@ -41,6 +41,9 @@ export default class BookishDb {
 
       request.onupgradeneeded = function (event) {
         const db = this.result;
+
+        db.deleteObjectStore("collections");
+        db.deleteObjectStore("books");
 
         if (!db.objectStoreNames.contains("collections")) {
           const collections = db.createObjectStore("collections", {
