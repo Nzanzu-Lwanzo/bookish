@@ -56,7 +56,7 @@ const ListBooks = () => {
                 className="center action-icon no"
                 onClick={async () => {
                   let yes = confirmDeletion(
-                    `Etes-vous sûr(e) de vouloir supprimer tous les livres de cette collection ?`
+                    "Etes-vous sûr(e) de vouloir supprimer tous les livres de cette collection ?"
                   );
 
                   if (yes) {

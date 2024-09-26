@@ -4,6 +4,7 @@ import { enqueueSnackbar } from "notistack";
 
 const useSyncDatabase = () => {
   const [collections, setCollections] = useState([]);
+  const [books,setBooks] = useState([]);
   const [pending, setTransition] = useTransition();
   const [database,setDatabase] = useState(undefined);
 
@@ -12,7 +13,11 @@ const useSyncDatabase = () => {
     BookishDb.init()
       .then(async (db) => {
         const collections = await db?.getUnSyncedCollections();
-        setTransition(() => setCollections(collections));
+        const books = await db?.getUnSyncedBooks();
+        setTransition(() => {
+          setCollections(collections);
+          setBooks(books);
+        });
         return db;
       })
       .then((db)=>setDatabase(db))
@@ -31,6 +36,12 @@ const useSyncDatabase = () => {
       // REQUEST THE CLOUD DATABASE TO STORE DATA INSIDE OF IT
 
 
+    
+
+      
+      // WHEN I'M DONE SENDING THE COLLECTIONS ON THE CLOUD
+      await database.markAllCollectionsAsSynced();
+      await database.markAllBooksAsSynced();
 
     },
 

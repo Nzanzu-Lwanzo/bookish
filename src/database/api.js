@@ -34,10 +34,10 @@ export default class BookishDb {
       const request = window.indexedDB.open(this.#dbName, this.#dbV);
 
       request.onblocked = (event) => {
-        enqueueSnackbar(`Ensuite relancez l'application !`)
+        enqueueSnackbar(`Ensuite relancez l'application !`);
         enqueueSnackbar(`Fermez tous les onglets Bookish`);
         enqueueSnackbar(`Version ${this.#dbV} de ${this.#dbName} installée !`);
-      }
+      };
 
       request.onupgradeneeded = function (event) {
         const db = this.result;
@@ -296,7 +296,7 @@ export default class BookishDb {
         reject(new InvalidDataError("Book must contain a title."));
       }
 
-      const buildBook = Object.assign(book, this.timestamps, { cid });
+      const buildBook = Object.assign(book, this.timestamps, { cid, synced:false  });
 
       const request = crudHandler.add(buildBook);
 
@@ -381,6 +381,7 @@ export default class BookishDb {
 
         const updatedCollection = Object.assign(collection, data, {
           updated_at: new Date(),
+          synced : false
         });
 
         const requestPutCollection = crudHandler.put(updatedCollection);
@@ -412,6 +413,7 @@ export default class BookishDb {
 
         const updatedBook = Object.assign(book, data, {
           updated_at: new Date(),
+          synced : false
         });
 
         const requestPutBook = crudHandler.put(updatedBook);
@@ -471,6 +473,60 @@ export default class BookishDb {
         reject(e);
       }
     });
+  }
+
+  async getUnSyncedBooks() {
+    const database = await this.getDb();
+    const crudHandler = database
+      .transaction("books", "readonly")
+      .objectStore("books");
+
+    return new Promise((resolve, reject) => {
+      const request = crudHandler.getAll();
+
+      request.onerror = (event) => reject(event.target);
+
+      request.onsuccess = (event) => {
+        const allBooks = request.result;
+
+        const unSyncedBooks = allBooks.filter(
+          (book) => !book.synced
+        );
+
+        resolve(unSyncedBooks);
+      };
+    });
+  }
+
+
+  async markAllBooksAsSynced() {
+
+    const database = await this.getDb();
+    const crudHandler = database
+      .transaction("books", "readwrite")
+      .objectStore("books");
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        /**@type { Array } */
+        const books = await this.getUnSyncedBooks();
+        const allUpdatedBooks = [];
+
+        for (let book of books) {
+          const updatedBook= await this.updateBook(
+            book?._id,
+            { synced: true }
+          );
+          allUpdatedBooks.push(updatedBook);
+        }
+
+        resolve(allUpdatedBooks);
+      } catch (e) {
+        reject(e);
+      }
+    });
+
+
   }
 
   get timestamps() {
