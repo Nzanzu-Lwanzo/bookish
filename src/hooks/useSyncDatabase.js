@@ -4,12 +4,11 @@ import { enqueueSnackbar } from "notistack";
 
 const useSyncDatabase = () => {
   const [collections, setCollections] = useState([]);
-  const [books,setBooks] = useState([]);
+  const [books, setBooks] = useState([]);
   const [pending, setTransition] = useTransition();
-  const [database,setDatabase] = useState(undefined);
+  const [database, setDatabase] = useState(undefined);
 
   useEffect(() => {
-
     BookishDb.init()
       .then(async (db) => {
         const collections = await db?.getUnSyncedCollections();
@@ -20,29 +19,21 @@ const useSyncDatabase = () => {
         });
         return db;
       })
-      .then((db)=>setDatabase(db))
+      .then((db) => setDatabase(db))
       .catch((e) => {
         enqueueSnackbar("Echec d'initialisation de la BDD locale");
       });
 
-    return () => {
-        
-    };
+    return () => {};
   }, []);
 
   return {
     sync: async () => {
-
       // REQUEST THE CLOUD DATABASE TO STORE DATA INSIDE OF IT
 
-
-    
-
-      
       // WHEN I'M DONE SENDING THE COLLECTIONS ON THE CLOUD
       await database.markAllCollectionsAsSynced();
       await database.markAllBooksAsSynced();
-
     },
 
     unSyncedCollections: collections,

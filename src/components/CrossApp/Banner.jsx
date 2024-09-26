@@ -5,9 +5,7 @@ import { enqueueSnackbar } from "notistack";
 import useSyncDatabase from "../../hooks/useSyncDatabase";
 
 const Banner = ({ headerBtn, children }) => {
-  const { setCollectionsAppearance, setModalCard } = useAppContext();
-  const { sync } = useSyncDatabase();
-
+  
   return (
     <section className="banner center">
       <div className="sticky-top for-mobile">
@@ -22,7 +20,6 @@ const Banner = ({ headerBtn, children }) => {
             onClick={() => {
               enqueueSnackbar("Synchroniser avec la BDD cloud");
               enqueueSnackbar("Fonctionnalité bientôt disponible");
-              // sync();
             }}
           >
             <DatabaseBackup />

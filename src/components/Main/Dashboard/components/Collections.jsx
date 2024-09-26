@@ -5,6 +5,7 @@ import { useAppContext } from "../../../../context/AppContext";
 import { useEffect } from "react";
 import { enqueueSnackbar } from "notistack";
 import useConfirmDeletion from "../../../../hooks/useConfirmDeletion";
+import Loader from "../../../CrossApp/Loader";
 
 const Collections = () => {
   const {
@@ -17,6 +18,7 @@ const Collections = () => {
     setCollections,
     setBooks,
     currentCollection,
+    isFetching,
   } = useAppContext();
 
   const { confirmDeletion } = useConfirmDeletion();
@@ -34,7 +36,7 @@ const Collections = () => {
                 `Etes-vous sûr(e) de vouloir supprimer toutes vos collections ?`
               );
 
-              if(yes) {
+              if (yes) {
                 let areAllDeleted;
                 try {
                   areAllDeleted = await database.deleteAllCollections();
@@ -74,17 +76,19 @@ const Collections = () => {
       {collections?.length !== 0 ? (
         <ul className="list-collections">
           {collections?.map((collection) => {
-           return  (<CollectionElt
-              key={collection._id}
-              name={collection.name}
-              id={collection._id}
-              onClick={async (event) => {
-                if (!event.target.matches("button *")) {
-                  setCurrentCollection(collection);
-                  setCollectionsAppearance(false);
-                }
-              }}
-            />);
+            return (
+              <CollectionElt
+                key={collection._id}
+                name={collection.name}
+                id={collection._id}
+                onClick={async (event) => {
+                  if (!event.target.matches("button *")) {
+                    setCurrentCollection(collection);
+                    setCollectionsAppearance(false);
+                  }
+                }}
+              />
+            );
           })}
         </ul>
       ) : (

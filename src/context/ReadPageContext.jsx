@@ -62,7 +62,7 @@ export const ReadPageContextProvider = ({ children }) => {
         children
       ) : (
         <div className="center wait-to-read-book" style={{ height: "100vh" }}>
-          <Loader height={100} width={100} borderWidth={5}></Loader>
+          <Loader height={100} width={100}></Loader>
         </div>
       )}
     </ReadPageContext.Provider>

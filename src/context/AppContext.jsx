@@ -9,6 +9,7 @@ import { modalReducer } from "../utils/reducers";
 import BookishDb from "../database/api";
 import { lsRead } from "../utils/localStorage-io";
 import { enqueueSnackbar } from "notistack";
+import Loader from "../components/CrossApp/Loader";
 
 const AppContext = createContext();
 
@@ -23,6 +24,7 @@ export const AppContextProvider = function ({ children }) {
   const [currentCollection, setCurrentCollection] = useState(undefined);
   const [books, setBooks] = useState([]);
   const [currentBook, setCurrentBook] = useState(undefined);
+  const [isFetching, setIsFetching] = useState(true);
   const [modalCard, setModalCard] = useReducer(modalReducer, {
     show: false,
     element: "book",
@@ -57,7 +59,8 @@ export const AppContextProvider = function ({ children }) {
       })
       .catch((error) => {
         enqueueSnackbar("Erreur de création de la DBB");
-      });
+      })
+      .finally(($) => setIsFetching(false));
   }, []);
 
   const data = {
@@ -74,6 +77,7 @@ export const AppContextProvider = function ({ children }) {
     setBooks,
     currentBook,
     setCurrentBook,
+    isFetching,
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

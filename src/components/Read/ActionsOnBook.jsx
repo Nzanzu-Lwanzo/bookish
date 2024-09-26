@@ -2,7 +2,7 @@ import { enqueueSnackbar } from "notistack";
 import { Trash2, PencilLine, DownoladIcon } from "../../assets/svg";
 import { useAppContext } from "../../context/AppContext";
 import { lsWrite } from "../../utils/localStorage-io";
-import { startTransition, useState } from "react";
+import { startTransition, useRef, useState } from "react";
 import Loader from "../CrossApp/Loader";
 import { useReadPageContext } from "../../context/ReadPageContext";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,14 @@ import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 import useConfirmDeletion from "../../hooks/useConfirmDeletion";
 
-
 const ActionsOnBook = () => {
-  const { database, setCurrentBook, setBooks, setModalCard } = useAppContext();
+  const {
+    database,
+    setCurrentBook,
+    setBooks,
+    setModalCard,
+    currentCollection,
+  } = useAppContext();
   const { beingReadBook, setBeingReadBook } = useReadPageContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const navigateTo = useNavigate();
@@ -24,7 +29,7 @@ const ActionsOnBook = () => {
         <button
           type="button"
           className="no-state-button download-book-button"
-          onClick={() => {
+          onClick={async () => {
             enqueueSnackbar("Convertir en PDF et télécharger");
             enqueueSnackbar("Fonctionnalité bientôt disponible");
           }}
@@ -43,7 +48,7 @@ const ActionsOnBook = () => {
             `Etes-vous sûr(e) de vouloir supprimer le livre ${beingReadBook?.title} ?`
           );
 
-          if(yes) {
+          if (yes) {
             setIsDeleting(true);
             await database
               .deleteBook(beingReadBook?._id)
