@@ -16,7 +16,7 @@ const About = () => {
           <h1>About</h1>
           <p>
             Veuillez, s'il vous plaît, lire ceci avant d'utiliser{" "}
-            <strong>Bookish</strong>. Sinon, scroller jusqu'au bas de la page et
+            <strong>Bookish</strong>. Sinon, scrollez jusqu'au bas de la page et
             cliquez sur le bouton. Vous pourrez toujours revenir en cliquant sur
             le bouton{" "}
             <span>
