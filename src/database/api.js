@@ -23,6 +23,11 @@ export default class BookishDb {
   static async init() {
     if (!BookishDb.#instance) {
       const singleton = new BookishDb();
+
+       if(!'indexedDB' in window) {
+          return enqueueSnackbar('Votre appareil ne peut pas utiliser cette application !')
+     }
+
       await singleton.#openDb();
     }
 
