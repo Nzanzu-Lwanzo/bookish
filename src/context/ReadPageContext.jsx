@@ -1,4 +1,4 @@
-import { useContext, createContext, useEffect, useState } from "react";
+import { useContext, createContext, useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BookishDb from "../database/api";
 import { enqueueSnackbar } from "notistack";
@@ -19,6 +19,7 @@ export const ReadPageContextProvider = ({ children }) => {
   const [pending, startTransition] = useTransition();
   const navigateTo = useNavigate();
   const { setCurrentBook } = useAppContext();
+  const bookResumeArticleElementRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,6 +55,7 @@ export const ReadPageContextProvider = ({ children }) => {
   const data = {
     beingReadBook,
     setBeingReadBook,
+    bookResumeArticleElementRef
   };
 
   return (

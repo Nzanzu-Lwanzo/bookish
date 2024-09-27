@@ -9,20 +9,20 @@ const useSyncDatabase = () => {
   const [database, setDatabase] = useState(undefined);
 
   useEffect(() => {
-    BookishDb.init()
-      .then(async (db) => {
-        const collections = await db?.getUnSyncedCollections();
-        const books = await db?.getUnSyncedBooks();
-        setTransition(() => {
-          setCollections(collections);
-          setBooks(books);
-        });
-        return db;
-      })
-      .then((db) => setDatabase(db))
-      .catch((e) => {
-        enqueueSnackbar("Echec d'initialisation de la BDD locale");
-      });
+    // BookishDb.init()
+    //   .then(async (db) => {
+    //     const collections = await db?.getUnSyncedCollections();
+    //     const books = await db?.getUnSyncedBooks();
+    //     setTransition(() => {
+    //       setCollections(collections);
+    //       setBooks(books);
+    //     });
+    //     return db;
+    //   })
+    //   .then((db) => setDatabase(db))
+    //   .catch((e) => {
+    //     enqueueSnackbar("Echec d'initialisation de la BDD locale");
+    //   });
 
     return () => {};
   }, []);

@@ -16,9 +16,9 @@ const ActionsOnBook = () => {
     setCurrentBook,
     setBooks,
     setModalCard,
-    currentCollection,
   } = useAppContext();
-  const { beingReadBook, setBeingReadBook } = useReadPageContext();
+  const { beingReadBook, setBeingReadBook, bookResumeArticleElementRef } =
+    useReadPageContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const navigateTo = useNavigate();
   const { confirmDeletion } = useConfirmDeletion();
