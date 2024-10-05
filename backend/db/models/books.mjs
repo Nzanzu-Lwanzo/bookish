@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { deleteModel } from "mongoose";
 
 const BookSchema = new mongoose.Schema({
   title: {
@@ -16,9 +16,9 @@ const BookSchema = new mongoose.Schema({
 
   resume: String,
 
-  __id : {
-    type : Number,
-    unique : true
+  __id: {
+    type: Number,
+    unique: true,
   },
 
   owner: {
@@ -34,6 +34,16 @@ const BookSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+});
+
+BookSchema.pre("save", async function (next, options) {
+  try {
+    let __id = this.__id;
+    await mongoose.model("Book").findOneAndDelete({ __id });
+    next();
+  } catch (e) {
+    next(e);
+  }
 });
 
 const Book = mongoose.model("Book", BookSchema);

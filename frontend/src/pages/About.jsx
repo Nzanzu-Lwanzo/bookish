@@ -62,6 +62,17 @@ const About = () => {
               livres, vous permettant donc de fonctionner sans avoir besoin de
               contacter un serveur ou une BDD éloignée (ce qui, évidemment, vous
               permet de sauver vos mégas).
+              <br />
+              <br />
+              Afin de vous permettre de retrouver vos collections et vos livres
+              sauvegardées dans la Base de Données cloud de synchronisation,
+              <strong>
+                vous devez vous créer un compte et vous connecter.
+              </strong>{" "}
+              Cependant, pas de panique. Vous n'avez besoin de fournir qu'un{" "}
+              <strong>nom d'utilisateur</strong> et une{" "}
+              <strong>adresse e-mail</strong>. Vous avez pour cela un boutton
+              sur le bas de la page.
             </p>
           </div>
           <div>
@@ -235,6 +246,16 @@ const About = () => {
               </li>
             </ul>
           </div>
+
+          <Link
+            to="/auth"
+            onClick={(event) => {
+              lsWrite(["bookish-has-read-about-page", Date.now()]);
+            }}
+            className="no-state-button"
+          >
+            Me connecter
+          </Link>
 
           <Link
             to="/"

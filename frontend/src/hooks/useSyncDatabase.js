@@ -6,29 +6,37 @@ import Axios from "axios";
 import { ORIGIN } from "../utils/constants";
 import { lsRead } from "../utils/localStorage-io";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
 
 const useSyncDatabase = () => {
   const [collections, setCollections] = useState([]);
   const [books, setBooks] = useState([]);
-  const [pending, setTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
   const [database, setDatabase] = useState(undefined);
+  const [isSyncing, setIsSyncing] = useState(false);
   const { mutate } = useNetworkRequest();
   const navigateTo = useNavigate();
+  const {
+    setCollections: setCollectionsToDisplay,
+    setBooks: setBooksToDisplay,
+    setCurrentCollection,
+    currentCollection,
+  } = useAppContext();
 
   useEffect(() => {
     BookishDb.init()
       .then(async (db) => {
-        return db;
+        setDatabase(db);
       })
-      .then((db) => setDatabase(db))
       .catch((e) => {
         if (e.message === "NO_AUTH_USER") {
-          enqueueSnackbar("Connectez-vous à votre Base de Données cloud.");
+          enqueueSnackbar("Connectez-vous à la DBB cloud.");
           navigateTo("/auth");
 
           return;
         }
 
+        alert(e.message);
         enqueueSnackbar("Echec d'initialisation de la BDD locale");
       });
 
@@ -37,73 +45,122 @@ const useSyncDatabase = () => {
 
   return {
     sync: async () => {
-      // Send collections & books
-
       const unSyncedCollections = await database?.getUnSyncedCollections();
       const unSyncedBooks = await database?.getUnSyncedBooks();
 
-      setTransition(() => {
-        setCollections(unSyncedCollections);
-        setBooks(unSyncedBooks);
-      });
+      // Send collections & books
 
+      setIsSyncing(true);
       mutate(
         {
           url: `/api/collection/?last_collection_id=${lsRead(
             "last-collection-id",
             0
           )}`,
-          data: { collections },
+          data: { collections: unSyncedCollections },
         },
         {
-          onSuccess: async (data, variables, context) => {
+          onSuccess: async (data, { variables }, context) => {
             // Save the collections to local database
 
-            for (let collection of data) {
-              await database.createCollection(collection);
+            if (data?.length !== 0) {
+              for (let collection of data) {
+                const savedCollection = await database.saveSyncedCollections(
+                  collection
+                );
+
+                startTransition(() => {
+                  setCollectionsToDisplay((prev) => [savedCollection, ...prev]);
+                  setCurrentCollection(data[0]);
+                });
+              }
             }
 
             await database.markAllCollectionsAsSynced();
+            enqueueSnackbar("Collections synced, actualisez la page !");
 
-            enqueueSnackbar("Collections synchronisées !");
+            // ********************* SYNC BOOKS ******************************* //
 
+            setIsSyncing(true);
             mutate(
               {
                 url: `/api/book/?last_book_id=${lsRead("last-book-id", 0)}`,
-                data: { books },
+                data: { books: unSyncedBooks },
               },
               {
                 onSuccess: async (data, variables, context) => {
                   // Save the  books to local database
-                  for (let book of data) {
-                    await database.createBook(book);
+                  if (data?.length !== 0) {
+                    for (let book of data) {
+                      const savedBook = await database.saveSyncedBooks(book);
+                    }
+
+                    startTransition(() => {
+                      setBooksToDisplay(
+                        data.filter(
+                          (book) => book.cid === currentCollection?.__id
+                        )
+                      );
+                    });
                   }
 
                   await database.markAllBooksAsSynced();
-                  enqueueSnackbar("Livres synchronisés !");
+                  enqueueSnackbar("Books synced, actualisez la page !");
                 },
                 onError: (error) => {
-                  console.log(error);
-                  enqueueSnackbar(
-                    "Livres non synchronisés : opération avortée."
-                  );
+                  switch (error.response?.status) {
+                    case 401:
+                      navigateTo("/auth");
+                      enqueueSnackbar("Connectez-vous à la BDD cloud.");
+                      return;
+
+                    case 400:
+                      enqueueSnackbar("Books not synced : opération avortée.");
+                      return;
+
+                    case 406:
+                      enqueueSnackbar("Aucun livre à synchroniser !");
+                      return;
+
+                    default:
+                      return;
+                  }
                 },
+                onSettled: () => setIsSyncing(false),
               }
+
+              // ****************** END OF SYNC BOOKS ************************* //
             );
           },
 
           onError: (error) => {
-            console.log(error);
-            enqueueSnackbar(
-              "Collections non synchronisées : opération avortée."
-            );
+            switch (error.response?.status) {
+              case 401:
+                navigateTo("/auth");
+                enqueueSnackbar("Connectez-vous à la BDD cloud.");
+                return;
+
+              case 400:
+                enqueueSnackbar("Collections not synced : opération avortée.");
+                return;
+
+              case 406:
+                enqueueSnackbar("Aucune collection à synchroniser !");
+                return;
+
+              default:
+                return;
+            }
           },
+
+          onSettled: () => setIsSyncing(false),
         }
       );
     },
 
     unSyncedCollections: collections,
     state_is_updating: pending,
+    is_synchronizing: isSyncing,
   };
 };
 

@@ -8,6 +8,11 @@ import "../strategies/local.mjs";
 
 const authRouter = Router();
 
-authRouter.post("/", passport.authenticate("local"), authenticateUser);
+authRouter.post(
+  "/",
+  passport.authenticate("local"),
+
+  authenticateUser
+);
 
 export default authRouter;

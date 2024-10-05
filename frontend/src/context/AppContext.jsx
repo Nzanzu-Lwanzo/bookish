@@ -9,7 +9,7 @@ import { modalReducer } from "../utils/reducers";
 import BookishDb from "../database/api";
 import { lsRead } from "../utils/localStorage-io";
 import { enqueueSnackbar } from "notistack";
-import Loader from "../components/CrossApp/Loader";
+import getStorageInfo from "../utils/storage";
 
 const AppContext = createContext();
 
@@ -31,6 +31,19 @@ export const AppContextProvider = function ({ children }) {
     is_update: false,
   });
   const [auth, setAuth] = useState(lsRead("bookish-auth", undefined));
+
+  const [storage, setStorage] = useState({
+    totalStorage: 0,
+    totalUsage: 0,
+  });
+
+  useEffect(() => {
+    getStorageInfo()
+      .then(({ totalStorage, totalUsage }) => {
+        setStorage({ totalStorage, totalUsage });
+      })
+      .catch((e) => null);
+  }, []);
 
   useEffect(() => {
     BookishDb.init()

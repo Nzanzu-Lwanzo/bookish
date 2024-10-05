@@ -12,7 +12,7 @@ import authRouter from "./backend/auth/routes/auth.mjs";
 import booksRouter from "./backend/routes/books.mjs";
 import booksCollectionsRouter from "./backend/routes/booksCollections.mjs";
 
-let env = process.env.ENV;
+let env = process.env.ENV || 'prod';
 let __dirname = dirname(fileURLToPath(import.meta.url));
 const App = express();
 const PORT = process.env.PORT || 5000;
@@ -57,6 +57,7 @@ App.use("/api/book", booksRouter);
 App.get("*", (req, res) => res.sendFile("/index.html"));
 
 App.listen(PORT, () => {
+
   mongoose
     .connect(MONGODB_URI,{
       dbName : "bookish"

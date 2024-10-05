@@ -34,11 +34,20 @@ const BooksCollectionSchema = new mongoose.Schema({
   },
 });
 
+BooksCollectionSchema.pre("save", async function (next, options) {
+  try {
+    let __id = this.__id;
+    const deletedCollection = await mongoose.model("BooksCollection").findOneAndDelete({ __id });
+
+    next();
+  } catch (e) {
+    next(e);
+  }
+});
+
 const BooksCollection = mongoose.model(
   "BooksCollection",
   BooksCollectionSchema
 );
-
-
 
 export default BooksCollection;

@@ -32,7 +32,8 @@ const useAuth = () => {
         enqueueSnackbar("Erreur ! Compte non connecté !");
       } catch (e) {
         setAuth(undefined);
-        enqueueSnackbar("Fetch error : request failed.");
+        enqueueSnackbar("Changez de données puis réessayez !");
+        enqueueSnackbar("Nom ou email probablement déjà pris !");
       } finally {
         setIsRequesting(false);
       }

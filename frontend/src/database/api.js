@@ -400,6 +400,8 @@ export default class BookishDb {
           synced: !external,
         });
 
+        console.log(updatedCollection);
+
         const requestPutCollection = crudHandler.put(updatedCollection);
 
         requestPutCollection.onerror = (event) => reject(event.target);
@@ -466,11 +468,14 @@ export default class BookishDb {
             reject(new Error("NO_AUTH_USER"));
           }
 
-          unSyncedCollections = unSyncedCollections.map((collection) => ({
-            ...collection,
-            synced: true,
-            owner: authUser?._id,
-          }));
+          unSyncedCollections = unSyncedCollections.map((collection) => {
+            delete collection["_id"];
+            return {
+              ...collection,
+              synced: true,
+              owner: authUser?._id,
+            };
+          });
         }
 
         resolve(unSyncedCollections);
@@ -484,6 +489,8 @@ export default class BookishDb {
       .transaction("collections", "readwrite")
       .objectStore("collections");
 
+      console.log("SYNCING")
+
     return new Promise(async (resolve, reject) => {
       try {
         /**@type { Array } */
@@ -494,9 +501,10 @@ export default class BookishDb {
         for (let collection of collections) {
           const updatedCollection = await this.updateCollection(
             collection?.__id,
-            { synced: true },
+            {},
             false
           );
+          console.log(updatedCollection)
           allUpdatedCollections.push(updatedCollection);
         }
 
@@ -524,17 +532,20 @@ export default class BookishDb {
         let unSyncedBooks = allBooks.filter((book) => !book.synced);
 
         if (external) {
-          const authUser = lsRead("bookish-auth",undefined);
+          const authUser = lsRead("bookish-auth", undefined);
 
           if (!authUser) {
-            reject(new Error('NO_AUTH_USER'));
+            reject(new Error("NO_AUTH_USER"));
           }
 
-          unSyncedBooks = unSyncedBooks.map((book) => ({
-            ...book,
-            synced: true,
-            owner: authUser?._id,
-          }));
+          unSyncedBooks = unSyncedBooks.map((book) => {
+            delete book["_id"];
+            return {
+              ...book,
+              synced: true,
+              owner: authUser?._id,
+            };
+          });
         }
 
         resolve(unSyncedBooks);
@@ -555,13 +566,7 @@ export default class BookishDb {
         const allUpdatedBooks = [];
 
         for (let book of books) {
-          const updatedBook = await this.updateBook(
-            book?.__id,
-            {
-              synced: true,
-            },
-            false
-          );
+          const updatedBook = await this.updateBook(book?.__id, {}, false);
           allUpdatedBooks.push(updatedBook);
         }
 
@@ -569,6 +574,42 @@ export default class BookishDb {
       } catch (e) {
         reject(e);
       }
+    });
+  }
+
+  async saveSyncedCollections(data) {
+    const database = await this.getDb();
+    const crudHandler = database
+      .transaction("collections", "readwrite")
+      .objectStore("collections");
+
+    return new Promise((resolve, reject) => {
+      const request = crudHandler.put(data);
+
+      request.onerror = (event) => reject(event.target);
+
+      request.onsuccess = (event) => {
+        lsWrite(["last-collection-id", request.result]);
+        resolve({ __id: request.result, ...data });
+      };
+    });
+  }
+
+  async saveSyncedBooks(data) {
+    const database = await this.getDb();
+    const crudHandler = database
+      .transaction("books", "readwrite")
+      .objectStore("books");
+
+    return new Promise((resolve, reject) => {
+      const request = crudHandler.put(data);
+
+      request.onerror = (event) => reject(event.target);
+
+      request.onsuccess = (event) => {
+        lsWrite(["last-book-id", request.result]);
+        resolve({ __id: request.result, ...data });
+      };
     });
   }
 

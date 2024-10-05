@@ -5,6 +5,7 @@ import { enqueueSnackbar } from "notistack";
 import Loader from "../components/CrossApp/Loader";
 import { useTransition } from "react";
 import { useAppContext } from "./AppContext";
+import WholePageLoader from "../components/CrossApp/WholePageLoader";
 
 const ReadPageContext = createContext();
 
@@ -63,9 +64,7 @@ export const ReadPageContextProvider = ({ children }) => {
       {beingReadBook && !pending ? (
         children
       ) : (
-        <div className="center wait-to-read-book" style={{ height: "100vh" }}>
-          <Loader height={100} width={100}></Loader>
-        </div>
+        <WholePageLoader />
       )}
     </ReadPageContext.Provider>
   );

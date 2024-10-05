@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { enqueueSnackbar } from "notistack";
 import useConfirmDeletion from "../../../../hooks/useConfirmDeletion";
 import Loader from "../../../CrossApp/Loader";
+import { lsWrite } from "../../../../utils/localStorage-io";
 
 const Collections = () => {
   const {
@@ -48,6 +49,9 @@ const Collections = () => {
                   setCurrentCollection(undefined);
                   setBooks([]);
                   setCollections([]);
+
+                  lsWrite(["last-collection-id",undefined]);
+                  lsWrite(["last-book-id",undefined]);
                 }
               }
             }}

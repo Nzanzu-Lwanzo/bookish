@@ -11,9 +11,13 @@ export const saveBooksCollections = async (req, res) => {
   const { last_collection_id } = req.query;
   let lastId = parseInt(last_collection_id);
 
+  console.log(collections)
+
   try {
     // Save theses collections
-    const booksCollections = await BooksCollection.create(collections);
+    if (collections && collections.length !== 0) {
+      const booksCollections = await BooksCollection.create(collections);
+    }
 
     // Take the last collections that are not synced on the current apparatus
     let unSyncedCollections = [];
