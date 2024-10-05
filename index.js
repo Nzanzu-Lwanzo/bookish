@@ -25,7 +25,7 @@ const WHITELIST_ORIGINS = [
 ];
 
 App.use(express.json());
-App.use(express.static(join(__dirname, "/frontend/dist/index.html")));
+App.use(express.static(join(__dirname, "/frontend/dist")));
 App.use(cookieParser(SECRET));
 App.use(
   cors({
