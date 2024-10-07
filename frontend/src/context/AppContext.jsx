@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import { modalReducer } from "../utils/reducers";
+import { modalReducer, fetchFromIDBOnLoad } from "../utils/reducers";
 import BookishDb from "../database/api";
 import { lsRead } from "../utils/localStorage-io";
 import { enqueueSnackbar } from "notistack";
@@ -37,6 +37,14 @@ export const AppContextProvider = function ({ children }) {
     totalUsage: 0,
   });
 
+  const [isFetchingFromIDB, setIsFetchingFromIDB] = useReducer(
+    fetchFromIDBOnLoad,
+    {
+      collections_are_fetched: false,
+      books_are_fetched: false,
+    }
+  );
+
   useEffect(() => {
     getStorageInfo()
       .then(({ totalStorage, totalUsage }) => {
@@ -57,9 +65,11 @@ export const AppContextProvider = function ({ children }) {
         if (fetchedCollections) {
           setCollections(fetchedCollections || []);
           setCurrentCollection(fetchedCollections?.at(-1));
+          setIsFetchingFromIDB("HAS_FETCHED_COLLECTIONS");
           return { db, chosenCollection: fetchedCollections.at(-1) };
         }
 
+        setIsFetchingFromIDB("HAS_FETCHED_COLLECTIONS");
         return { db, chosenCollection: undefined };
       })
       .then(async ({ db, chosenCollection }) => {
@@ -67,11 +77,13 @@ export const AppContextProvider = function ({ children }) {
           chosenCollection?.__id || 0
         );
 
-        const booksArrayReversed = fetchedBooks?.books?.reverse();
-
+        const booksArrayReversed = fetchedBooks?.books?.reverse() || [];
         setBooks(booksArrayReversed);
+
+        setIsFetchingFromIDB("HAS_FETCHED_BOOKS");
       })
       .catch((error) => {
+        setIsFetchingFromIDB("BACK_TO_NORMAL_ANYWAY");
         enqueueSnackbar("Erreur de création de la DBB");
       })
       .finally(($) => setIsFetching(false));
@@ -94,6 +106,8 @@ export const AppContextProvider = function ({ children }) {
     isFetching,
     auth,
     setAuth,
+    isFetchingFromIDB,
+    setIsFetchingFromIDB,
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

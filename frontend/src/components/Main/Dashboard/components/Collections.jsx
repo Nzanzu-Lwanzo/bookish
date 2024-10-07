@@ -2,7 +2,6 @@ import CollectionElt from "./CollectionElt";
 import { PlusCircleIcon, TrashIcon, XCircleIcon } from "../../../../assets/svg";
 import NoCollection from "./NoCollection";
 import { useAppContext } from "../../../../context/AppContext";
-import { useEffect } from "react";
 import { enqueueSnackbar } from "notistack";
 import useConfirmDeletion from "../../../../hooks/useConfirmDeletion";
 import Loader from "../../../CrossApp/Loader";
@@ -18,11 +17,12 @@ const Collections = () => {
     database,
     setCollections,
     setBooks,
-    currentCollection,
-    isFetching,
+    isFetchingFromIDB: { collections_are_fetched },
   } = useAppContext();
 
   const { confirmDeletion } = useConfirmDeletion();
+
+  let stillFetchingCollections = !collections_are_fetched;
 
   return (
     <aside className={`collections ${collectionsAppearance && "show"}`}>
@@ -50,8 +50,8 @@ const Collections = () => {
                   setBooks([]);
                   setCollections([]);
 
-                  lsWrite(["last-collection-id",undefined]);
-                  lsWrite(["last-book-id",undefined]);
+                  lsWrite(["last-collection-id", undefined]);
+                  lsWrite(["last-book-id", undefined]);
                 }
               }
             }}
@@ -76,27 +76,39 @@ const Collections = () => {
           </button>
         </div>
       </div>
-
-      {collections?.length !== 0 ? (
-        <ul className="list-collections">
-          {collections?.map((collection) => {
-            return (
-              <CollectionElt
-                key={collection.__id}
-                name={collection.name}
-                id={collection.__id}
-                onClick={async (event) => {
-                  if (!event.target.matches("button *")) {
-                    setCurrentCollection(collection);
-                    setCollectionsAppearance(false);
-                  }
-                }}
-              />
-            );
-          })}
-        </ul>
+      {stillFetchingCollections ? (
+        <div className="center" style={{ height: "100%", flex: "2" }}>
+          <Loader
+            height={50}
+            width={50}
+            ringColor="#FFF"
+            trackColor="#15d846"
+          />
+        </div>
       ) : (
-        <NoCollection />
+        <>
+          {collections?.length !== 0 ? (
+            <ul className="list-collections">
+              {collections?.map((collection) => {
+                return (
+                  <CollectionElt
+                    key={collection.__id}
+                    name={collection.name}
+                    id={collection.__id}
+                    onClick={async (event) => {
+                      if (!event.target.matches("button *")) {
+                        setCurrentCollection(collection);
+                        setCollectionsAppearance(false);
+                      }
+                    }}
+                  />
+                );
+              })}
+            </ul>
+          ) : (
+            <NoCollection />
+          )}
+        </>
       )}
     </aside>
   );

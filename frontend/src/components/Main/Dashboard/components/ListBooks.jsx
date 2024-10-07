@@ -20,6 +20,7 @@ const ListBooks = () => {
     database,
     setBooks,
     collections,
+    isFetchingFromIDB: { books_are_fetched },
   } = useAppContext();
   const { fetcher, fetchingBooks } = useGetCollectionBooks();
 
@@ -41,85 +42,93 @@ const ListBooks = () => {
   let thereAreCollectionsButNoneSelected =
     thereAreCollections && !currentCollection;
 
+  let stillFetchingBooks = !books_are_fetched;
+
   return (
-    <div className="list-books">
-      <div className="top-bar">
-        <h2>{currentCollection?.name}</h2>
-        <div className="actions">
-          {thereAreCollections && currentCollection && (
-            <Link className="no-state-button" to="/create-book">
-              <span>Ajouter</span>
-              <span className="center">
-                <Plus />
-              </span>
-            </Link>
-          )}
+    <div className={`list-books ${stillFetchingBooks ? "center" : null}`}>
+      {stillFetchingBooks ? (
+        <Loader height={100} width={100} />
+      ) : (
+        <>
+          <div className="top-bar">
+            <h2>{currentCollection?.name}</h2>
+            <div className="actions">
+              {thereAreCollections && currentCollection && (
+                <Link className="no-state-button" to="/create-book">
+                  <span>Ajouter</span>
+                  <span className="center">
+                    <Plus />
+                  </span>
+                </Link>
+              )}
 
-          {currentCollection && books?.length !== 0 && (
-            <>
-              <button
-                type="button"
-                className="action-icon ok center"
-                onClick={() =>
-                  setModalCard({ type: "SHOW", element: "search-book" })
-                }
-              >
-                <SearchIcon />
-              </button>
-
-              <button
-                type="button"
-                className="center action-icon no"
-                onClick={async () => {
-                  let yes = confirmDeletion(
-                    "Etes-vous sûr(e) de vouloir supprimer tous les livres de cette collection ?"
-                  );
-
-                  if (yes) {
-                    let deletedBooksOnCollection;
-                    try {
-                      deletedBooksOnCollection =
-                        await database.removeBookFromCollection(
-                          currentCollection.__id
-                        );
-                    } catch (e) {
-                      enqueueSnackbar("Erreur ! Livres non supprmés !");
+              {currentCollection && books?.length !== 0 && (
+                <>
+                  <button
+                    type="button"
+                    className="action-icon ok center"
+                    onClick={() =>
+                      setModalCard({ type: "SHOW", element: "search-book" })
                     }
+                  >
+                    <SearchIcon />
+                  </button>
 
-                    if (deletedBooksOnCollection) {
-                      setBooks([]);
-                    }
-                  }
-                }}
-              >
-                <Trash2 />
-              </button>
-            </>
-          )}
+                  <button
+                    type="button"
+                    className="center action-icon no"
+                    onClick={async () => {
+                      let yes = confirmDeletion(
+                        "Etes-vous sûr(e) de vouloir supprimer tous les livres de cette collection ?"
+                      );
 
-          {element}
+                      if (yes) {
+                        let deletedBooksOnCollection;
+                        try {
+                          deletedBooksOnCollection =
+                            await database.removeBookFromCollection(
+                              currentCollection.__id
+                            );
+                        } catch (e) {
+                          enqueueSnackbar("Erreur ! Livres non supprmés !");
+                        }
 
-          {fetchingBooks && (
-            <div className="center">
-              <Loader height={25} width={25}></Loader>
+                        if (deletedBooksOnCollection) {
+                          setBooks([]);
+                        }
+                      }
+                    }}
+                  >
+                    <Trash2 />
+                  </button>
+                </>
+              )}
+
+              {element}
+
+              {fetchingBooks && (
+                <div className="center">
+                  <Loader height={25} width={25}></Loader>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
 
-      {books?.length !== 0 ? (
-        <div className="books">
-          {books?.map((book) => {
-            return <BookElt key={book.__id} book={book} />;
-          })}
-        </div>
-      ) : thereAreNoBooksInCurrentCollection ? (
-        <NoBook />
-      ) : thereAreCollectionsButNoneSelected ? (
-        <CollectionsButNoneSelected />
-      ) : !thereAreCollections ? (
-        <NoCollection />
-      ) : null}
+          {books?.length !== 0 ? (
+            <div className="books">
+              {books?.map((book) => {
+                return <BookElt key={book.__id} book={book} />;
+              })}
+            </div>
+          ) : thereAreCollectionsButNoneSelected ? (
+            <CollectionsButNoneSelected />
+          ) : thereAreNoBooksInCurrentCollection ? (
+            <NoBook />
+          ) : !thereAreCollections ? (
+            <NoCollection />
+          ) : null}
+        </>
+      )}
     </div>
   );
 };

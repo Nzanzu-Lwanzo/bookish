@@ -179,6 +179,11 @@ body {
   height: -moz-fit-content;
   height: fit-content;
   min-height: 300px;
+
+  display:flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
 .collections .title {
@@ -234,6 +239,7 @@ body {
   gap: 1rem;
   list-style: none;
   width: 100%;
+  flex: 2;
 }
 
 .list-collections li {
