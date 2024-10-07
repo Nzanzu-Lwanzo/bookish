@@ -1,4 +1,4 @@
-export let env = 'dev'; // dev = developement; prod = production -> Switch this value between envs
+export let env = 'prod'; // dev = developement; prod = production -> Switch this value between envs
 
 export const MONTHS = {
   1 : "Janvier",
