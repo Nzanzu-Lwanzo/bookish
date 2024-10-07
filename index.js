@@ -22,6 +22,7 @@ const WHITELIST_ORIGINS = [
   "http://localhost:5000",
   "http://localhost:5173",
   "https://bookish-app.onrender.com",
+  "https://bookish-app-v9y2.onrender.com"
 ];
 
 App.use(express.json());
