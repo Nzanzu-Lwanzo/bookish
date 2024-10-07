@@ -21,24 +21,25 @@ const useSyncDatabase = () => {
     setBooks: setBooksToDisplay,
     setCurrentCollection,
     currentCollection,
+    database
   } = useAppContext();
 
   useEffect(() => {
-    BookishDb.init()
-      .then(async (db) => {
-        setDatabase(db);
-      })
-      .catch((e) => {
-        if (e.message === "NO_AUTH_USER") {
-          enqueueSnackbar("Connectez-vous à la DBB cloud.");
-          navigateTo("/auth");
+    // BookishDb.init()
+    //   .then(async (db) => {
+    //     setDatabase(db);
+    //   })
+    //   .catch((e) => {
+    //     if (e.message === "NO_AUTH_USER") {
+    //       enqueueSnackbar("Connectez-vous à la DBB cloud.");
+    //       navigateTo("/auth");
 
-          return;
-        }
+    //       return;
+    //     }
 
-        alert(e.message);
-        enqueueSnackbar("Echec d'initialisation de la BDD locale");
-      });
+    //     alert(e.message);
+    //     enqueueSnackbar("Echec d'initialisation de la BDD locale");
+    //   });
 
     return () => {};
   }, []);
