@@ -12,7 +12,7 @@ const useSyncDatabase = () => {
   const [collections, setCollections] = useState([]);
   const [books, setBooks] = useState([]);
   const [pending, startTransition] = useTransition();
-  const [database, setDatabase] = useState(undefined);
+  // const [database, setDatabase] = useState(undefined);
   const [isSyncing, setIsSyncing] = useState(false);
   const { mutate } = useNetworkRequest();
   const navigateTo = useNavigate();
