@@ -50,9 +50,6 @@ export default class BookishDb {
       request.onupgradeneeded = function (event) {
         const db = this.result;
 
-        db.deleteObjectStore("collections");
-        db.deleteObjectStore("books");
-
         if (!db.objectStoreNames.contains("collections")) {
           const collections = db.createObjectStore("collections", {
             keyPath: "__id",
