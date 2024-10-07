@@ -85,6 +85,7 @@ export const AppContextProvider = function ({ children }) {
       .catch((error) => {
         setIsFetchingFromIDB("BACK_TO_NORMAL_ANYWAY");
         enqueueSnackbar("Erreur de création de la DBB");
+        console.log(error)
       })
       .finally(($) => setIsFetching(false));
   }, []);
