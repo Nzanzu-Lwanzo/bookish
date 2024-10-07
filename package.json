@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "npm install --prefix frontend && npm run build --prefix frontend && npm install && node index.js"
+    "build":"npm install --prefix frontend && npm run build --prefix frontend && npm install",
+    "start": "node index.js"
   },
   "keywords": [
     "Bookish",
