@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { lsWrite } from "../utils/localStorage-io";
 import { useState } from "react";
 import Loader from "../components/CrossApp/Loader";
-import { Info } from "lucide-react";
+import { Info, DatabaseBackup } from "lucide-react";
 
 const About = () => {
   const navigateTo = useNavigate();
@@ -71,8 +71,12 @@ const About = () => {
               </strong>{" "}
               Cependant, pas de panique. Vous n'avez besoin de fournir qu'un{" "}
               <strong>nom d'utilisateur</strong> et une{" "}
-              <strong>adresse e-mail</strong>. Vous avez pour cela un boutton
-              sur le bas de la page.
+              <strong>adresse e-mail</strong>. Ces données permettent de vous
+              associer à vos livres et vos collections. Si vous accédez à la
+              Base de Données cloud à partir de deux appareils différents, nous
+              devons savoir que c'est la même personne et qu'il faut lui servir
+              ses livres et ses collections. <br /> Vous avez pour cela un
+              boutton sur le bas de la page.
             </p>
           </div>
           <div>
@@ -90,6 +94,20 @@ const About = () => {
                   ordinateur. Ainsi, les livres et les collections que vous
                   créez sur votre téléphone ne seront pas accessibles depuis
                   votre ordinateur, votre tablette ou depuis un autre téléphone.
+                  <br />
+                  Afin d'avoir accès à vos données sur des appareils différents,
+                  connectez votre compte sur l'appareil A, synchronisez, ensuite
+                  allez sur l'appareil B, connectez également votre compte et
+                  synchronisez. Toutes vos données sont là ! Une fois que vous
+                  avez fait des modifications conséquentes sur l'appareil B,
+                  synchronisez encore afin d'avoir des données qui sont à jour
+                  quand vous reviendrez à l'appareil A (où vous devrez aussi
+                  synchroniser).
+                  <br />
+                  Voici le boutton de synchronisation :{" "}
+                  <span>
+                    <DatabaseBackup size={18} />
+                  </span>
                 </p>
               </li>
               <li>
@@ -111,10 +129,10 @@ const About = () => {
                 <p>
                   Il peut arriver, pour différentes raisons, que la BDD se
                   supprime d'elle-même et que vous perdiez vos données. Nous
-                  sommes en train d'implémenter des techniques de sauvegarde
-                  (backup sur BDD cloud, téléchargement en PDF, ... ). En
-                  attendant que la solution soit trouvée, utilisez l'application
-                  mais soyez prudents.
+                  sommes en train d'implémenter des techniques de sauvegarde. La{" "}
+                  <strong>synchronisation sur BDD cloud</strong> est la première
+                  solution. Ainsi donc, par mesure de prudence, quand vous avez
+                  une quantité conséquente de données, pensez à synchroniser.
                 </p>
               </li>
             </ul>
@@ -127,13 +145,13 @@ const About = () => {
               <strong>Bookish</strong>. Nous y travaillons toujours. Dans
               l'avenir, vous pourrez{" "}
               <strong>
-                synchroniser vos BDD à travers vos différents appareils (en
-                utilisant <strong>Bluetooth</strong>, par exemple)
+                synchroniser vos BDD à travers vos différents appareils en
+                utilisant <strong>Bluetooth</strong>
               </strong>
               ,{" "}
               <strong>
-                avoir la possibilité de sauvegarder vos données sur un serveur
-                ou dans votre Google Drive
+                avoir la possibilité télécharger vos livres dans des fichier
+                pdf,
               </strong>
               , ... et bien d'autres fonctionnalités.
             </p>
@@ -144,11 +162,8 @@ const About = () => {
               Comme vous avez pu le remarquer, <strong>Bookish</strong> ne
               possède pas d'adresse propre. Nous utilisons un sous-domaine{" "}
               <strong>Render</strong>. Nous aurons besoin d'acheter notre propre
-              domaine (par exemple, <strong>www.bookish.edu</strong>). <br />
-              En plus de cela, pour permettre le partage de collections et des
-              livres entre utilisateurs, nous aurions probablement besoin de
-              payer un hébergement sur un serveur. Ce qui coûte, évidemment, de
-              l'argent. <br />
+              domaine (par exemple, <strong>www.bookish.edu</strong>).
+              <br />
               <br />
               Si vous voulez faire un don pour permettre à{" "}
               <strong>Bookish</strong> de continuer à fonctionner et au
@@ -193,58 +208,21 @@ const About = () => {
                   <strong>Bookish</strong> . Cette API est accessible et{" "}
                   <i>open source</i>. Si vous en avez besoin, écrivez au
                   développeur et vous obtiendrez le code source (le dépôt Github
-                  est privé, impossible de partager le lien du fichier.)
+                  est privé, impossible de partager le lien du fichier.) <br />
+                  Une instance <strong>Mongo DB</strong> est utilisée pour le
+                  backup cloud.
                 </p>
               </li>
             </ul>
 
             <p>
               Nous signalons également que nous avons besoin d'un volontaire qui
-              voudrait travailler sur les algorithmes de synchronisation de BDD
-              (avec un modèle de Base de Données NoSql). Si cela vous intéresse,
-              merci d'écrire au développeur au numéro{" "}
+              voudrait travailler sur les techniques de sauvegarde. Si cela vous
+              intéresse, merci d'écrire au développeur au numéro{" "}
               <a href="tel:0977210519">0977210519 (Whatsapp et Telegram)</a> en
               envoyant <strong>votre a adresse e-mail</strong> et/ou{" "}
               <strong>le lien vers votre Github.</strong>
             </p>
-          </div>
-
-          <div>
-            <h2>Dépendances</h2>
-            <ul>
-              <li>
-                <p>
-                  <strong>react-router-dom</strong> : pour la navigation
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>html-entities</strong>,{" "}
-                  <strong>react-safely-set-inner-html</strong>,{" "}
-                  <strong>dompurify</strong> : pour le parsing des chaînes de
-                  caractère HTML stockées dans la BDD
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>notistack</strong> : pour les toast messages
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>react-froala-wysiwyg</strong> : pour l'édition des
-                  resumés des livres.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>lucide-react</strong> : pour les icônes, bien que
-                  certaines aient été prises dans le pack{" "}
-                  <strong>phosphor-icons</strong> et leurs svgs copiés comme des
-                  compoosants.
-                </p>
-              </li>
-            </ul>
           </div>
 
           <Link

@@ -21,7 +21,8 @@ const useSyncDatabase = () => {
     setBooks: setBooksToDisplay,
     setCurrentCollection,
     currentCollection,
-    database
+    database,
+    setCollectionsAppearance,
   } = useAppContext();
 
   useEffect(() => {
@@ -78,6 +79,7 @@ const useSyncDatabase = () => {
             }
 
             await database.markAllCollectionsAsSynced();
+            setCollectionsAppearance(true);
             enqueueSnackbar("Collections synced, actualisez la page !");
 
             // ********************* SYNC BOOKS ******************************* //
