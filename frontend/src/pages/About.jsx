@@ -77,6 +77,14 @@ const About = () => {
               devons savoir que c'est la même personne et qu'il faut lui servir
               ses livres et ses collections. <br /> Vous avez pour cela un
               boutton sur le bas de la page.
+              <br />
+              <br />
+              Cela permet aussi que les données puissent être accessibles par
+              d'autres utilisateurs de l'application. Après synchronisation, vos
+              livres et vos collections sont envoyés à un serveur. A partir de
+              ce serveur cloud, n'importe qui peut y avoir accès mais seulement
+              vous pouvez les supprimer. Vous aussi avez accès aux livres et aux
+              collections des autres.
             </p>
           </div>
           <div>

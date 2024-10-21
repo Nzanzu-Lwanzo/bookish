@@ -10,12 +10,19 @@ import AuthForm from "./pages/AuthForm";
 import { closeSnackbar, SnackbarProvider } from "notistack";
 import { XIcon } from "./assets/svg";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import CloudData from "./pages/CloudData";
+import ReadCloud from "./pages/ReadCloud";
+
 
 const client = new QueryClient({
   defaultOptions: {
     mutations: {
       retry: 1,
       retryDelay: 3000,
+    },
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     },
   },
 });
@@ -43,6 +50,16 @@ function App() {
             <Route path="/" element={<Main />} caseSensitive={false} />
             <Route path="/about" element={<About />} caseSensitive={false} />
             <Route path="/auth" element={<AuthForm />} caseSensitive={false} />
+            <Route
+              path="/cloud"
+              element={<CloudData />}
+              caseSensitive={false}
+            />
+            <Route
+              path="/cloud/:id"
+              element={<ReadCloud />}
+              caseSensitive={false}
+            />
             <Route
               path="/create-book"
               element={<CreateBookForm />}

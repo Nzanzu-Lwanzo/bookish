@@ -2,6 +2,7 @@ import User from "../../db/models/user.mjs";
 import { generateToken } from "../../utils/authTokens.mjs";
 
 let env = process.env.ENV;
+export let cookiesMaxAge = 60 * 60 * 24 * 30 * 1500;
 
 /**
  *
@@ -18,7 +19,7 @@ export const authenticateUser = async (req, res) => {
 
   res
     .cookie("at", authToken, {
-      maxAge: 30 * 24 * 60 * 60,
+      maxAge: cookiesMaxAge,
       httpOnly: env !== "dev",
       secure: env !== "dev",
     })

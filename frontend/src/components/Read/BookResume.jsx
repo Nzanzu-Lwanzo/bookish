@@ -6,10 +6,9 @@ import { useReadPageContext } from "../../context/ReadPageContext";
 const BookResume = ({ resume, title }) => {
   const entitiesFree = decode(resume);
   const pureHtml = DOMPurify.sanitize(entitiesFree);
-  const { bookResumeArticleElementRef } = useReadPageContext();
 
   return (
-    <article ref={bookResumeArticleElementRef}>
+    <article>
       <h2 className="special-title-for-book">{title}</h2>
       <ReactSafelySetInnerHTML excludedTags={["iframes", "script", "style"]}>
         {pureHtml}

@@ -22,6 +22,12 @@
   background-color: transparent;
 } */
 
+#root,
+html,
+body {
+  min-height: 100vh;
+}
+
 #root {
   width: 100%;
   height: 100%;
@@ -180,21 +186,21 @@ body {
   height: fit-content;
   min-height: 300px;
 
-  display:-webkit-box;
+  display: -webkit-box;
 
-  display:-ms-flexbox;
+  display: -ms-flexbox;
 
-  display:flex;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
   -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 
 .collections .title {
@@ -251,8 +257,8 @@ body {
   list-style: none;
   width: 100%;
   -webkit-box-flex: 2;
-      -ms-flex: 2;
-          flex: 2;
+  -ms-flex: 2;
+  flex: 2;
 }
 
 .list-collections li {
@@ -388,6 +394,29 @@ body {
   text-decoration: none;
 }
 
+.book-elt .top-on-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.book-elt .top-on-card button {
+  background-color: transparent;
+}
+
+.book-elt-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.3rem;
+}
+
+.book-elt-container button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .book-elt > * {
   display: inline-block;
   width: 100%;
@@ -431,7 +460,7 @@ body {
   stroke: #fff;
 }
 
-.list-books .books {
+.books {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1rem 1fr 1rem 1fr;
@@ -939,11 +968,11 @@ p[data-f-id="pbf"] {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
   gap: 1rem;
 }
 
@@ -956,11 +985,11 @@ p[data-f-id="pbf"] {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   gap: 2rem;
 }
 
@@ -969,28 +998,28 @@ p[data-f-id="pbf"] {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   gap: 0.5rem;
 }
 
 #auth-form-page .infos {
   position: fixed;
-  background-color: rgba(0,0,0,.9);
-  color: #FFF;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 1rem;
 
-  -webkit-transition: .7s ease-out;
+  -webkit-transition: 0.7s ease-out;
 
-  -o-transition: .7s ease-out;
+  -o-transition: 0.7s ease-out;
 
-  transition: .7s ease-out;
+  transition: 0.7s ease-out;
 }
 
 #auth-form-page .infos .btns {
@@ -998,33 +1027,85 @@ p[data-f-id="pbf"] {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   gap: 2rem;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
 }
 
 #auth-form-page * input::-webkit-input-placeholder {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 #auth-form-page * input::-moz-placeholder {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 #auth-form-page * input:-ms-input-placeholder {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 #auth-form-page * input::-ms-input-placeholder {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 #auth-form-page * input::placeholder {
-  font-size: .8rem;
+  font-size: 0.8rem;
+}
+
+/* CLOUD DATA */
+
+body:has(.cloud-data) {
+  background-color: #eee;
+}
+
+.cloud-data {
+  background-color: #fff;
+  border-radius: 4px;
+  width: 90%;
+  margin: auto;
+  min-height: 90vh;
+  overflow: hidden;
+}
+
+.cloud-data .header {
+  padding: 1rem;
+  background-color: var(--black-shade);
+  color: #fff;
+  gap: 1rem;
+  text-align: center;
+}
+
+.cloud-data .menu {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.cloud-data .header h1 {
+  font-size: 3rem;
+}
+
+.cloud-data .header p {
+  font-size: 0.8rem;
+}
+
+.cloud-data .list-books {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.cloud-data ._loader {
+  padding-top: 10rem;
 }
 
 @media only all and (max-width: 1100px) {
@@ -1121,7 +1202,7 @@ p[data-f-id="pbf"] {
 }
 
 @media only all and (max-width: 720px) {
-  .list-books .books {
+  .books {
     -ms-grid-columns: (1fr) [2];
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1148,6 +1229,10 @@ p[data-f-id="pbf"] {
   .read-panel {
     padding: 0;
   }
+
+  .search-cloud {
+    width: 70%;
+  }
 }
 
 @media only all and (max-width: 500px) {
@@ -1159,7 +1244,7 @@ p[data-f-id="pbf"] {
     padding-inline: 0;
   }
 
-  .list-books .books {
+  .books {
     -ms-grid-columns: auto;
     grid-template-columns: auto;
     padding: 0;
@@ -1207,11 +1292,11 @@ p[data-f-id="pbf"] {
   }
 
   .list-books .top-bar,
-  .list-books .books {
+  .books {
     padding-inline: 1rem;
   }
 
-  .list-books .books {
+  .books {
     padding-top: 1rem;
     padding-bottom: 2rem;
   }
@@ -1252,8 +1337,18 @@ p[data-f-id="pbf"] {
     padding-inline: 1rem;
   }
 
-  #auth-form-page .card{
+  #auth-form-page .card {
     width: 90%;
+  }
+
+  .cloud-data {
+    width: 100%;
+    min-height: 100vh;
+    border-radius: none;
+  }
+
+  .cloud-data ._loader {
+    padding-top: 2rem;
   }
 }
 

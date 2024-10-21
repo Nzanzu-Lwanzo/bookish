@@ -11,8 +11,9 @@ import mongoose from "mongoose";
 import authRouter from "./backend/auth/routes/auth.mjs";
 import booksRouter from "./backend/routes/books.mjs";
 import booksCollectionsRouter from "./backend/routes/booksCollections.mjs";
+import { cookiesMaxAge } from "./backend/auth/controllers/auth.mjs";
 
-let env = process.env.ENV || 'prod';
+let env = process.env.ENV || 'dev';
 let __dirname = dirname(fileURLToPath(import.meta.url));
 const App = express();
 const PORT = process.env.PORT || 5000;
@@ -43,7 +44,7 @@ App.use(
     cookie: {
       httpOnly: env !== "dev",
       secure: env !== "dev",
-      maxAge: 30 * 24 * 60 * 60,
+      maxAge: cookiesMaxAge,
       signed: true,
     },
   })

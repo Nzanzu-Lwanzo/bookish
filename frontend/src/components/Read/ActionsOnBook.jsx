@@ -12,7 +12,7 @@ import useConfirmDeletion from "../../hooks/useConfirmDeletion";
 
 const ActionsOnBook = () => {
   const { database, setCurrentBook, setBooks, setModalCard } = useAppContext();
-  const { beingReadBook, setBeingReadBook, bookResumeArticleElementRef } =
+  const { beingReadBook, setBeingReadBook } =
     useReadPageContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const navigateTo = useNavigate();

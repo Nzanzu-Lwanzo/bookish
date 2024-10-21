@@ -112,13 +112,17 @@ const useSyncDatabase = () => {
                 },
                 onError: (error) => {
                   switch (error.response?.status) {
+                    case 400:
+                      enqueueSnackbar("Books not synced : opération avortée.");
+                      return;
+
                     case 401:
                       navigateTo("/auth");
                       enqueueSnackbar("Connectez-vous à la BDD cloud.");
                       return;
 
-                    case 400:
-                      enqueueSnackbar("Books not synced : opération avortée.");
+                    case 404:
+                      enqueueSnackbar("Error 404 on books !");
                       return;
 
                     case 406:
@@ -138,18 +142,22 @@ const useSyncDatabase = () => {
 
           onError: (error) => {
             switch (error.response?.status) {
+              case 400:
+                enqueueSnackbar("Collections not synced : opération avortée.");
+                return;
+
               case 401:
                 navigateTo("/auth");
                 enqueueSnackbar("Connectez-vous à la BDD cloud.");
                 return;
 
-              case 400:
-                enqueueSnackbar("Collections not synced : opération avortée.");
+              case 404:
+                enqueueSnackbar("Error 404 on collections !");
                 return;
 
               case 406:
                 enqueueSnackbar("Aucune collection à synchroniser !");
-                return;
+                retbreakurn;
 
               default:
                 return;

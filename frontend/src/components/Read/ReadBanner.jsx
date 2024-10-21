@@ -25,7 +25,9 @@ const ReadBanner = () => {
       <p>
         <span className="author-name">{beingReadBook?.author}</span>
       </p>
-      <span className="collection-name">#{currentCollection?.name}</span>
+      <span className="collection-name">
+        #{currentCollection?.name || beingReadBook?.collection?.name}
+      </span>
       {/* <Link
         to="/"
         className="no-state-button cta"
@@ -35,6 +37,6 @@ const ReadBanner = () => {
       </Link> */}
     </Banner>
   );
-}
+};
 
-export default ReadBanner
+export default ReadBanner;

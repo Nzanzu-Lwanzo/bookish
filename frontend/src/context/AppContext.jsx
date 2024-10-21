@@ -25,6 +25,7 @@ export const AppContextProvider = function ({ children }) {
   const [books, setBooks] = useState([]);
   const [currentBook, setCurrentBook] = useState(undefined);
   const [isFetching, setIsFetching] = useState(true);
+  const [cloudBooks,setCloudBooks] = useState([]);
   const [modalCard, setModalCard] = useReducer(modalReducer, {
     show: false,
     element: "book",
@@ -109,6 +110,8 @@ export const AppContextProvider = function ({ children }) {
     setAuth,
     isFetchingFromIDB,
     setIsFetchingFromIDB,
+    cloudBooks,
+    setCloudBooks,
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

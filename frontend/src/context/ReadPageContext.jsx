@@ -20,7 +20,6 @@ export const ReadPageContextProvider = ({ children }) => {
   const [pending, startTransition] = useTransition();
   const navigateTo = useNavigate();
   const { setCurrentBook } = useAppContext();
-  const bookResumeArticleElementRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -56,16 +55,11 @@ export const ReadPageContextProvider = ({ children }) => {
   const data = {
     beingReadBook,
     setBeingReadBook,
-    bookResumeArticleElementRef
   };
 
   return (
     <ReadPageContext.Provider value={data}>
-      {beingReadBook && !pending ? (
-        children
-      ) : (
-        <WholePageLoader />
-      )}
+      {beingReadBook && !pending ? children : <WholePageLoader />}
     </ReadPageContext.Provider>
   );
 };

@@ -1,6 +1,6 @@
 import { useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
-import { DatabaseBackup, InfoIcon, Menu } from "lucide-react";
+import { DatabaseBackup, InfoIcon, Menu, Cloud } from "lucide-react";
 import { enqueueSnackbar } from "notistack";
 import useSyncDatabase from "../../hooks/useSyncDatabase";
 import Loader from "./Loader";
@@ -15,6 +15,9 @@ const Banner = ({ headerBtn, children }) => {
       <div className="sticky-top for-mobile">
         <div className="icons-n-buttons">
           {headerBtn}
+          <Link className="center about-link" to="/cloud">
+            <Cloud />
+          </Link>
           <Link className="center about-link" to="/about">
             <InfoIcon />
           </Link>
