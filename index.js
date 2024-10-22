@@ -27,7 +27,7 @@ const WHITELIST_ORIGINS = [
 ];
 
 App.use(express.json());
-App.use(express.static(join(__dirname, "/frontend/dist")));
+App.use(express.static(join(__dirname, "frontend","dist")));
 App.use(cookieParser(SECRET));
 App.use(
   cors({
@@ -56,7 +56,7 @@ App.use("/api/auth", authRouter);
 App.use("/api/collection", booksCollectionsRouter);
 App.use("/api/book", booksRouter);
 
-App.get("*", (req, res) => res.sendFile("/index.html"));
+App.get("*", (req, res) => res.sendFile(join(__dirname,"frontend","dist","index.html")));
 
 App.listen(PORT, () => {
 
